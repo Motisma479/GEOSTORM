@@ -29,6 +29,8 @@ namespace Geostorm.Core
             datas.camera.Update(inputs);
             for (int i = 0; i < datas.stars.Count(); i++)
                 datas.stars[i].Update(datas.camera);
+
+            datas.Player.Update();
         }
         public void Render(Graphics graphics)
         {
@@ -37,6 +39,7 @@ namespace Geostorm.Core
                     datas.stars[i].Draw(graphics);
             graphics.DrawMap(datas.MapSize, datas.camera.Pos);
 
+            datas.Player.Draw(graphics);
         }
         public bool IsInside(Vector2 pos)
         {

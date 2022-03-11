@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
+using Geostorm.Renderer;
 
 namespace Geostorm.Core.Entities
 {
@@ -16,12 +17,19 @@ namespace Geostorm.Core.Entities
         public Player()
         {
             Weapon = new Weapon();
+
+            Position.X = 200;
+            Position.Y = 200;
         }
 
 
-        public void Update() { }
-        public void Draw() 
+        public void Update() 
         {
+            Rotation++;
+        }
+        public override void Draw(Graphics graphics) 
+        {
+            graphics.DrawPlayer(Position, Rotation);
         }
     }
 }

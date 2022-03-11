@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
+using Geostorm.Renderer;
 
 namespace Geostorm.Core.Entities
 {
@@ -16,8 +17,9 @@ namespace Geostorm.Core.Entities
         public void Update() 
         {
         }
-        public void Draw() 
+        public override void Draw(Graphics graphics) 
         {
+            graphics.DrawPlayer(Position, Rotation);
         }
     }
 }

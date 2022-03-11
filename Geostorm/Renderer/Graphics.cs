@@ -52,12 +52,30 @@ namespace Geostorm.Renderer
 
         public void DrawPlayer(Vector2 pos, float rotation) 
         {
+            Matrix3x2 rotate = Matrix3x2.CreateRotation((rotation * MathF.PI / 180));
+            for (int i = 0; i <= Core.Entities.PlayerTexture.Points.Length - 1; i++)
+            {
+                Vector2 curentP = Vector2.Transform(Core.Entities.PlayerTexture.Points[i], rotate) + pos;
+                Vector2 curentP2 = Vector2.Transform(Core.Entities.PlayerTexture.Points[(i + 1) % Core.Entities.PlayerTexture.Points.Length], rotate) + pos;
+
+                DrawLineEx(curentP, curentP2, 2.0f, Color.WHITE);
+
+            }
         }
         public void DrawGrunt(Vector2 pos, float activeTime) 
         {
         }
         public void DrawBullet(Vector2 pos, float rotation) 
         {
+            Matrix3x2 rotate = Matrix3x2.CreateRotation((rotation * MathF.PI / 180));
+            for (int i = 0; i <= Core.Entities.BulletTexture.Points.Length - 1; i++)
+            {
+                Vector2 curentP = Vector2.Transform(Core.Entities.BulletTexture.Points[i], rotate) + pos;
+                Vector2 curentP2 = Vector2.Transform(Core.Entities.BulletTexture.Points[(i + 1) % Core.Entities.BulletTexture.Points.Length], rotate) + pos;
+
+                DrawLineEx(curentP, curentP2, 2.0f, Color.WHITE);
+
+            }
         }
     }
 }

@@ -12,13 +12,14 @@ namespace Geostorm.Core
 {
     class GameData
     {
+        private Player player = new Player();
+
         public Vector2 MapSize = new Vector2(1000,1000);
         public IEnumerable<Entity> Entities { get { return entities; } }
         public Player Player { get { return player; } }
         public IEnumerable<Bullet> Bullets { get { return bullets; } }
         public IEnumerable<BlackHole> BlackHoles { get { return blackHoles; } }
 
-        public Player player;
         public List<Enemy> enemies = new List<Enemy>();
         public List<Entity> entities = new List<Entity>();
         public List<Bullet> bullets = new List<Bullet>();

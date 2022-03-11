@@ -13,6 +13,7 @@ namespace Geostorm.Core.Entities.Enemies
         public void DoUpdate() { }
         public new void Draw() 
         {
+
         }
     }
 }
