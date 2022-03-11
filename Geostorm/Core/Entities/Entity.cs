@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
 using Geostorm.Core.Events;
+using Geostorm.Renderer;
 
 namespace Geostorm.Core.Entities
 {
@@ -16,6 +17,6 @@ namespace Geostorm.Core.Entities
         public float CollisionRadius;
 
         public virtual void Update(in GameInputs inputs, GameData datas, List<Event> events) { }
-        public virtual void Draw() { }
+        public virtual void Draw(Graphics) { }
     }
 }
