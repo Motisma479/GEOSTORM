@@ -49,6 +49,7 @@ namespace Geostorm
                 game.Render(renders, inputs);
                 EndDrawing();
                 //----------------------------------------------------------------------------------
+                DrawFPS(10, 10);
             }
 
             // De-Initialization

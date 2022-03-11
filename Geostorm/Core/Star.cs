@@ -22,19 +22,18 @@ namespace Geostorm.Core
             this.Pos = pos;
             switch (Depth)
             {
+                default:
                 case 0:
-                    Speed = 1;
+                    Speed = 0.6f;
                     break;
                 case 1:
-                    Speed = 0.7f;
+                    Speed = 0.5f;
                     break;
                 case 2:
-                    Speed = 0.5f;
+                    Speed = 0.3f;
                     break;
                 case 3:
                     Speed = 0.25f;
-                    break;
-                default:
                     break;
             }
         }

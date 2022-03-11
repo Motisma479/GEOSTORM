@@ -46,7 +46,7 @@ namespace Geostorm.Core
         {
             ui = new Ui(scene);
             scene = Scene.MainMenu;
-            MapSize = new Vector2(2000,2000);
+            MapSize = new Vector2(350*4,350*3);
             for (int i = 0; i < 5000; i++)
                 stars.Add(new Star(new Vector2(GetRandomValue(-1500, 3500), GetRandomValue(-1500, 3500)), GetRandomValue(1, 4)));
         }
