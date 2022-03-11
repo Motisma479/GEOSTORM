@@ -10,6 +10,14 @@ namespace Geostorm.Renderer
 {
     class Sound : IGameEventListener
     {
+        public Sound()
+        {
+            Load();
+        }
+        ~Sound()
+        {
+            Unload();
+        }
         public void Load() { }
         public void Unload() { }
 

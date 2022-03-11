@@ -15,6 +15,9 @@ namespace Geostorm.Core
         float speed;
 
 
-        public void Update(in GameInputs inputs, GameData data, List<Event> events) { }
+        public void Update(in GameInputs inputs, GameData data, List<Event> events) 
+        {
+
+        }
     }
 }
