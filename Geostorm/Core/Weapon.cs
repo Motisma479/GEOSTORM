@@ -14,6 +14,11 @@ namespace Geostorm.Core
         float timer;
         float speed;
 
+        public Weapon()
+        {
+            level = 0;
+        }
+
 
         public void Update(in GameInputs inputs, GameData data, List<Event> events) 
         {

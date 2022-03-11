@@ -9,8 +9,14 @@ namespace Geostorm.Core.Entities
 {
     class Player : Entity
     {
-        int Life;
+        int Life { get { return Life; } set { Life = value; } }
+        int Score { get { return Score; } set { Score = value; } }
         Weapon Weapon;
+
+        public Player()
+        {
+            Weapon = new Weapon();
+        }
 
 
         public void Update() { }

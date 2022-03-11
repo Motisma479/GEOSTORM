@@ -11,7 +11,7 @@ namespace Geostorm.Core.Entities.Enemies
     class Grunt : Enemy
     {
         public void DoUpdate() { }
-        public void Draw() 
+        public new void Draw() 
         {
         }
     }

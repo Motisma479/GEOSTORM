@@ -9,11 +9,11 @@ namespace Geostorm.Core
 {
     class GameInputs
     {
-        Vector2 ScreenSize;
-        float DeltaTime;
-        Vector2 MoveAxis;
-        Vector2 ShootAxis;
-        bool Shoot;
-        Vector2 ShootTarget;
+        public Vector2 ScreenSize;
+        public float DeltaTime;
+        public Vector2 MoveAxis;
+        public Vector2 ShootAxis;
+        public bool Shoot;
+        public Vector2 ShootTarget;
     }
 }

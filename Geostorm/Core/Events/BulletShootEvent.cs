@@ -10,6 +10,6 @@ namespace Geostorm.Core.Events
 {
     class BulletShootEvent : Event
     {
-        Bullet bullet;
+        Bullet bullet = new Bullet();
     }
 }

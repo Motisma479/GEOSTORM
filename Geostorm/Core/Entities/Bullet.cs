@@ -9,7 +9,13 @@ namespace Geostorm.Core.Entities
 {
     class Bullet : Entity
     {
-        public void Update() { }
+        public Bullet()
+        {
+
+        }
+        public void Update() 
+        {
+        }
         public void Draw() 
         {
         }

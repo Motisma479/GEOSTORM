@@ -6,23 +6,25 @@ using System.Threading.Tasks;
 using Geostorm.Core.Entities;
 using Geostorm.Core.Entities.Enemies;
 using Geostorm.Renderer;
-
+using static Raylib_cs.Raylib;
+using System.Numerics;
 namespace Geostorm.Core
 {
     class GameData
     {
-        public Game game;
-
+        public Vector2 MapSize = new Vector2(1000,1000);
         public IEnumerable<Entity> Entities { get { return entities; } }
         public Player Player { get { return player; } }
         public IEnumerable<Bullet> Bullets { get { return bullets; } }
         public IEnumerable<BlackHole> BlackHoles { get { return blackHoles; } }
 
-        Player player;
-        List<Enemy> enemies = new List<Enemy>();
-        List<Entity> entities = new List<Entity>();
-        List<Bullet> bullets = new List<Bullet>();
-        List<BlackHole> blackHoles = new List<BlackHole>();
+        public Player player;
+        public List<Enemy> enemies = new List<Enemy>();
+        public List<Entity> entities = new List<Entity>();
+        public List<Bullet> bullets = new List<Bullet>();
+        public List<BlackHole> blackHoles = new List<BlackHole>();
+        public List<Star> stars = new List<Star>();
+        public Camera camera = new Camera();
 
 
         // Temporary List
@@ -32,7 +34,8 @@ namespace Geostorm.Core
 
         public GameData()
         {
-            game = new Game();
+            for (int i = 0; i < GetRandomValue(900, 1000); i++)
+                stars.Add(new Star(new Vector2(GetRandomValue(0, 5000), GetRandomValue(0, 5000)), GetRandomValue(1, 3)));
         }
 
         public void AddEnemyDelayed(Enemy enemy) 
