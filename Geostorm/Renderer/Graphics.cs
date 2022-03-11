@@ -57,9 +57,9 @@ namespace Geostorm.Renderer
             DrawCircle((int)pos.X, (int)pos.Y, 1, Color.WHITE);
         }
 
-        public void DrawPlayer(Vector2 pos, float rotation)
+        public void DrawPlayer(Vector2 pos, float rotation, float weaponRotation) 
         {
-            Matrix3x2 rotate = Matrix3x2.CreateRotation((rotation * MathF.PI / 180));
+            Matrix3x2 rotate = Matrix3x2.CreateRotation((MathHelper.ToRadians(rotation)));
             for (int i = 0; i <= Core.Entities.PlayerTexture.Points.Length - 1; i++)
             {
                 Vector2 curentP = Vector2.Transform(Core.Entities.PlayerTexture.Points[i], rotate) + pos;
@@ -69,6 +69,7 @@ namespace Geostorm.Renderer
                 DrawLineEx(curentP, curentP2, Core.Entities.PlayerTexture.thickness, Color.WHITE);
 
             }
+            DrawCircleV(pos+MathHelper.getVectorRot(weaponRotation)*20,3.0f,Color.WHITE);
         }
         public void DrawGrunt(Vector2 pos, float activeTime)
         {

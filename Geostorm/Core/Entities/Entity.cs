@@ -13,10 +13,11 @@ namespace Geostorm.Core.Entities
     {
         public bool IsDead;
         public Vector2 Position;
+        public Vector2 Velocity = new Vector2();
         public float Rotation;
         public float CollisionRadius;
 
         public virtual void Update(in GameInputs inputs, GameData datas, List<Event> events) { }
-        public virtual void Draw(Graphics graphics) { }
+        public virtual void Draw(Graphics graphics, Camera camera) { }
     }
 }

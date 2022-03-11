@@ -53,7 +53,7 @@ namespace Geostorm.Core
 
         public void UpdateInGame(GameInputs inputs)
         {
-            datas.camera.Update(inputs, datas.MapSize);
+            datas.camera.Update(inputs, datas.Player.Position, datas.MapSize);
             for (int i = 0; i < datas.stars.Count(); i++)
                 datas.stars[i].Update(datas.camera);
             datas.Player.Update(inputs);
@@ -77,16 +77,19 @@ namespace Geostorm.Core
                 case GameData.Scene.InGame:
                     {
                         for (int i = 0; i < datas.stars.Count(); i++)
-                            if (IsInside(datas.stars[i].Pos + datas.camera.Pos * datas.stars[i].Speed))
-                                datas.stars[i].Draw(graphics, datas.camera);
-                        graphics.DrawMap(datas.MapSize, datas.camera);
+                            if (IsInside(datas.camera.Pos + datas.stars[i].Pos))
+                                datas.stars[i].Draw(graphics);
+                        graphics.DrawMap(datas.MapSize, datas.camera.Pos);
                         Vector2 PosA = new Vector2(100, 100);
                         DrawCircleV(PosA, 10, Color.GRAY);
                         DrawCircleV(PosA + inputs.MoveAxis * 10, 8, Color.GREEN);
                         DrawCircleV(inputs.ScreenPos + inputs.ShootTarget, 8, Color.GREEN);
                         DrawEllipse(150, 100, 25, 15, Color.GRAY);
                         if (inputs.Shoot) DrawEllipse(150, 100, 23, 13, Color.GREEN);
-                            datas.Player.Draw(graphics);
+                        PosA = new Vector2(200, 100);
+                        DrawCircleV(PosA, 10, Color.GRAY);
+                        DrawCircleV(PosA + MathHelper.getVectorRot(datas.Player.WeaponRotation) * 10, 8, Color.GREEN);
+                        datas.Player.Draw(graphics);
                     }
                     break;
                 case GameData.Scene.Pause:

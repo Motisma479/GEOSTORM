@@ -19,13 +19,9 @@ namespace Geostorm.Core
             zoom = 1;
         }
 
-        public void Update(GameInputs inputs, Vector2 mapSize)
+        public void Update(GameInputs inputs, Vector2 position, Vector2 mapSize)
         {
-            if (IsMouseButtonDown(Raylib_cs.MouseButton.MOUSE_LEFT_BUTTON))
-            {
-                pos.X = GetMouseX() - mapSize.X/2;
-                pos.Y = GetMouseY() - mapSize.Y/2;
-            }
+            pos = inputs.ScreenSize/2 - mapSize/2 + (mapSize / 2 - position)*0.5f;
             inputs.ScreenPos = pos;
         }
     }

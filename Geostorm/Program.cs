@@ -37,6 +37,7 @@ namespace Geostorm
                 float dt = GetFrameTime();
                 inputs.Update(configs);
                 //TraceLog(TraceLogLevel.LOG_INFO,"Window size: " + inputs.MoveAxis.ToString());
+                
                 game.Update(inputs);
                 //----------------------------------------------------------------------------------
 

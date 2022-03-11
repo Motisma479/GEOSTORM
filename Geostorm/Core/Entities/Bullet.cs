@@ -17,9 +17,9 @@ namespace Geostorm.Core.Entities
         public void Update() 
         {
         }
-        public override void Draw(Graphics graphics) 
+        public override void Draw(Graphics graphics, Camera camera) 
         {
-            graphics.DrawPlayer(Position, Rotation);
+            graphics.DrawBullet(Position, Rotation);
         }
     }
 }

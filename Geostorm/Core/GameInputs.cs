@@ -11,6 +11,7 @@ namespace Geostorm.Core
     class GameInputs
     {
         public Vector2 ScreenPos;
+        public Vector2 ScreenSize;
         public float DeltaTime;
         public Vector2 MoveAxis;
         public Vector2 ShootAxis;
@@ -24,6 +25,7 @@ namespace Geostorm.Core
 
         public void Update(GameConfig configs)
         {
+            ScreenSize = new Vector2(GetScreenWidth(), GetScreenHeight());
             DeltaTime = GetFrameTime();
             MoveAxis = new Vector2(
             boolToInt(IsKeyDown((Raylib_cs.KeyboardKey)configs.KeyboardInputs[3])) - boolToInt(IsKeyDown((Raylib_cs.KeyboardKey)configs.KeyboardInputs[1])),
