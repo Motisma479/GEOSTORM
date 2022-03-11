@@ -48,4 +48,15 @@ namespace Geostorm.Core.Entities
             new Vector2(-0.0f, 1.0f)    * preScale      //bottom
         };
     }
+    static class PointerTexture
+    {
+        private static readonly float preScale = 5.0f;
+        public static float thickness = 2.5f;
+        public static readonly Vector2[] Points =
+        {
+            new Vector2(-1.0f, 0.0f)    * preScale,     //left  
+            new Vector2(-0.0f,-1.0f)    * preScale,     //top  
+            new Vector2( 1.0f, 0.0f)     * preScale,     //right
+        };
+    }
 }
