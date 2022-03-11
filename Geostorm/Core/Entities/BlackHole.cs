@@ -9,6 +9,6 @@ namespace Geostorm.Core.Entities
     class BlackHole : Entity
     {
         public void Update() { }
-        public override void Draw() { }
+        public void Draw() { }
     }
 }

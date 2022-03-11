@@ -20,9 +20,9 @@ namespace Geostorm
 
             InitAudioDevice();
 
-            var game = new GameData();
+            var datas = new GameData();
+            var inputs = new GameInputs();
             var renders = new Graphics();
-            renders.Load();
 
             //--------------------------------------------------------------------------------------
 
@@ -32,7 +32,7 @@ namespace Geostorm
                 // Update
                 //----------------------------------------------------------------------------------
                 float dt = GetFrameTime();
-                game.Update();
+                datas.game.Update(inputs);
                 //----------------------------------------------------------------------------------
 
 
@@ -40,7 +40,7 @@ namespace Geostorm
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
                 ClearBackground(Color.WHITE);
-                renders.DrawPlayer(System.Numerics.Vector2.One,0);
+                datas.game.Render(renders);
                 EndDrawing();
                 //----------------------------------------------------------------------------------
             }

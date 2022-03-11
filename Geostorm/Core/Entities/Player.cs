@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
 
 namespace Geostorm.Core.Entities
 {
@@ -11,7 +12,10 @@ namespace Geostorm.Core.Entities
         int Life;
         Weapon Weapon;
 
+
         public void Update() { }
-        public override void Draw() { }
+        public void Draw() 
+        {
+        }
     }
 }

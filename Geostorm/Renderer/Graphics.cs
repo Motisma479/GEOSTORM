@@ -11,6 +11,14 @@ namespace Geostorm.Renderer
 {
     class Graphics
     {
+        public Graphics()
+        {
+            Load();
+        }
+        ~Graphics()
+        {
+            Unload();
+        }
         Texture2D test;
         public void Load()
         {
@@ -22,11 +30,15 @@ namespace Geostorm.Renderer
             UnloadTexture(test);
         }
 
-        public void DrawPlayer(Vector2 pos, float rotation)
+        public void DrawPlayer(Vector2 pos, float rotation) 
         {
-            DrawTextureEx(test,pos,rotation,5.0f,Color.WHITE);
+            DrawTextureEx(test, pos, rotation, 5.0f, Color.WHITE);
         }
-        public void DrawGrunt(Vector2 pos, float activeTime) { }
-        public void DrawBullet(Vector2 pos, float rotation) { }
+        public void DrawGrunt(Vector2 pos, float activeTime) 
+        {
+        }
+        public void DrawBullet(Vector2 pos, float rotation) 
+        {
+        }
     }
 }
