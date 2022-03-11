@@ -77,7 +77,7 @@ namespace Geostorm.Core
                 case GameData.Scene.InGame:
                     {
                         for (int i = 0; i < datas.stars.Count(); i++)
-                            if (IsInside(datas.camera.Pos + datas.stars[i].Pos))
+                            //if (IsInside(datas.camera.Pos + datas.stars[i].Pos))
                                 datas.stars[i].Draw(graphics,datas.camera);
                         graphics.DrawMap(datas.MapSize, datas.camera);
                         Vector2 PosA = new Vector2(100, 100);
@@ -90,6 +90,7 @@ namespace Geostorm.Core
                         DrawCircleV(PosA, 10, Color.GRAY);
                         DrawCircleV(PosA + MathHelper.getVectorRot(datas.Player.WeaponRotation) * 10, 8, Color.GREEN);
                         datas.Player.Draw(graphics,datas.camera);
+                        DrawFPS(10, 10);
                     }
                     break;
                 case GameData.Scene.Pause:
