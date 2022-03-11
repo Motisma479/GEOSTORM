@@ -58,13 +58,24 @@ namespace Geostorm.Renderer
                 Vector2 curentP = Vector2.Transform(Core.Entities.PlayerTexture.Points[i], rotate) + pos;
                 Vector2 curentP2 = Vector2.Transform(Core.Entities.PlayerTexture.Points[(i + 1) % Core.Entities.PlayerTexture.Points.Length], rotate) + pos;
 
-                DrawLineEx(curentP, curentP2, 2.0f, Color.WHITE);
+                DrawCircleV(curentP, Core.Entities.PlayerTexture.thickness/2, Color.WHITE);
+                DrawLineEx(curentP, curentP2, Core.Entities.PlayerTexture.thickness, Color.WHITE);
 
             }
         }
         public void DrawGrunt(Vector2 pos, float activeTime) 
         {
+            //Copie of the other but d
+            /*for (int i = 0; i <= Core.Entities.GruntTexture.Points.Length - 1; i++)
+            {
+                Vector2 curentP = Vector2.Transform(Core.Entities.GruntTexture.Points[i], rotate) + pos;
+                Vector2 curentP2 = Vector2.Transform(Core.Entities.GruntTexture.Points[(i + 1) % Core.Entities.GruntTexture.Points.Length], rotate) + pos;
+
+                DrawLineEx(curentP, curentP2, Core.Entities.GruntTexture.thickness, Color.WHITE);
+
+            }*/
         }
+
         public void DrawBullet(Vector2 pos, float rotation) 
         {
             Matrix3x2 rotate = Matrix3x2.CreateRotation((rotation * MathF.PI / 180));
@@ -73,7 +84,7 @@ namespace Geostorm.Renderer
                 Vector2 curentP = Vector2.Transform(Core.Entities.BulletTexture.Points[i], rotate) + pos;
                 Vector2 curentP2 = Vector2.Transform(Core.Entities.BulletTexture.Points[(i + 1) % Core.Entities.BulletTexture.Points.Length], rotate) + pos;
 
-                DrawLineEx(curentP, curentP2, 2.0f, Color.WHITE);
+                DrawLineEx(curentP, curentP2, Core.Entities.BulletTexture.thickness, Color.WHITE);
 
             }
         }

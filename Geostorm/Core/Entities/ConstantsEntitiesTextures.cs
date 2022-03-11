@@ -11,6 +11,7 @@ namespace Geostorm.Core.Entities
     static class PlayerTexture
     {
         private static readonly float preScale = 20.0f;
+        public static float thickness = 2.5f;
         public static readonly Vector2[] Points =
         {
             new Vector2(-1.0f, 0.0f)    * preScale,     //outerCenter 
@@ -26,6 +27,7 @@ namespace Geostorm.Core.Entities
     static class BulletTexture
     {
         private static readonly float preScale = 15.0f;
+        public static float thickness = 5f;
         public static readonly Vector2[] Points =
         {
             new Vector2(-0.3f, 0.0f)    * preScale,     //left  
@@ -37,6 +39,7 @@ namespace Geostorm.Core.Entities
     static class GruntTexture
     {
         private static readonly float preScale = 18.0f;
+        public static float thickness = 5f;
         public static readonly Vector2[] Points =
         {
             new Vector2(-1.0f, 0.0f)    * preScale,     //left  
