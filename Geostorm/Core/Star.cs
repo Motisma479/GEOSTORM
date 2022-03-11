@@ -14,7 +14,7 @@ namespace Geostorm.Core
     {
         public Vector2 Pos;
         int Depth;
-        int Speed;
+        public float Speed = 1;
 
         public Star(Vector2 pos, int depth)
         {
@@ -23,13 +23,16 @@ namespace Geostorm.Core
             switch (Depth)
             {
                 case 0:
-                    Speed = 5;
+                    Speed = 1;
                     break;
                 case 1:
-                    Speed = 3;
+                    Speed = 0.7f;
                     break;
                 case 2:
-                    Speed = 1;
+                    Speed = 0.5f;
+                    break;
+                case 3:
+                    Speed = 0.25f;
                     break;
                 default:
                     break;
@@ -40,9 +43,9 @@ namespace Geostorm.Core
 
         }
 
-        public void Draw(Graphics graphics)
+        public void Draw(Graphics graphics, Camera cam)
         {
-            graphics.DrawStar(Pos);
+            graphics.DrawStar(Pos + cam.Pos * Speed);
         }
     }
 }

@@ -14,9 +14,10 @@ namespace Geostorm
 
             // Initialization
             //--------------------------------------------------------------------------------------
-            SetConfigFlags(ConfigFlags.FLAG_MSAA_4X_HINT | ConfigFlags.FLAG_VSYNC_HINT | ConfigFlags.FLAG_WINDOW_RESIZABLE);
+            SetConfigFlags(ConfigFlags.FLAG_VSYNC_HINT | ConfigFlags.FLAG_WINDOW_RESIZABLE);
             InitWindow(screenWidth, screenHeight, "GeoStorm");
             SetTargetFPS(60);
+            SetMousePosition(screenWidth / 2, screenHeight / 2);
 
             InitAudioDevice();
 
@@ -45,7 +46,6 @@ namespace Geostorm
                 BeginDrawing();
                 ClearBackground(Color.BLACK);
                 game.Render(renders, inputs);
-                renders.DrawPlayer(System.Numerics.Vector2.One, 0);
                 EndDrawing();
                 //----------------------------------------------------------------------------------
             }

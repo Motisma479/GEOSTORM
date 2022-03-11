@@ -30,7 +30,7 @@ namespace Geostorm.Core.Entities
                 Position += inputs.MoveAxis;
             }
         }
-        public void Draw() 
+        public void Draw(Graphics graphics) 
         {
             graphics.DrawPlayer(Position, Rotation);
         }

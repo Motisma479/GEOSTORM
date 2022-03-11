@@ -12,9 +12,18 @@ namespace Geostorm.Core
 {
     class GameData
     {
-        private Player player = new Player();
+        public enum Scene 
+        {
+            MainMenu,
+            InGame,
+            Pause,
+        }
 
-        public Vector2 MapSize = new Vector2(1000,1000);
+        public Scene scene;
+        public Ui ui;
+
+        public Vector2 MapSize;
+        private Player player = new Player();
         public IEnumerable<Entity> Entities { get { return entities; } }
         public Player Player { get { return player; } }
         public IEnumerable<Bullet> Bullets { get { return bullets; } }
@@ -35,8 +44,11 @@ namespace Geostorm.Core
 
         public GameData()
         {
-            for (int i = 0; i < GetRandomValue(900, 1000); i++)
-                stars.Add(new Star(new Vector2(GetRandomValue(0, 5000), GetRandomValue(0, 5000)), GetRandomValue(1, 3)));
+            ui = new Ui(scene);
+            scene = Scene.MainMenu;
+            MapSize = new Vector2(2000,2000);
+            for (int i = 0; i < 5000; i++)
+                stars.Add(new Star(new Vector2(GetRandomValue(-2500, 2500), GetRandomValue(-2500, 2500)), GetRandomValue(1, 4)));
         }
 
         public void AddEnemyDelayed(Enemy enemy) 
