@@ -40,10 +40,6 @@ namespace Geostorm
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
                 ClearBackground(Color.WHITE);
-                renders.DrawPlayer(System.Numerics.Vector2.One,0);
-                EndDrawing();
-                BeginDrawing();
-                ClearBackground(Color.WHITE);
                 datas.game.Render(renders);
                 EndDrawing();
                 //----------------------------------------------------------------------------------
