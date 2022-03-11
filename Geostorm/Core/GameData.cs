@@ -32,6 +32,9 @@ namespace Geostorm.Core
         public void AddEnemyDelayed(Enemy enemy) { }
         public void AddBulletDelayed(Enemy enemy) { }
         public void AddBlackHoleDelayed(Enemy enemy) { }
+        public void Update()
+        {
+        }
 
         public void Synchronize () { }
     }

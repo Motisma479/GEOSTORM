@@ -12,7 +12,7 @@ namespace Geostorm.Core
         List<IGameEventListener> eventListeners;
 
         void AddEventListener(IGameEventListener listener) { }
-        void Update(GameInputs inputs) { }
+        public void Update(GameInputs inputs) { }
         public void Render() { }
     }
 }
