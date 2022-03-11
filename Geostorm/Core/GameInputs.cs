@@ -10,7 +10,7 @@ namespace Geostorm.Core
 {
     class GameInputs
     {
-        public Vector2 ScreenSize;
+        public Vector2 ScreenPos;
         public float DeltaTime;
         public Vector2 MoveAxis;
         public Vector2 ShootAxis;
@@ -25,14 +25,13 @@ namespace Geostorm.Core
         public void Update(GameConfig configs)
         {
             DeltaTime = GetFrameTime();
-            ScreenSize = new Vector2(GetScreenWidth(), GetScreenHeight());
             MoveAxis = new Vector2(
             boolToInt(IsKeyDown((Raylib_cs.KeyboardKey)configs.KeyboardInputs[3])) - boolToInt(IsKeyDown((Raylib_cs.KeyboardKey)configs.KeyboardInputs[1])),
             boolToInt(IsKeyDown((Raylib_cs.KeyboardKey)configs.KeyboardInputs[2])) - boolToInt(IsKeyDown((Raylib_cs.KeyboardKey)configs.KeyboardInputs[0]))
             );
-            ShootTarget = GetMousePosition();
+            ShootTarget = (GetMousePosition()- ScreenPos);
             Shoot = IsKeyDown((Raylib_cs.KeyboardKey)configs.KeyboardInputs[4]);
-            if (MoveAxis.Length() > 1) MoveAxis = MoveAxis / MoveAxis.Length();
+            if (MoveAxis.Length() > 1) MoveAxis /= MoveAxis.Length();
 
         }
     }

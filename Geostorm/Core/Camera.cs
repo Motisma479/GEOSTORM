@@ -21,6 +21,7 @@ namespace Geostorm.Core
         {
             pos.X = GetScreenWidth()/2 - GetMouseX();
             pos.Y = GetScreenHeight()/2 - GetMouseY();
+            inputs.ScreenPos = pos;
         }
     }
 }

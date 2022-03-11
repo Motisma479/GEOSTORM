@@ -7,6 +7,7 @@ using Geostorm.Core.Events;
 using Geostorm.Renderer;
 using System.Numerics;
 using static Raylib_cs.Raylib;
+using Raylib_cs;
 
 namespace Geostorm.Core
 {
@@ -32,12 +33,18 @@ namespace Geostorm.Core
 
             datas.Player.Update();
         }
-        public void Render(Graphics graphics)
+        public void Render(Graphics graphics, GameInputs inputs)
         {
             for (int i = 0; i < datas.stars.Count(); i++)
                 if (IsInside(datas.camera.Pos + datas.stars[i].Pos))
                     datas.stars[i].Draw(graphics);
             graphics.DrawMap(datas.MapSize, datas.camera.Pos);
+            Vector2 PosA = new Vector2(100,100);
+            DrawCircleV(PosA, 10, Color.GRAY);
+            DrawCircleV(PosA + inputs.MoveAxis * 10, 8, Color.GREEN);
+            DrawCircleV(inputs.ScreenPos + inputs.ShootTarget, 8, Color.GREEN);
+            DrawEllipse(150, 100, 25, 15, Color.GRAY);
+            if (inputs.Shoot) DrawEllipse(150, 100, 23, 13, Color.GREEN);
 
             datas.Player.Draw(graphics);
         }

@@ -43,12 +43,9 @@ namespace Geostorm
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-                ClearBackground(Color.WHITE);
+                ClearBackground(Color.BLACK);
+                game.Render(renders, inputs);
                 renders.DrawPlayer(System.Numerics.Vector2.One, 0);
-                DrawCircle(100, 100, 10, Color.GRAY);
-                DrawCircle((int)(100 + inputs.MoveAxis.X * 10), (int)(100 + inputs.MoveAxis.Y * 10), 8, Color.GREEN);
-                DrawEllipse(150,100,25,15,Color.GRAY);
-                if (inputs.Shoot) DrawEllipse(150,100,23,13,Color.GREEN);
                 EndDrawing();
                 //----------------------------------------------------------------------------------
             }

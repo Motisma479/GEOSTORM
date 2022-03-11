@@ -23,11 +23,14 @@ namespace Geostorm.Core.Entities
         }
 
 
-        public void Update() 
+        public void Update(GameInputs inputs)
         {
-            Rotation++;
+            if (inputs.MoveAxis.Length() != 0.0f)
+            {
+                Position += inputs.MoveAxis;
+            }
         }
-        public override void Draw(Graphics graphics) 
+        public void Draw() 
         {
             graphics.DrawPlayer(Position, Rotation);
         }
