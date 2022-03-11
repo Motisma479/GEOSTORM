@@ -23,6 +23,8 @@ namespace Geostorm.Renderer
         }
         public void Load()
         {
+            var installDirectory = AppContext.BaseDirectory;
+            //test = LoadTexture(installDirectory + "Assets/SUS_4.png");
         }
         public void Unload()
         {

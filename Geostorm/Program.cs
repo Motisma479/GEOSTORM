@@ -23,6 +23,8 @@ namespace Geostorm
             var game = new Game();
             var inputs = new GameInputs();
             var renders = new Graphics();
+            var configs = new GameConfig();
+            renders.Load();
 
             //--------------------------------------------------------------------------------------
 
@@ -31,6 +33,9 @@ namespace Geostorm
             {
                 // Update
                 //----------------------------------------------------------------------------------
+                float dt = GetFrameTime();
+                inputs.Update(configs);
+                //TraceLog(TraceLogLevel.LOG_INFO,"Window size: " + inputs.MoveAxis.ToString());
                 game.Update(inputs);
                 //----------------------------------------------------------------------------------
 
@@ -38,8 +43,12 @@ namespace Geostorm
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-                ClearBackground(Color.BLACK);
-                game.Render(renders);
+                ClearBackground(Color.WHITE);
+                renders.DrawPlayer(System.Numerics.Vector2.One, 0);
+                DrawCircle(100, 100, 10, Color.GRAY);
+                DrawCircle((int)(100 + inputs.MoveAxis.X * 10), (int)(100 + inputs.MoveAxis.Y * 10), 8, Color.GREEN);
+                DrawEllipse(150,100,25,15,Color.GRAY);
+                if (inputs.Shoot) DrawEllipse(150,100,23,13,Color.GREEN);
                 EndDrawing();
                 //----------------------------------------------------------------------------------
             }
