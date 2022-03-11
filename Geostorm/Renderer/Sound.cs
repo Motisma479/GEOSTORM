@@ -13,6 +13,6 @@ namespace Geostorm.Renderer
         public void Load() { }
         public void Unload() { }
 
-        public void HandleEvents(IEnumerable<Event> events, GameData data) { }
+        public override void HandleEvents(IEnumerable<Event> events, GameData data) { }
     }
 }

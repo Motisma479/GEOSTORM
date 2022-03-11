@@ -13,7 +13,7 @@ namespace Geostorm.Core.Entities.Enemies
     class Enemy : Entity
     {
         int spawnTime;
-        sealed public void Update() { }
+        public sealed override void Update(in GameInputs inputs, GameData datas, List<Event> events) { }
         public override void Draw() { }
     }
 }

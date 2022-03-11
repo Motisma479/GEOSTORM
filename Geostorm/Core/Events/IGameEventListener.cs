@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Geostorm.Core.Events
 {
-    class IGameEventListener
+    abstract class IGameEventListener
     {
-        abstract void HandleEvents(IEnumerable<Event> events, GameData data) { }
+        public abstract void HandleEvents(IEnumerable<Event> events, GameData data);
     }
 }

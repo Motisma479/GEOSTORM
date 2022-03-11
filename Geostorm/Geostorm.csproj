@@ -9,4 +9,10 @@
     <PackageReference Include="Raylib-cs" Version="3.7.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Assets\SUS_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

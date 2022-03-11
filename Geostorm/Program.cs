@@ -1,6 +1,8 @@
 ﻿using System;
 using Raylib_cs;
+using static Raylib_cs.Raylib;
 using Geostorm.Core;
+using Geostorm.Renderer;
 namespace Geostorm
 {
     class Program
@@ -12,40 +14,42 @@ namespace Geostorm
 
             // Initialization
             //--------------------------------------------------------------------------------------
-            Raylib.SetConfigFlags(ConfigFlags.FLAG_MSAA_4X_HINT | ConfigFlags.FLAG_VSYNC_HINT | ConfigFlags.FLAG_WINDOW_RESIZABLE);
-            Raylib.InitWindow(screenWidth, screenHeight, "GeoStorm");
-            Raylib.SetTargetFPS(60);
+            SetConfigFlags(ConfigFlags.FLAG_MSAA_4X_HINT | ConfigFlags.FLAG_VSYNC_HINT | ConfigFlags.FLAG_WINDOW_RESIZABLE);
+            InitWindow(screenWidth, screenHeight, "GeoStorm");
+            SetTargetFPS(60);
 
-            Raylib.InitAudioDevice();
+            InitAudioDevice();
 
             var game = new GameData();
+            var renders = new Graphics();
+            renders.Load();
 
             //--------------------------------------------------------------------------------------
 
             // Main game loop
-            while (!Raylib.WindowShouldClose())
+            while (!WindowShouldClose())
             {
                 // Update
                 //----------------------------------------------------------------------------------
-                float dt = Raylib.GetFrameTime();
+                float dt = GetFrameTime();
                 game.Update();
                 //----------------------------------------------------------------------------------
 
 
                 // Draw
                 //----------------------------------------------------------------------------------
-                Raylib.BeginDrawing();
-                Raylib.ClearBackground(Color.WHITE);
-
-                Raylib.EndDrawing();
+                BeginDrawing();
+                ClearBackground(Color.WHITE);
+                renders.DrawPlayer(System.Numerics.Vector2.One,0);
+                EndDrawing();
                 //----------------------------------------------------------------------------------
             }
 
             // De-Initialization
             //--------------------------------------------------------------------------------------
-
-            Raylib.CloseAudioDevice();
-            Raylib.CloseWindow();
+            renders.Unload();
+            CloseAudioDevice();
+            CloseWindow();
             //--------------------------------------------------------------------------------------
         }
     }
