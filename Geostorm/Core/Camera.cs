@@ -26,10 +26,6 @@ namespace Geostorm.Core
                 pos.X = GetMouseX() - mapSize.X/2;
                 pos.Y = GetMouseY() - mapSize.Y/2;
             }
-            if (GetMouseWheelMove() == 1)
-                zoom += 0.1f;
-            else if (GetMouseWheelMove() == -1)
-                zoom -= 0.1f;
             inputs.ScreenPos = pos;
         }
     }

@@ -48,7 +48,7 @@ namespace Geostorm.Core
             scene = Scene.MainMenu;
             MapSize = new Vector2(2000,2000);
             for (int i = 0; i < 5000; i++)
-                stars.Add(new Star(new Vector2(GetRandomValue(-2500, 2500), GetRandomValue(-2500, 2500)), GetRandomValue(1, 4)));
+                stars.Add(new Star(new Vector2(GetRandomValue(-1500, 3500), GetRandomValue(-1500, 3500)), GetRandomValue(1, 4)));
         }
 
         public void AddEnemyDelayed(Enemy enemy) 

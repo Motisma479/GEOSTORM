@@ -29,21 +29,27 @@ namespace Geostorm.Renderer
         public void Unload()
         {
         }
-        public void DrawMap(Vector2 size,Camera cam)
+        public void DrawMap(Vector2 size, Camera cam)
         {
-            const int square = 32;
-            int width = (int)size.X/ square;
-            int height = (int)size.Y/ square;
 
+            int square = 32;
+            for (int i = 24; i < 32; i++)
+                if (GetScreenWidth() % i == 0 && GetScreenHeight() % i == 0)
+                {
+                    square = i;
+                    break;
+                }
 
+            int width = (int)size.X / square;
+            int height = (int)size.Y / square;
             for (int j = 0; j < height; j++)
             {
                 for (int i = 0; i < width; i++)
                 {
-                    DrawRectangleLinesEx(new Rectangle(cam.Pos.X + i* square, cam.Pos.Y + j* square, square, square), 1, new Color(20, 105, 253, 60*255/100));
+                    DrawRectangleLinesEx(new Rectangle(cam.Pos.X + i * square, cam.Pos.Y + j * square, square, square), 1, new Color(20, 105, 253, 60 * 255 / 100));
                 }
             }
-            
+
             DrawRectangleLinesEx(new Rectangle(cam.Pos.X, cam.Pos.Y, size.X, size.Y), 5, Color.WHITE);
         }
         public void DrawStar(Vector2 pos)
@@ -51,7 +57,7 @@ namespace Geostorm.Renderer
             DrawCircle((int)pos.X, (int)pos.Y, 1, Color.WHITE);
         }
 
-        public void DrawPlayer(Vector2 pos, float rotation) 
+        public void DrawPlayer(Vector2 pos, float rotation)
         {
             Matrix3x2 rotate = Matrix3x2.CreateRotation((rotation * MathF.PI / 180));
             for (int i = 0; i <= Core.Entities.PlayerTexture.Points.Length - 1; i++)
@@ -59,12 +65,12 @@ namespace Geostorm.Renderer
                 Vector2 curentP = Vector2.Transform(Core.Entities.PlayerTexture.Points[i], rotate) + pos;
                 Vector2 curentP2 = Vector2.Transform(Core.Entities.PlayerTexture.Points[(i + 1) % Core.Entities.PlayerTexture.Points.Length], rotate) + pos;
 
-                DrawCircleV(curentP, Core.Entities.PlayerTexture.thickness/2, Color.WHITE);
+                DrawCircleV(curentP, Core.Entities.PlayerTexture.thickness / 2, Color.WHITE);
                 DrawLineEx(curentP, curentP2, Core.Entities.PlayerTexture.thickness, Color.WHITE);
 
             }
         }
-        public void DrawGrunt(Vector2 pos, float activeTime) 
+        public void DrawGrunt(Vector2 pos, float activeTime)
         {
             //Copie of the other but d
             /*for (int i = 0; i <= Core.Entities.GruntTexture.Points.Length - 1; i++)
@@ -77,7 +83,7 @@ namespace Geostorm.Renderer
             }*/
         }
 
-        public void DrawBullet(Vector2 pos, float rotation) 
+        public void DrawBullet(Vector2 pos, float rotation)
         {
             Matrix3x2 rotate = Matrix3x2.CreateRotation((rotation * MathF.PI / 180));
             for (int i = 0; i <= Core.Entities.BulletTexture.Points.Length - 1; i++)
