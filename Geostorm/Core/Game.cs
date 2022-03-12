@@ -77,19 +77,14 @@ namespace Geostorm.Core
                 case GameData.Scene.InGame:
                     {
                         for (int i = 0; i < datas.stars.Count(); i++)
-                            //if (IsInside(datas.camera.Pos + datas.stars[i].Pos))
                                 datas.stars[i].Draw(graphics,datas.camera);
                         graphics.DrawMap(datas.MapSize, datas.camera);
-                        Vector2 PosA = new Vector2(100, 100);
-                        DrawCircleV(PosA, 10, Color.GRAY);
-                        DrawCircleV(PosA + inputs.MoveAxis * 10, 8, Color.GREEN);
-                        DrawCircleV(inputs.ScreenPos + inputs.ShootTarget, 8, Color.GREEN);
-                        DrawEllipse(150, 100, 25, 15, Color.GRAY);
-                        if (inputs.Shoot) DrawEllipse(150, 100, 23, 13, Color.GREEN);
-                        PosA = new Vector2(200, 100);
-                        DrawCircleV(PosA, 10, Color.GRAY);
-                        DrawCircleV(PosA + MathHelper.getVectorRot(datas.Player.WeaponRotation) * 10, 8, Color.GREEN);
+                        DrawDebug(inputs);
                         datas.Player.Draw(graphics,datas.camera);
+                        /*
+                        for (int i = 0; i < datas.enemies.Count(); i++)
+                            datas.enemies[i].Draw();
+                        */
                         DrawFPS(10, 10);
                     }
                     break;
@@ -109,6 +104,19 @@ namespace Geostorm.Core
                 return true;
             else
                 return false;
+        }
+
+        public void DrawDebug(GameInputs inputs)
+        {
+            Vector2 PosA = new Vector2(100, 100);
+            DrawCircleV(PosA, 10, Color.GRAY);
+            DrawCircleV(PosA + inputs.MoveAxis * 10, 8, Color.GREEN);
+            DrawCircleV(inputs.ScreenPos + inputs.ShootTarget, 8, Color.GREEN);
+            DrawEllipse(150, 100, 25, 15, Color.GRAY);
+            if (inputs.Shoot) DrawEllipse(150, 100, 23, 13, Color.GREEN);
+            PosA = new Vector2(200, 100);
+            DrawCircleV(PosA, 10, Color.GRAY);
+            DrawCircleV(PosA + MathHelper.getVectorRot(datas.Player.WeaponRotation) * 10, 8, Color.GREEN);
         }
     }
 }

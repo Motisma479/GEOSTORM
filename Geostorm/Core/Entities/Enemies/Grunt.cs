@@ -5,15 +5,25 @@ using System.Text;
 using System.Threading.Tasks;
 using Geostorm.Core;
 using System.Numerics;
+using Geostorm.Renderer;
 
 namespace Geostorm.Core.Entities.Enemies
 {
     class Grunt : Enemy
     {
-        public void DoUpdate() { }
-        public new void Draw() 
+        public int spawnTime;
+        public Grunt(int spawnTime)
         {
-
+            this.spawnTime = spawnTime;
+        }
+        Vector2 pos;
+        public Vector2 Pos { get { return pos; } set { pos = value; } }
+        float rotation;
+        
+        public void DoUpdate() { }
+        public new void Draw(Graphics graphics) 
+        {
+            graphics.DrawGrunt(pos, rotation, spawnTime);
         }
     }
 }

@@ -32,14 +32,7 @@ namespace Geostorm.Renderer
         public void DrawMap(Vector2 size, Camera cam)
         {
 
-            int square = 32;
-            for (int i = 24; i < 32; i++)
-                if (GetScreenWidth() % i == 0 && GetScreenHeight() % i == 0)
-                {
-                    square = i;
-                    break;
-                }
-
+            int square = 25;
             int width = (int)size.X / square;
             int height = (int)size.Y / square;
             for (int j = 0; j < height; j++)
@@ -71,17 +64,18 @@ namespace Geostorm.Renderer
             }
             DrawCircleV(pos+MathHelper.getVectorRot(weaponRotation)*20,3.0f,Color.WHITE);
         }
-        public void DrawGrunt(Vector2 pos, float activeTime)
+        public void DrawGrunt(Vector2 pos, float rotation, float activeTime)
         {
             //Copie of the other but d
-            /*for (int i = 0; i <= Core.Entities.GruntTexture.Points.Length - 1; i++)
+            Matrix3x2 rotate = Matrix3x2.CreateRotation((MathHelper.ToRadians(rotation)));
+            for (int i = 0; i <= Core.Entities.GruntTexture.Points.Length - 1; i++)
             {
                 Vector2 curentP = Vector2.Transform(Core.Entities.GruntTexture.Points[i], rotate) + pos;
                 Vector2 curentP2 = Vector2.Transform(Core.Entities.GruntTexture.Points[(i + 1) % Core.Entities.GruntTexture.Points.Length], rotate) + pos;
 
                 DrawLineEx(curentP, curentP2, Core.Entities.GruntTexture.thickness, Color.WHITE);
 
-            }*/
+            }
         }
 
         public void DrawBullet(Vector2 pos, float rotation)
