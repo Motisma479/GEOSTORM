@@ -29,22 +29,7 @@ namespace Geostorm.Renderer
         public void Unload()
         {
         }
-        public void DrawMap(Vector2 size, Camera cam)
-        {
 
-            int square = 25;
-            int width = (int)size.X / square;
-            int height = (int)size.Y / square;
-            for (int j = 0; j < height; j++)
-            {
-                for (int i = 0; i < width; i++)
-                {
-                    DrawRectangleLinesEx(new Rectangle(cam.Pos.X + i * square, cam.Pos.Y + j * square, square, square), 1, new Color(20, 105, 253, 60 * 255 / 100));
-                }
-            }
-
-            DrawRectangleLinesEx(new Rectangle(cam.Pos.X, cam.Pos.Y, size.X, size.Y), 5, Color.WHITE);
-        }
         public void DrawStar(Vector2 pos)
         {
             DrawCircle((int)pos.X, (int)pos.Y, 1, Color.WHITE);
@@ -104,6 +89,11 @@ namespace Geostorm.Renderer
                 DrawLineEx(curentP, curentP2, Core.Entities.BulletTexture.thickness, Color.WHITE);
 
             }
+        }
+
+        public void DrawGridLine(Vector2 posA, Vector2 posB)
+        {
+            DrawLineEx(posA, posB, 1, new Color(20, 105, 253, 60 * 255 / 100));
         }
     }
 }

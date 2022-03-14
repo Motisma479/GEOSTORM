@@ -91,18 +91,24 @@ namespace Geostorm.Core
             datas.camera.Update(inputs, datas.Player.Position, datas.MapSize);
             for (int i = 0; i < datas.stars.Count(); i++)
                 datas.stars[i].Update(datas.camera);
-
             if (IsKeyPressed(KeyboardKey.KEY_ESCAPE))
                 datas.ui.SwitchToScene(GameData.Scene.PAUSE, ref datas.scene);
-
-            datas.Player.Update(inputs, datas, events);
-
-            for (int i = 0; i < datas.bullets.Count ; i++)
+            datas.Player.Update(inputs,datas,events);
+            for (int i = 0; i < datas.bullets.Count; i++)
                 datas.bullets[i].Update(datas);
 
             foreach (IGameEventListener eventListener in eventListeners)
                 eventListener.HandleEvents(events, datas);
+            foreach (var item in datas.Grid)
+            {
+                item.UpdatePoint(datas.Player.Position);
+            }
+            foreach (var item in datas.Grid)
+            {
+                item.UpdatePos();
+            }
         }
+
         public void UpdatePause(GameInputs inputs)
         {
             if (datas.ui.buttons["resume"].IsClicked() || IsKeyPressed(KeyboardKey.KEY_ESCAPE))
@@ -125,8 +131,9 @@ namespace Geostorm.Core
                         // Draw element in the map.
                         foreach (var star in datas.stars)
                             if (IsInside(star.Pos + datas.camera.Pos * star.Speed))
-                                star.Draw(graphics, datas.camera);
-                        graphics.DrawMap(datas.MapSize, datas.camera);
+                                star.Draw(graphics,datas.camera);
+                        foreach (var point in datas.Grid)
+                            point.Draw(graphics,datas.camera);
 
                         // Draw the Debug.
                         DrawDebug(inputs);

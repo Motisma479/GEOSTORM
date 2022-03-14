@@ -22,6 +22,7 @@ namespace Geostorm.Core
 
         public Scene scene;
         public Ui ui;
+        public GridPoint[] Grid;
 
         public Vector2 MapSize;
         private Player player = new Player();
@@ -49,7 +50,35 @@ namespace Geostorm.Core
             scene = Scene.MAIN_MENU;
             MapSize = new Vector2(350 * 4, 350 * 3);
             for (int i = 0; i < 1400; i++)
+            {
                 stars.Add(new Star(new Vector2(GetRandomValue(-500, (int)(MapSize.X + 500)), GetRandomValue(-500, (int)(MapSize.Y + 500))), GetRandomValue(1, 4)));
+            }
+            int square = 25;
+            int width = (int)MapSize.X / square + 1;
+            int height = (int)MapSize.Y / square + 1;
+            Grid = new GridPoint[width*height];
+            for (int j = 0; j < height; j++)
+            {
+                for (int i = 0; i < width; i++)
+                {
+                    Grid[j * width + i] = new GridPoint(new Vector2(i * square, j * square), (i == 0 || i == width - 1 || j == 0 || j == height - 1));
+                }
+            }
+            for (int i = 0; i < width * height; i++)
+            {
+                GridPoint[] connect = new GridPoint[4];
+                int count = 0;
+                for (int j = 0; j < 4; j++)
+                {
+                    Vector2 pos = new Vector2(i % width, i / width) + Directions.Dir[j];
+                    if (pos.X >= 0 && pos.X < width && pos.Y >= 0 && pos.Y < height)
+                    {
+                        connect[count] = Grid[(int)pos.X + (int)pos.Y * width];
+                        count++;
+                    }
+                }
+                Grid[i].AddPoints(connect, count);
+            }
         }
 
         public void AddEnemyDelayed(Enemy enemy) 

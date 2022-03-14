@@ -8,6 +8,17 @@ using System.Numerics;
 
 namespace Geostorm.Core
 {
+    static class Directions
+    {
+        public static readonly Vector2[] Dir =
+        {
+            new Vector2(1,0),
+            new Vector2(0,-1),
+            new Vector2(-1,0),
+            new Vector2(0,1),
+        };
+    }
+
     static class MathHelper
     {
         public static float CutFloat(float value, float lowerBound, float upperBound)
