@@ -184,6 +184,7 @@ namespace Geostorm.Core
 
                         // Draw the Debug.
                         DrawDebug(inputs);
+                        graphics.DrawCursor(inputs.ScreenPos + inputs.ShootTarget);
 
                         // Draw Player
                         data.Player.Draw(graphics, data.camera);
@@ -231,6 +232,7 @@ namespace Geostorm.Core
             PosA = new Vector2(200, 100);
             DrawCircleV(PosA, 10, Color.GRAY);
             DrawCircleV(PosA + MathHelper.GetVectorRot(data.Player.WeaponRotation) * 10, 8, Color.GREEN);
+            
         }
     }
 }

@@ -58,4 +58,27 @@ namespace Geostorm.Core.Entities
             new Vector2( 1.0f, 0.0f)     * preScale,     //right
         };
     }
+    static class CurssorTexture
+    {
+        public static readonly float preScale = 25.0f;
+        public static float thickness = 2.5f;
+        public static readonly Vector2[] Points =
+        {
+            new Vector2(0.0f, 0.0f)    * preScale,     //p1  
+            new Vector2(0.5f,0.0f)    * preScale,     //p2  
+            new Vector2( 1.0f, 0.5f)     * preScale,     //p3
+            new Vector2( 1.0f, 1.0f)     * preScale,     //p4
+            new Vector2( 0.5f, 1.5f)     * preScale,     //p5
+            new Vector2( 0.0f, 1.5f)     * preScale,     //p6
+            new Vector2( -0.5f, 1.0f)     * preScale,     //p7
+            new Vector2( -0.5f, 0.5f)     * preScale,     //p8
+        };
+        public static readonly Vector2[] Cross =
+        {
+            new Vector2( 0.3f, 0.0f)     * preScale,     //c1
+            new Vector2( 0.3f, 1.5f)     * preScale,     //c2
+            new Vector2( -0.5f, 0.7f)     * preScale,     //c3
+            new Vector2( 1.0f, 0.7f)     * preScale,     //c4
+        };
+    }
 }

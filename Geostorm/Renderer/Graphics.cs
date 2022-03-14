@@ -50,6 +50,19 @@ namespace Geostorm.Renderer
             }
         }
 
+        public void DrawCursor(Vector2 pos)
+        {
+            Vector2 newPos = new Vector2(pos.X - Core.Entities.CurssorTexture.preScale / 4, pos.Y - Core.Entities.CurssorTexture.preScale / 1.3f);
+            for (int i = 0; i <= Core.Entities.CurssorTexture.Points.Length - 1; i++)
+            {
+                DrawCircleV(Core.Entities.CurssorTexture.Points[i] + newPos, Core.Entities.CurssorTexture.thickness / 2, Color.WHITE);
+                DrawLineEx(Core.Entities.CurssorTexture.Points[i] + newPos, Core.Entities.CurssorTexture.Points[(i + 1) % Core.Entities.CurssorTexture.Points.Length] + newPos, Core.Entities.CurssorTexture.thickness, Color.WHITE);
+            }
+            DrawLineEx(Core.Entities.CurssorTexture.Cross[0] + newPos, Core.Entities.CurssorTexture.Cross[1] + newPos, Core.Entities.CurssorTexture.thickness, Color.WHITE);
+            DrawLineEx(Core.Entities.CurssorTexture.Cross[2] + newPos, Core.Entities.CurssorTexture.Cross[3] + newPos, Core.Entities.CurssorTexture.thickness, Color.WHITE);
+
+        }
+
         public void DrawPlayer(Vector2 pos, float rotation, float weaponRotation)
         {
             Matrix3x2 rotate = Matrix3x2.CreateRotation((MathHelper.ToRadians(rotation)));
