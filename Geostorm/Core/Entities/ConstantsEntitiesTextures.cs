@@ -14,14 +14,14 @@ namespace Geostorm.Core.Entities
         public static float thickness = 2.5f;
         public static readonly Vector2[] Points =
         {
-            new Vector2(-1.0f, 0.0f)    * preScale,     //outerCenter 
-            new Vector2(-0.4f,-0.8f)    * preScale,     //topOuterWing 
-            new Vector2(0.6f,-0.3f)     * preScale,     //topGun
-            new Vector2(-0.2f, -0.55f)  * preScale,     //topInnerWing
-            new Vector2(-0.5f, 0.0f)    * preScale,     //innerCenter 
-            new Vector2(-0.2f,0.55f)    * preScale,     //bottomInnerWing
-            new Vector2(0.6f,0.3f)      * preScale,     //bottomGun
-            new Vector2(-0.4f,0.8f)     * preScale      //bottomOuterWing
+            new Vector2(-0.9f, 0.0f)    * preScale,     //outerCenter 
+            new Vector2(-0.3f,-0.8f)    * preScale,     //topOuterWing 
+            new Vector2(0.7f,-0.3f)     * preScale,     //topGun
+            new Vector2(-0.1f, -0.55f)  * preScale,     //topInnerWing
+            new Vector2(-0.4f, 0.0f)    * preScale,     //innerCenter 
+            new Vector2(-0.1f,0.55f)    * preScale,     //bottomInnerWing
+            new Vector2(0.7f,0.3f)      * preScale,     //bottomGun
+            new Vector2(-0.3f,0.8f)     * preScale      //bottomOuterWing
         };
     }
     static class BulletTexture
