@@ -15,7 +15,7 @@ namespace Geostorm.Core
     {
         public GameData data;
         public GameConfig config;
-        
+        public bool ShouldClose = false;
         List<IGameEventListener> eventListeners = new List<IGameEventListener>();
 
         public Game()
@@ -54,13 +54,13 @@ namespace Geostorm.Core
         public void UpdateMainMenu(GameInputs inputs)
         {
             if (data.ui.buttons["start"].IsClicked())
-                data.ui.SwitchToScene(GameData.Scene.IN_GAME, ref data.scene);
+                data.ui.SwitchToScene(GameData.Scene.IN_GAME, ref data.scene, config);
             else if (data.ui.buttons["settings"].IsClicked())
-                data.ui.SwitchToScene(GameData.Scene.SETTINGS, ref data.scene);
+                data.ui.SwitchToScene(GameData.Scene.SETTINGS, ref data.scene, config);
             else if (data.ui.buttons["quit"].IsClicked())
-                System.Environment.Exit(0);
+                ShouldClose = true;
             if (IsKeyPressed(KeyboardKey.KEY_ESCAPE))
-                System.Environment.Exit(0);
+                ShouldClose = true;
 
         }
         static int activebuttons = 0;
@@ -68,10 +68,10 @@ namespace Geostorm.Core
         public void UpdateSettings(GameInputs inputs)
         {
             if (data.ui.buttons["back"].IsClicked())
-                data.ui.SwitchToScene(GameData.Scene.MAIN_MENU, ref data.scene);
+                data.ui.SwitchToScene(GameData.Scene.MAIN_MENU, ref data.scene, config);
             else
             {
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < config.KeyboardInputs.Length; i++)
                 {
                     
                     for (int j = 0; j < 5; j++)
@@ -134,7 +134,7 @@ namespace Geostorm.Core
                 data.stars[i].Update(data.camera);
             //Ui Update
             if (IsKeyPressed(KeyboardKey.KEY_ESCAPE))
-                data.ui.SwitchToScene(GameData.Scene.PAUSE, ref data.scene);
+                data.ui.SwitchToScene(GameData.Scene.PAUSE, ref data.scene, config);
             // Update Player
             data.Player.Update(inputs,data,events);
             // Update Bullets
@@ -158,9 +158,9 @@ namespace Geostorm.Core
         public void UpdatePause(GameInputs inputs)
         {
             if (data.ui.buttons["resume"].IsClicked() || IsKeyPressed(KeyboardKey.KEY_ESCAPE))
-                data.ui.SwitchToScene(GameData.Scene.IN_GAME, ref data.scene);
+                data.ui.SwitchToScene(GameData.Scene.IN_GAME, ref data.scene, config);
             else if (data.ui.buttons["quit"].IsClicked())
-                data.ui.SwitchToScene(GameData.Scene.MAIN_MENU, ref data.scene);
+                data.ui.SwitchToScene(GameData.Scene.MAIN_MENU, ref data.scene, config);
         }
 
         public void Render(Graphics graphics, GameInputs inputs)
@@ -208,7 +208,7 @@ namespace Geostorm.Core
                 default:
                     break;
             }
-            data.ui.Draw(data.scene);
+            data.ui.Draw(data.scene, config);
         }
 
         public bool IsInside(Vector2 pos)

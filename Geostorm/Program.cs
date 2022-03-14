@@ -24,18 +24,19 @@ namespace Geostorm
 
             var game = new Game();
             var inputs = new GameInputs();
+            inputs.LocalSize = game.data.MapSize;
             var renders = new Graphics();
             renders.Load();
             game.config.LoadConfigFile();
             //--------------------------------------------------------------------------------------
 
             // Main game loop
-            while (!WindowShouldClose())
+            while (!WindowShouldClose() && !game.ShouldClose)
             {
                 // Update
                 //----------------------------------------------------------------------------------
                 float dt = GetFrameTime();
-                inputs.Update(game.config);
+                inputs.Update(game.config, game.data.Player.Position);
                 game.Update(inputs);
                 //----------------------------------------------------------------------------------
 

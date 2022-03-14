@@ -69,12 +69,36 @@ namespace Geostorm.Core
         public static Vector2 GetVectorRot(float rotation)
         {
             rotation = ToRadians(rotation);
-            return new Vector2(MathF.Cos(rotation),MathF.Sin(rotation));
+            return new Vector2(MathF.Cos(rotation), MathF.Sin(rotation));
         }
 
         public static int BoolToInt(bool value)
         {
             return value ? 1 : 0;
+        }
+
+        public static int GetInt(string buf, ref int index, int maxSize = 0)
+        {
+            if (maxSize == 0) maxSize = buf.Length;
+            int value = 0;
+            if (index >= maxSize) return value;
+            char n = buf[index];
+            bool negative = false;
+            if (n == '-')
+            {
+                negative = true;
+                index++;
+                n = buf[index];
+            }
+            while (n >= '0' && n <= '9')
+            {
+                value *= 10;
+                value += n - '0';
+                index++;
+                if (index == buf.Length) break;
+                n = buf[index];
+            }
+            return (negative ? -value : value);
         }
     }
 }

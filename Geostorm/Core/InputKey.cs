@@ -41,17 +41,17 @@ namespace Geostorm.Core
                 case KeyType.MouseButton:
                     return IsMouseButtonDown((MouseButton)id);
                 case KeyType.MouseAxis:
-                    return GetMouseWheelMove() is < 0.5f or > 0.5f;
+                    return GetMouseWheelMove() is < 0.2f or > 0.2f;
                 case KeyType.GamepadButton:
                     return IsGamepadButtonDown(0,(GamepadButton)id);
                 case KeyType.GamepadAxis:
                     if (id < 0)
                     {
-                        return GetGamepadAxisMovement(0, (GamepadAxis)(-id)) < 0.5f; // Negative value axis
+                        return GetGamepadAxisMovement(0, (GamepadAxis)(-id-2)) < 0.5f; // Negative value axis
                     }
                     else
                     {
-                        return GetGamepadAxisMovement(0, (GamepadAxis)id) > 0.5f; // Positive value axis
+                        return GetGamepadAxisMovement(0, (GamepadAxis)(id-2)) > 0.5f; // Positive value axis
                     }
                 default:
                     return IsKeyDown((KeyboardKey)id);
@@ -65,17 +65,17 @@ namespace Geostorm.Core
                 case KeyType.MouseButton:
                     return MathHelper.BoolToInt(IsMouseButtonDown((MouseButton)id));
                 case KeyType.MouseAxis:
-                    return GetMouseWheelMove();
+                    return GetMouseWheelMove()*2;
                 case KeyType.GamepadButton:
                     return MathHelper.BoolToInt(IsGamepadButtonDown(0, (GamepadButton)id));
                 case KeyType.GamepadAxis:
                     if (id < 0)
                     {
-                        return MathHelper.CutFloat(-GetGamepadAxisMovement(0, (GamepadAxis)(-id)),0.0f,1.0f); // Negative value axis
+                        return MathHelper.CutFloat(-GetGamepadAxisMovement(0, (GamepadAxis)(-id-2)),0.0f,1.0f); // Negative value axis
                     }
                     else
                     {
-                        return MathHelper.CutFloat(GetGamepadAxisMovement(0, (GamepadAxis)id),0.0f,1.0f); // Positive value axis
+                        return MathHelper.CutFloat(GetGamepadAxisMovement(0, (GamepadAxis)(id-2)),0.0f,1.0f); // Positive value axis
                     }
                 default:
                     return MathHelper.BoolToInt(IsKeyDown((KeyboardKey)id));
@@ -124,8 +124,9 @@ namespace Geostorm.Core
             for (int i = 0; i < GetGamepadAxisCount(0); i++)
             {
                 float value = GetGamepadAxisMovement(0, (GamepadAxis)i);
-                if (value is > 0.1f or < -0.1f && value < 0.9f && value > -0.9f)
+                if (value is > 0.1f or < -0.1f && value > -0.9f)
                 {
+                    i = i + 2;
                     type = KeyType.GamepadAxis;
                     id = value < 0 ? -i : i;
                     return true;

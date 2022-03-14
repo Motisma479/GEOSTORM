@@ -10,10 +10,9 @@ namespace Geostorm.Core
 {
     class GameConfig
     {
-        public bool GamepadRelativeAim = false;
-        public int SelectedGamepad = -1;
-        public InputKey[] KeyboardInputs = { new InputKey(0,87), new InputKey(0, 65), new InputKey(0, 83), new InputKey(0, 68), new InputKey(0, 32) }; // WASD SPACE
-        public string[] InputStrings = { "MovementUp", "MovementLeft", "MovementDown", "MovementRight", "ActionShoot" };
+        public int AimType = 0;
+        public InputKey[] KeyboardInputs = { new InputKey(0,87), new InputKey(0, 65), new InputKey(0, 83), new InputKey(0, 68), new InputKey(0, 32) , new InputKey(0, 265), new InputKey(0, 263), new InputKey(0, 264), new InputKey(0, 262)}; // WASD SPACE /\ < \/ >
+        public string[] InputStrings = { "MovementUp", "MovementLeft", "MovementDown", "MovementRight", "ActionShoot", "CursorUp", "CursorLeft", "CursorDown", "CursorRight" };
 
         public void LoadConfigFile()
         {
@@ -27,16 +26,14 @@ namespace Geostorm.Core
                     if (inputs[l].Contains(InputStrings[i]))
                     {
                         string line = inputs[l].Remove(0,InputStrings[i].Length+1);
-                        if (int.TryParse(line, out int j))
+                        int index = 0;
+                        int j = MathHelper.GetInt(line, ref index);
+                        index++;
+                        int k = MathHelper.GetInt(line, ref index);
                         {
-                            int indf = line.IndexOf(' ');
-                            if (indf < 0) continue;
-                            line = line.Substring(0,indf+1);
-                            if (int.TryParse(line, out int k))
-                            {
                                 KeyboardInputs[i] = new InputKey(j,k);
                             }
-                        }
+                        
                         continue;
                     }
                 }
