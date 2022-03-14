@@ -91,9 +91,10 @@ namespace Geostorm.Renderer
             }
         }
 
-        public void DrawGridLine(Vector2 posA, Vector2 posB)
+        public void DrawGridLine(Vector2 posA, Vector2 posB, Rectangle size)
         {
-            DrawLineEx(posA, posB, 1, new Color(20, 105, 253, 60 * 255 / 100));
+            if (CheckCollisionPointRec(posA, size) && CheckCollisionPointRec(posB, size))
+                DrawLineEx(posA, posB, 1, new Color(20, 105, 253, 60 * 255 / 100));
         }
     }
 }

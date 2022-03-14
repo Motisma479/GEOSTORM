@@ -60,11 +60,11 @@ namespace Geostorm.Renderer
                 if (!fixedPoint) pPos = pPos + pVel;
         }
 
-        public void Draw(Graphics graphics, Camera camera)
+        public void Draw(Graphics graphics, Camera camera, Vector2 size)
         {
             for (int i = 0; i < connexions.Length; i++)
             {
-                graphics.DrawGridLine((connexions[i].pPos + pPos) / 2 + camera.Pos, pPos + camera.Pos);
+                graphics.DrawGridLine((connexions[i].pPos + pPos) / 2 + camera.Pos, pPos + camera.Pos, new Raylib_cs.Rectangle(camera.Pos.X, camera.Pos.Y, size.X, size.Y));
             }
         }
     }

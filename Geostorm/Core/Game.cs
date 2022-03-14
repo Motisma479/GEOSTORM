@@ -179,7 +179,8 @@ namespace Geostorm.Core
                             if (IsInside(star.Pos + data.camera.Pos * star.Speed))
                                 star.Draw(graphics,data.camera);
                         foreach (var point in data.Grid)
-                            point.Draw(graphics,data.camera);
+                            point.Draw(graphics,data.camera, data.MapSize);
+                        DrawRectangleLinesEx(new Rectangle(data.camera.Pos.X, data.camera.Pos.Y, data.MapSize.X, data.MapSize.Y), 5, Color.WHITE);
 
                         // Draw the Debug.
                         DrawDebug(inputs);
