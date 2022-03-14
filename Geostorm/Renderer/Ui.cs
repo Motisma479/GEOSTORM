@@ -73,12 +73,12 @@ namespace Geostorm.Renderer
             {
                 case GameData.Scene.MAIN_MENU:
                     {
-                        buttons["start"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, 400), new Vector2(400, 100), ButtonType.TEXT, BLUE);
-                        buttons["start"].SetText("START", new Vector2(15, 0), 100, DARKBLUE);
-                        buttons["settings"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, 600), new Vector2(400, 100), ButtonType.TEXT, BLUE);
-                        buttons["settings"].SetText("SETTINGS", new Vector2(10, 20), 70, DARKBLUE);
-                        buttons["quit"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, 800), new Vector2(400, 100), ButtonType.TEXT, BLUE);
-                        buttons["quit"].SetText("QUIT", new Vector2(85, 8), 90, DARKBLUE);
+                        buttons["start"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, 400), new Vector2(400, 100), ButtonType.TEXT, DARKBLUE);
+                        buttons["start"].SetText("START", new Vector2(15, 0), 100, BLACK);
+                        buttons["settings"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, 600), new Vector2(400, 100), ButtonType.TEXT, DARKBLUE);
+                        buttons["settings"].SetText("SETTINGS", new Vector2(10, 20), 70, BLACK);
+                        buttons["quit"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, 800), new Vector2(400, 100), ButtonType.TEXT, DARKBLUE);
+                        buttons["quit"].SetText("QUIT", new Vector2(85, 8), 90, BLACK);
                     }
                     break;
                 case GameData.Scene.IN_GAME:
@@ -88,21 +88,21 @@ namespace Geostorm.Renderer
                     break;
                 case GameData.Scene.PAUSE:
                     {
-                        buttons["resume"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, 400), new Vector2(400, 100), ButtonType.TEXT, BLUE);
-                        buttons["resume"].SetText("RESUME", new Vector2(10, 8), 90, DARKBLUE);
-                        buttons["quit"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, 600), new Vector2(400, 100), ButtonType.TEXT, BLUE);
-                        buttons["quit"].SetText("QUIT", new Vector2(85, 8), 90, DARKBLUE);
+                        buttons["resume"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, 400), new Vector2(400, 100), ButtonType.TEXT, DARKBLUE);
+                        buttons["resume"].SetText("RESUME", new Vector2(10, 8), 90, BLACK);
+                        buttons["quit"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, 600), new Vector2(400, 100), ButtonType.TEXT, DARKBLUE);
+                        buttons["quit"].SetText("QUIT", new Vector2(85, 8), 90, BLACK);
                     }
                     break;
                 case GameData.Scene.SETTINGS:
                     {
                         for (int i = 0; i < config.KeyboardInputs.Length; i++)
                         {
-                            buttons["input" + i] = new Button(new Vector2(GetScreenWidth() / 2 + 350, 100 + 100 * i), new Vector2(300, 50), ButtonType.MANUAL, BLUE);
-                            buttons["input" + i].SetText("", new Vector2(85, 8), 90, DARKBLUE);
+                            buttons["input" + i] = new Button(new Vector2(GetScreenWidth() / 2 + 350, 100 + 100 * i), new Vector2(300, 50), ButtonType.MANUAL, DARKBLUE);
+                            buttons["input" + i].SetText("", new Vector2(85, 8), 90, BLACK);
                         }
-                        buttons["back"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, GetScreenHeight() - 200), new Vector2(400, 100), ButtonType.TEXT, BLUE);
-                        buttons["back"].SetText("BACK", new Vector2(85, 8), 90, DARKBLUE);
+                        buttons["back"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, GetScreenHeight() - 200), new Vector2(400, 100), ButtonType.TEXT, DARKBLUE);
+                        buttons["back"].SetText("BACK", new Vector2(85, 8), 90, BLACK);
                     }
                     break;
                 default:

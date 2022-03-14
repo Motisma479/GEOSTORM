@@ -29,11 +29,6 @@ namespace Geostorm.Core
             {
                 Bullet b = new Bullet();
 
-
-
-
-
-
                 switch (level)
                 {
                     case 0:
