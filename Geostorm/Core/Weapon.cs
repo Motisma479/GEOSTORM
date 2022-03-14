@@ -145,7 +145,7 @@ namespace Geostorm.Core
                             }
                            
 
-                            coolDown = 1;
+                            coolDown = 120;
                             break;
                         }
 
