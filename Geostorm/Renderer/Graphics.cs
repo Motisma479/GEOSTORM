@@ -77,7 +77,7 @@ namespace Geostorm.Renderer
                 DrawLineEx(curentP, curentP2, Core.Entities.PlayerTexture.thickness, Color.WHITE);
 
             }
-            DrawPointer(pos + MathHelper.getVectorRot(weaponRotation) * 23, weaponRotation);
+            DrawPointer(pos + MathHelper.GetVectorRot(weaponRotation) * 23, weaponRotation);
         }
         public void DrawGrunt(Vector2 pos, float rotation, float activeTime)
         {
