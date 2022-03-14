@@ -24,9 +24,8 @@ namespace Geostorm
             var game = new Game();
             var inputs = new GameInputs();
             var renders = new Graphics();
-            var configs = new GameConfig();
             renders.Load();
-            configs.LoadConfigFile();
+            game.config.LoadConfigFile();
             //--------------------------------------------------------------------------------------
 
             // Main game loop
@@ -35,9 +34,7 @@ namespace Geostorm
                 // Update
                 //----------------------------------------------------------------------------------
                 float dt = GetFrameTime();
-                inputs.Update(configs);
-                //TraceLog(TraceLogLevel.LOG_INFO,"Window size: " + inputs.MoveAxis.ToString());
-                
+                inputs.Update(game.config);
                 game.Update(inputs);
                 //----------------------------------------------------------------------------------
 
@@ -53,7 +50,7 @@ namespace Geostorm
 
             // De-Initialization
             //--------------------------------------------------------------------------------------
-            configs.WriteConfigFile();
+            game.config.WriteConfigFile();
             CloseAudioDevice();
             CloseWindow();
             //--------------------------------------------------------------------------------------

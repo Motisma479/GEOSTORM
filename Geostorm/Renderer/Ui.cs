@@ -12,6 +12,7 @@ namespace Geostorm.Renderer
 {
     class Ui
     {
+        public static string[] InputStrings = { "MoveUp", "Move Left", "Move Down", "Move Right", "Shoot" };
         public Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
         public Dictionary<string, Button> buttons = new Dictionary<string, Button>();
 
@@ -31,8 +32,8 @@ namespace Geostorm.Renderer
             {
                 case GameData.Scene.MAIN_MENU:
                     {
-                        DrawText("GeoStorm", GetScreenWidth() / 2 - MeasureText("GeoStorm", 205)/2, 100, 205, DARKBLUE);
-                        DrawText("GeoStorm", GetScreenWidth() / 2 - MeasureText("GeoStorm", 200)/2, 100, 200, BLUE);
+                        DrawText("GeoStorm", GetScreenWidth() / 2 - MeasureText("GeoStorm", 205) / 2, 100, 205, DARKBLUE);
+                        DrawText("GeoStorm", GetScreenWidth() / 2 - MeasureText("GeoStorm", 200) / 2, 100, 200, BLUE);
                         foreach (var button in buttons)
                             button.Value.Draw();
                     }
@@ -44,14 +45,17 @@ namespace Geostorm.Renderer
                     break;
                 case GameData.Scene.PAUSE:
                     {
-                        DrawRectangleRounded(new Rectangle(GetScreenWidth() / 2 - 400, 300, 800, 200 + buttons.Count() * 150), 0.05f, 1, new Color(150,150,150, 255/2));
+                        DrawRectangleRounded(new Rectangle(GetScreenWidth() / 2 - 400, 300, 800, 200 + buttons.Count() * 150), 0.05f, 1, new Color(150, 150, 150, 255 / 2));
                         foreach (var button in buttons)
                             button.Value.Draw();
                     }
                     break;
                 case GameData.Scene.SETTINGS:
                     {
-
+                        for (int i = 0; i < 5; i++)
+                        {
+                            DrawText(InputStrings[i], 200, 200 + 100 * i, 50, BLUE);
+                        }
                         foreach (var button in buttons)
                             button.Value.Draw();
                     }
@@ -70,7 +74,7 @@ namespace Geostorm.Renderer
                 case GameData.Scene.MAIN_MENU:
                     {
                         buttons["start"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, 400), new Vector2(400, 100), ButtonType.TEXT, BLUE);
-                        buttons["start"].SetText("START", new Vector2(15,0), 100, DARKBLUE);
+                        buttons["start"].SetText("START", new Vector2(15, 0), 100, DARKBLUE);
                         buttons["settings"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, 600), new Vector2(400, 100), ButtonType.TEXT, BLUE);
                         buttons["settings"].SetText("SETTINGS", new Vector2(10, 20), 70, DARKBLUE);
                         buttons["quit"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, 800), new Vector2(400, 100), ButtonType.TEXT, BLUE);
@@ -85,7 +89,7 @@ namespace Geostorm.Renderer
                 case GameData.Scene.PAUSE:
                     {
                         buttons["resume"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, 400), new Vector2(400, 100), ButtonType.TEXT, BLUE);
-                        buttons["resume"].SetText("RESUME", new Vector2(10,8), 90, DARKBLUE);
+                        buttons["resume"].SetText("RESUME", new Vector2(10, 8), 90, DARKBLUE);
                         buttons["quit"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, 600), new Vector2(400, 100), ButtonType.TEXT, BLUE);
                         buttons["quit"].SetText("QUIT", new Vector2(85, 8), 90, DARKBLUE);
                     }

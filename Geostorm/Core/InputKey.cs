@@ -20,6 +20,7 @@ namespace Geostorm.Core
     {
         private KeyType type;
         private int id;
+        public int Id { get { return id; } set { id = value; } }
 
         public InputKey()
         {
@@ -137,5 +138,6 @@ namespace Geostorm.Core
         {
             return (int)type + " " + id;
         }
+        
     }
 }

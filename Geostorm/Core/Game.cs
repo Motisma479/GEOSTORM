@@ -14,11 +14,13 @@ namespace Geostorm.Core
     class Game
     {
         public GameData datas;
+        public GameConfig config;
         List<IGameEventListener> eventListeners = new List<IGameEventListener>();
 
         public Game()
         {
             datas = new GameData();
+            config = new GameConfig();
         }
 
         public void AddEventListener(IGameEventListener listener)
@@ -61,6 +63,7 @@ namespace Geostorm.Core
 
         }
         static int activebuttons = 0;
+        static int timeCount = 0;
         public void UpdateSettings(GameInputs inputs)
         {
             if (datas.ui.buttons["back"].IsClicked())
@@ -69,7 +72,18 @@ namespace Geostorm.Core
             {
                 for (int i = 0; i < 5; i++)
                 {
-                    if (!datas.ui.buttons["input" + activebuttons].IsToggle())
+                    
+                    for (int j = 0; j < 5; j++)
+                    {
+                        if (i!= j && config.KeyboardInputs[i].Id == config.KeyboardInputs[j].Id)
+                        {
+                            config.KeyboardInputs[j].Id = -1;
+                            timeCount = 360;
+                        }
+                    }
+                    if (timeCount > 0)
+                        DrawText("You cannot assign a key that is already set", GetScreenWidth() / 2 - MeasureText("You cannot assign a key that is already set", 75) / 2, 100, 75, Color.RED);
+                    if (!datas.ui.buttons["input" + activebuttons].IsToggle() || i == activebuttons)
                     {
                         if (datas.ui.buttons["input" + i].IsClicked())
                         {
@@ -78,10 +92,20 @@ namespace Geostorm.Core
                         if (datas.ui.buttons["input" + i].IsToggle() == true)
                         {
                             datas.ui.buttons["input" + i].SetText("< Key >", new Vector2(25, 8), 35, Color.BLACK);
+
+                            if (IsKeyPressed(KeyboardKey.KEY_ESCAPE) || config.KeyboardInputs[i].AutoBindKey())
+                            {
+                                datas.ui.buttons["input" + i].SetState(false);
+                            }
                         }
+                        if (IsMouseButtonDown(MouseButton.MOUSE_LEFT_BUTTON) && datas.ui.buttons["input" + i].IsClicked() == false)
+                            datas.ui.buttons["input" + i].SetState(false);
                     }
+                    datas.ui.buttons["input" + i].SetText(config.KeyboardInputs[i].Id == -1 ? "NONE" : config.KeyboardInputs[i].Id.ToString(), new Vector2(25, 8), 35, Color.BLACK);
                 }
             }
+            if (timeCount > 0)
+                timeCount--;
         }
 
         public void UpdateInGame(GameInputs inputs)

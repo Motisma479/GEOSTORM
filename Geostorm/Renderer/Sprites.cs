@@ -94,7 +94,7 @@ namespace Geostorm.Renderer
                 if (tmp2.b - 20 >= 0) tmp2.b -= 20;
                 DrawRectanglePro(new Rectangle(Pos.X, Pos.Y, Size.X, Size.Y), new Vector2(), 0, isOn ? tmp2 : IsMouseOn() ? tmp : Color);
             }
-            if (mType == ButtonType.TEXT || mType == ButtonType.TOGGLE_TEXT)
+            if (mType == ButtonType.TEXT || mType == ButtonType.TOGGLE_TEXT || mType == ButtonType.MANUAL)
                 DrawText(mText, (int)(Pos.X + mTextOffSet.X), (int)(Pos.Y + mTextOffSet.Y), mTextSize, mTextColor);
         }
         public void Update()
