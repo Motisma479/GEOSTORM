@@ -57,9 +57,9 @@ namespace Geostorm.Core
             else if (datas.ui.buttons["settings"].IsClicked())
                 datas.ui.SwitchToScene(GameData.Scene.SETTINGS, ref datas.scene);
             else if (datas.ui.buttons["quit"].IsClicked())
-                System.Environment.Exit(1);
+                System.Environment.Exit(0);
             if (IsKeyPressed(KeyboardKey.KEY_ESCAPE))
-                System.Environment.Exit(1);
+                System.Environment.Exit(0);
 
         }
         static int activebuttons = 0;
@@ -128,7 +128,7 @@ namespace Geostorm.Core
                 eventListener.HandleEvents(events, datas);
             foreach (var item in datas.Grid)
             {
-                item.UpdatePoint(datas.Player.Position);
+                item.UpdatePoint(datas);
             }
             foreach (var item in datas.Grid)
             {

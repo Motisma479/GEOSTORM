@@ -124,7 +124,7 @@ namespace Geostorm.Core
             for (int i = 0; i < GetGamepadAxisCount(0); i++)
             {
                 float value = GetGamepadAxisMovement(0, (GamepadAxis)i);
-                if (value is > 0.1f or < -0.1f)
+                if (value is > 0.1f or < -0.1f && value < 0.9f && value > -0.9f)
                 {
                     type = KeyType.GamepadAxis;
                     id = value < 0 ? -i : i;

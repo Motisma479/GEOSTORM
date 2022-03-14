@@ -33,19 +33,19 @@ namespace Geostorm.Renderer
             }
         }
 
-        public void UpdatePoint(Vector2 playerPos)
+        public void UpdatePoint(GameData data)
         {
-            float mLength = (playerPos - pPos).Length();
-            if (mLength < 200)
+            float mLength = (data.Player.Position - pPos).Length();
+            if (mLength < 400)
             {
-                pVel += (playerPos - pPos) / 10000 * (mLength - 200) * -2;
+                pVel += (data.Player.Position - pPos) / 1000000 * -MathF.Pow(mLength - 400,2) * 2.0f;
             }
             for (int i = 0; i < connexions.Length; i++)
             {
                 float pLength = (connexions[i].pPos - pPos).Length();
-                if (pLength > 18)
+                if (pLength > 22)
                 {
-                    pVel = pVel + (connexions[i].pPos - pPos) / 10000 * (pLength - 18) * 32;
+                    pVel = pVel + (connexions[i].pPos - pPos) / 10000 * (pLength - 22) * 32;
                 }
             }
         }
