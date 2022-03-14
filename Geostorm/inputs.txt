@@ -12,8 +12,8 @@ MovementRight 0 68
 # MovementLeft : Move left (default : 0 65)
 MovementLeft 0 65
 
-# ActionShoot: Shoot (default : 0 32)
-ActionShoot 0 32
+# ActionShoot: Shoot (default : 1 0)
+ActionShoot 1 0
 
 # CursorUp : Move cursor up (default : 0 265)
 CursorUp 0 265
