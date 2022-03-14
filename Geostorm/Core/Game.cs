@@ -53,11 +53,11 @@ namespace Geostorm.Core
 
         public void UpdateMainMenu(GameInputs inputs)
         {
-            if (datas.ui.buttons["start"].IsClicked())
-                datas.ui.SwitchToScene(GameData.Scene.IN_GAME, ref datas.scene);
-            else if (datas.ui.buttons["settings"].IsClicked())
-                datas.ui.SwitchToScene(GameData.Scene.SETTINGS, ref datas.scene);
-            else if (datas.ui.buttons["quit"].IsClicked())
+            if (data.ui.buttons["start"].IsClicked())
+                data.ui.SwitchToScene(GameData.Scene.IN_GAME, ref data.scene);
+            else if (data.ui.buttons["settings"].IsClicked())
+                data.ui.SwitchToScene(GameData.Scene.SETTINGS, ref data.scene);
+            else if (data.ui.buttons["quit"].IsClicked())
                 System.Environment.Exit(0);
             if (IsKeyPressed(KeyboardKey.KEY_ESCAPE))
                 System.Environment.Exit(0);
@@ -84,7 +84,7 @@ namespace Geostorm.Core
                     }
                     if (timeCount > 0)
                         DrawText("You cannot assign a key that is already set", GetScreenWidth() / 2 - MeasureText("You cannot assign a key that is already set", 75) / 2, 100, 75, Color.RED);
-                    if (!datas.ui.buttons["input" + activebuttons].IsToggle() || i == activebuttons)
+                    if (!data.ui.buttons["input" + activebuttons].IsToggle() || i == activebuttons)
                     {
                         if (data.ui.buttons["input" + i].IsClicked())
                         {
@@ -92,20 +92,20 @@ namespace Geostorm.Core
                         }
                         if (data.ui.buttons["input" + i].IsToggle() == true)
                         {
-                            datas.ui.buttons["input" + i].SetText("< Key >", new Vector2(25, 8), 35, Color.BLACK);
+                            data.ui.buttons["input" + i].SetText("< Key >", new Vector2(25, 8), 35, Color.BLACK);
                             if (IsKeyPressed(KeyboardKey.KEY_ESCAPE) || config.KeyboardInputs[i].AutoBindKey())
                             {
-                                datas.ui.buttons["input" + i].SetState(false);
+                                data.ui.buttons["input" + i].SetState(false);
                             }
                         }
-                        if (IsMouseButtonDown(MouseButton.MOUSE_LEFT_BUTTON) && datas.ui.buttons["input" + i].IsClicked() == false)
-                            datas.ui.buttons["input" + i].SetState(false);
+                        if (IsMouseButtonDown(MouseButton.MOUSE_LEFT_BUTTON) && data.ui.buttons["input" + i].IsClicked() == false)
+                            data.ui.buttons["input" + i].SetState(false);
                     }
                     KeyboardKey tmp = (KeyboardKey)config.KeyboardInputs[i].Id;
                     string key = tmp.ToString();
                     key = key.Replace("KEY", "");
                     key = key.Replace("_", "");
-                    datas.ui.buttons["input" + i].SetText(config.KeyboardInputs[i].Id == -1 ? "NONE" : key, new Vector2(25, 8), 35, Color.BLACK);
+                    data.ui.buttons["input" + i].SetText(config.KeyboardInputs[i].Id == -1 ? "NONE" : key, new Vector2(25, 8), 35, Color.BLACK);
                 }
             }
             if (timeCount > 0)
