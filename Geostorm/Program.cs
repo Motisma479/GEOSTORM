@@ -26,7 +26,7 @@ namespace Geostorm
             var renders = new Graphics();
             var configs = new GameConfig();
             renders.Load();
-
+            configs.LoadConfigFile();
             //--------------------------------------------------------------------------------------
 
             // Main game loop
@@ -53,6 +53,7 @@ namespace Geostorm
 
             // De-Initialization
             //--------------------------------------------------------------------------------------
+            configs.WriteConfigFile();
             CloseAudioDevice();
             CloseWindow();
             //--------------------------------------------------------------------------------------

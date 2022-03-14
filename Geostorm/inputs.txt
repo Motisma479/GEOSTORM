@@ -1,0 +1,16 @@
+# Inputs configuration file
+
+# MovementUp : Move up (default : 0 87)
+MovementUp 0 87
+
+# MovementDown : Move down (default : 0 83)
+MovementDown 0 83
+
+# MovementRight : Move right (default : 0 68)
+MovementRight 0 68
+
+# MovementLeft : Move left (default : 0 65)
+MovementLeft 0 65
+
+# ActionShoot: Shoot (default : 0 32)
+ActionShoot 0 32

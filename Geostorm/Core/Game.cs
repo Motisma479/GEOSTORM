@@ -123,7 +123,7 @@ namespace Geostorm.Core
             if (inputs.Shoot) DrawEllipse(150, 100, 23, 13, Color.GREEN);
             PosA = new Vector2(200, 100);
             DrawCircleV(PosA, 10, Color.GRAY);
-            DrawCircleV(PosA + MathHelper.getVectorRot(datas.Player.WeaponRotation) * 10, 8, Color.GREEN);
+            DrawCircleV(PosA + MathHelper.GetVectorRot(datas.Player.WeaponRotation) * 10, 8, Color.GREEN);
         }
     }
 }

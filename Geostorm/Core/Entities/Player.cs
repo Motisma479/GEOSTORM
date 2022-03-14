@@ -30,16 +30,16 @@ namespace Geostorm.Core.Entities
             {
                 Velocity += inputs.MoveAxis*3;
             }
-            if (MathHelper.getRotation(Velocity,ref targetRotation))
+            if (MathHelper.GetRotation(Velocity,ref targetRotation))
             {
-                targetRotation = MathHelper.cutFloat(MathHelper.ModuloFloat(Rotation - targetRotation,-180.0f,180.0f), -20.0f,20.0f);
+                targetRotation = MathHelper.CutFloat(MathHelper.ModuloFloat(Rotation - targetRotation,-180.0f,180.0f), -20.0f,20.0f);
                 Rotation = (Rotation - targetRotation) % 360.0f;
             }
             Vector2 weaponDir = inputs.ShootTarget - Position;
-            MathHelper.getRotation(weaponDir,ref WeaponRotation);
+            MathHelper.GetRotation(weaponDir,ref WeaponRotation);
             Velocity *= 0.7f;
             Position += Velocity;
-            Position = new Vector2(MathHelper.cutFloat(Position.X,20,mapSize.X-20), MathHelper.cutFloat(Position.Y, 20, mapSize.Y-20));
+            Position = new Vector2(MathHelper.CutFloat(Position.X,20,mapSize.X-20), MathHelper.CutFloat(Position.Y, 20, mapSize.Y-20));
         }
         public override void Draw(Graphics graphics, Camera camera) 
         {

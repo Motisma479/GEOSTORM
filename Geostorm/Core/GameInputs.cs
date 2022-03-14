@@ -18,21 +18,16 @@ namespace Geostorm.Core
         public bool Shoot;
         public Vector2 ShootTarget;
 
-        private int boolToInt(bool value)
-        {
-            return value ? 1 : 0;
-        }
-
         public void Update(GameConfig configs)
         {
             ScreenSize = new Vector2(GetScreenWidth(), GetScreenHeight());
             DeltaTime = GetFrameTime();
             MoveAxis = new Vector2(
-            boolToInt(IsKeyDown((Raylib_cs.KeyboardKey)configs.KeyboardInputs[3])) - boolToInt(IsKeyDown((Raylib_cs.KeyboardKey)configs.KeyboardInputs[1])),
-            boolToInt(IsKeyDown((Raylib_cs.KeyboardKey)configs.KeyboardInputs[2])) - boolToInt(IsKeyDown((Raylib_cs.KeyboardKey)configs.KeyboardInputs[0]))
+            configs.KeyboardInputs[3].ReadAxisKey() - configs.KeyboardInputs[1].ReadAxisKey(),
+            configs.KeyboardInputs[2].ReadAxisKey() - configs.KeyboardInputs[0].ReadAxisKey()
             );
             ShootTarget = (GetMousePosition()- ScreenPos);
-            Shoot = IsKeyDown((Raylib_cs.KeyboardKey)configs.KeyboardInputs[4]);
+            Shoot = configs.KeyboardInputs[4].ReadButtonKey();
             if (MoveAxis.Length() > 1) MoveAxis /= MoveAxis.Length();
 
         }
