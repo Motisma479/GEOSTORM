@@ -13,7 +13,7 @@ namespace Geostorm.Core
 {
     class Game
     {
-        GameData datas;
+        public GameData datas;
         List<IGameEventListener> eventListeners = new List<IGameEventListener>();
 
         public Game()
@@ -27,16 +27,20 @@ namespace Geostorm.Core
         }
         public void Update(GameInputs inputs)
         {
+            datas.ui.Update();
             switch (datas.scene)
             {
-                case GameData.Scene.MainMenu:
+                case GameData.Scene.MAIN_MENU:
                     UpdateMainMenu(inputs);
                     break;
-                case GameData.Scene.InGame:
+                case GameData.Scene.IN_GAME:
                     UpdateInGame(inputs);
                     break;
-                case GameData.Scene.Pause:
+                case GameData.Scene.PAUSE:
                     UpdatePause(inputs);
+                    break;
+                case GameData.Scene.SETTINGS:
+                    UpdateSettings(inputs);
                     break;
                 default:
                     break;
@@ -44,10 +48,37 @@ namespace Geostorm.Core
         }
         public void UpdateMainMenu(GameInputs inputs)
         {
-            if (datas.ui.buttons.First().IsClicked())
+            if (datas.ui.buttons["start"].IsClicked())
+                datas.ui.SwitchToScene(GameData.Scene.IN_GAME, ref datas.scene);
+            else if (datas.ui.buttons["settings"].IsClicked())
+                datas.ui.SwitchToScene(GameData.Scene.SETTINGS, ref datas.scene);
+            else if (datas.ui.buttons["quit"].IsClicked())
+                System.Environment.Exit(1);
+            if (IsKeyPressed(KeyboardKey.KEY_ESCAPE))
+                System.Environment.Exit(1);
+
+        }
+        static int activebuttons = 0;
+        public void UpdateSettings(GameInputs inputs)
+        {
+            if (datas.ui.buttons["back"].IsClicked())
+                datas.ui.SwitchToScene(GameData.Scene.MAIN_MENU, ref datas.scene);
+            else
             {
-                datas.scene = GameData.Scene.InGame;
-                datas.ui.SwitchToScene(GameData.Scene.InGame);
+                for (int i = 0; i < 5; i++)
+                {
+                    if (!datas.ui.buttons["input" + activebuttons].IsToggle())
+                    {
+                        if (datas.ui.buttons["input" + i].IsClicked())
+                        {
+                            datas.ui.buttons["input" + i].SetState(true);
+                        }
+                        if (datas.ui.buttons["input" + i].IsToggle() == true)
+                        {
+                            datas.ui.buttons["input" + i].SetText("< Key >", new Vector2(25, 8), 35, Color.BLACK);
+                        }
+                    }
+                }
             }
         }
 
@@ -56,37 +87,40 @@ namespace Geostorm.Core
             datas.camera.Update(inputs, datas.Player.Position, datas.MapSize);
             for (int i = 0; i < datas.stars.Count(); i++)
                 datas.stars[i].Update(datas.camera);
-            datas.Player.Update(inputs,datas.MapSize);
+            datas.Player.Update(inputs, datas.MapSize);
+            if (IsKeyPressed(KeyboardKey.KEY_ESCAPE))
+                datas.ui.SwitchToScene(GameData.Scene.PAUSE, ref datas.scene);
         }
-
         public void UpdatePause(GameInputs inputs)
         {
-
+            if (datas.ui.buttons["resume"].IsClicked() || IsKeyPressed(KeyboardKey.KEY_ESCAPE))
+                datas.ui.SwitchToScene(GameData.Scene.IN_GAME, ref datas.scene);
+            else if (datas.ui.buttons["quit"].IsClicked())
+                datas.ui.SwitchToScene(GameData.Scene.MAIN_MENU, ref datas.scene);
         }
 
         public void Render(Graphics graphics, GameInputs inputs)
         {
-            datas.ui.Draw(datas.scene);
             switch (datas.scene)
             {
-                case GameData.Scene.MainMenu:
+                case GameData.Scene.MAIN_MENU:
                     {
-
                     }
                     break;
-                case GameData.Scene.InGame:
+                case GameData.Scene.PAUSE:
+                case GameData.Scene.IN_GAME:
                     {
                         // Draw element in the map.
                         foreach (var star in datas.stars)
                             if (IsInside(star.Pos + datas.camera.Pos * star.Speed))
-                                star.Draw(graphics,datas.camera);
+                                star.Draw(graphics, datas.camera);
                         graphics.DrawMap(datas.MapSize, datas.camera);
 
                         // Draw the Debug.
                         DrawDebug(inputs);
 
                         // Draw Player
-                        datas.Player.Draw(graphics,datas.camera);
+                        datas.Player.Draw(graphics, datas.camera);
 
                         //Draw enemies
                         foreach (var enemy in datas.enemies)
@@ -95,14 +129,10 @@ namespace Geostorm.Core
                         DrawFPS(10, 10);
                     }
                     break;
-                case GameData.Scene.Pause:
-                    {
-
-                    }
-                    break;
                 default:
                     break;
             }
+            datas.ui.Draw(datas.scene);
         }
 
         public bool IsInside(Vector2 pos)

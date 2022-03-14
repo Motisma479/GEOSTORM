@@ -14,9 +14,10 @@ namespace Geostorm.Core
     {
         public enum Scene 
         {
-            MainMenu,
-            InGame,
-            Pause,
+            MAIN_MENU,
+            IN_GAME,
+            PAUSE,
+            SETTINGS
         }
 
         public Scene scene;
@@ -44,8 +45,8 @@ namespace Geostorm.Core
 
         public GameData()
         {
-            ui = new Ui(scene);
-            scene = Scene.MainMenu;
+            ui = new Ui(Scene.MAIN_MENU, ref scene);
+            scene = Scene.MAIN_MENU;
             MapSize = new Vector2(350 * 4, 350 * 3);
             for (int i = 0; i < 1400; i++)
                 stars.Add(new Star(new Vector2(GetRandomValue(-500, (int)(MapSize.X + 500)), GetRandomValue(-500, (int)(MapSize.Y + 500))), GetRandomValue(1, 4)));

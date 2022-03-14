@@ -18,7 +18,7 @@ namespace Geostorm
             InitWindow(screenWidth, screenHeight, "GeoStorm");
             SetTargetFPS(60);
             SetMousePosition(screenWidth / 2, screenHeight / 2);
-
+            SetExitKey(0);
             InitAudioDevice();
 
             var game = new Game();
