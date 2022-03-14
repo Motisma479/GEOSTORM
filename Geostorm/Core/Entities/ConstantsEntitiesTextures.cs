@@ -26,7 +26,7 @@ namespace Geostorm.Core.Entities
     static class BulletTexture
     {
         private static readonly float preScale = 15.0f;
-        public static float thickness = 1f;
+        public static float thickness = 2.0f;
         public static readonly Vector2[] Points =
         {
             new Vector2(-0.3f, 0.0f)    * preScale,     //left  

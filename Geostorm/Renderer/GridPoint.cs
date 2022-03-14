@@ -40,7 +40,7 @@ namespace Geostorm.Renderer
                     float mLength = (item.Position - pPos).Length();
                     if (mLength < 70)
                     {
-                        pVel += (data.Player.Position - pPos) / 1000000 * -MathF.Pow(mLength - 70, 2) * 0.5f;
+                        pVel += (item.Position - pPos) / 1000000 * -MathF.Pow(mLength - 70, 2) * 1.5f;
                     }
             }
                 for (int i = 0; i < connexions.Length; i++)

@@ -19,7 +19,7 @@ namespace Geostorm.Core
 
         public Weapon()
         {
-            level = 8;
+            level = 7;
         }
 
 
@@ -102,22 +102,22 @@ namespace Geostorm.Core
                     case 7:
                         {
                             b.Position = data.Player.Position + MathHelper.GetVectorRot(data.Player.WeaponRotation) * 23;
-                            b.Position += MathHelper.GetVectorRot(data.Player.WeaponRotation + 90) * -20;
+                            b.Position += MathHelper.GetVectorRot(data.Player.WeaponRotation + 90) * -10;
                             b.Rotation = data.Player.WeaponRotation;
-                            b.Velocity = MathHelper.GetVectorRot(b.Rotation) * 20;
+                            b.Velocity = MathHelper.GetVectorRot(b.Rotation) * 10;
 
                             Bullet c = new Bullet();
                             c.Position = data.Player.Position + MathHelper.GetVectorRot(data.Player.WeaponRotation) * 23;
                             c.Position += MathHelper.GetVectorRot(data.Player.WeaponRotation + 90) * 0;
                             c.Rotation = data.Player.WeaponRotation;
-                            c.Velocity = MathHelper.GetVectorRot(b.Rotation) * 20;
+                            c.Velocity = MathHelper.GetVectorRot(b.Rotation) * 10;
                             data.AddBulletDelayed(c);
 
                             Bullet d = new Bullet();
                             d.Position = data.Player.Position + MathHelper.GetVectorRot(data.Player.WeaponRotation) * 23;
-                            d.Position += MathHelper.GetVectorRot(data.Player.WeaponRotation + 90) * 20;
+                            d.Position += MathHelper.GetVectorRot(data.Player.WeaponRotation + 90) * 10;
                             d.Rotation = data.Player.WeaponRotation;
-                            d.Velocity = MathHelper.GetVectorRot(b.Rotation) * 20;
+                            d.Velocity = MathHelper.GetVectorRot(b.Rotation) * 10;
                             data.AddBulletDelayed(d);
 
                             coolDown = 1;
