@@ -10,14 +10,19 @@ namespace Geostorm.Core.Entities
 {
     class Bullet : Entity
     {   
-
         public Bullet()
         {
-
+            CollisionRadius = 15;
         }
-        public void Update() 
+        public void Update(GameData data) 
         {
             Position += Velocity;
+
+            if(Position != new Vector2(MathHelper.CutFloat(Position.X, CollisionRadius, data.MapSize.X - CollisionRadius), MathHelper.CutFloat(Position.Y, CollisionRadius, data.MapSize.Y - CollisionRadius)))
+            {
+                IsDead = true;
+            }
+            
         }
         public override void Draw(Graphics graphics, Camera camera) 
         {

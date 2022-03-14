@@ -98,7 +98,7 @@ namespace Geostorm.Core
             datas.Player.Update(inputs, datas, events);
 
             for (int i = 0; i < datas.bullets.Count ; i++)
-                datas.bullets[i].Update();
+                datas.bullets[i].Update(datas);
 
             foreach (IGameEventListener eventListener in eventListeners)
                 eventListener.HandleEvents(events, datas);

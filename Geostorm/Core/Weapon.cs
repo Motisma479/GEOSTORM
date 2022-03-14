@@ -29,6 +29,7 @@ namespace Geostorm.Core
                 b.Position = data.Player.Position + MathHelper.GetVectorRot(data.Player.WeaponRotation) * 23;
                 b.Rotation = data.Player.WeaponRotation;
                 b.Velocity = MathHelper.GetVectorRot(b.Rotation);
+                b.IsDead = false;
                 
                 //data.AddBulletDelayed(b);
                 data.bullets.Add(b);
@@ -38,6 +39,10 @@ namespace Geostorm.Core
                 shootEvent.Bullet = b;
                 events.Add(shootEvent);
             }
+            for (int i = 0; i < data.bullets.Count; i++)
+                if (data.bullets[i].IsDead)
+                    data.bullets.RemoveAt(i);
+            
         }
     }
 }

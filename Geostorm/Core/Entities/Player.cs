@@ -19,7 +19,7 @@ namespace Geostorm.Core.Entities
         public Player()
         {
             weapon = new Weapon();
-
+            CollisionRadius = 20;
             Position.X = 200;
             Position.Y = 200;
         }
@@ -40,7 +40,7 @@ namespace Geostorm.Core.Entities
             MathHelper.GetRotation(weaponDir,ref WeaponRotation);
             Velocity *= 0.7f;
             Position += Velocity;
-            Position = new Vector2(MathHelper.CutFloat(Position.X,20, data.MapSize.X-20), MathHelper.CutFloat(Position.Y, 20, data.MapSize.Y-20));
+            Position = new Vector2(MathHelper.CutFloat(Position.X,CollisionRadius, data.MapSize.X-CollisionRadius), MathHelper.CutFloat(Position.Y, CollisionRadius, data.MapSize.Y-CollisionRadius));
 
             weapon.Update(inputs, data, events);
         }
