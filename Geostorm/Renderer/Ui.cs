@@ -98,7 +98,7 @@ namespace Geostorm.Renderer
                     {
                         for (int i = 0; i < 5; i++)
                         {
-                            buttons["input" + i] = new Button(new Vector2(GetScreenWidth() / 2 + 350, 200 + 100 * i), new Vector2(200, 50), ButtonType.MANUAL, BLUE);
+                            buttons["input" + i] = new Button(new Vector2(GetScreenWidth() / 2 + 350, 200 + 100 * i), new Vector2(300, 50), ButtonType.MANUAL, BLUE);
                             buttons["input" + i].SetText("", new Vector2(85, 8), 90, DARKBLUE);
                         }
                         buttons["back"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, GetScreenHeight() - 200), new Vector2(400, 100), ButtonType.TEXT, BLUE);

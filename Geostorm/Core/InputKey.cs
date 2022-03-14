@@ -138,6 +138,5 @@ namespace Geostorm.Core
         {
             return (int)type + " " + id;
         }
-        
     }
 }

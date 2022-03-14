@@ -92,7 +92,6 @@ namespace Geostorm.Core
                         if (datas.ui.buttons["input" + i].IsToggle() == true)
                         {
                             datas.ui.buttons["input" + i].SetText("< Key >", new Vector2(25, 8), 35, Color.BLACK);
-
                             if (IsKeyPressed(KeyboardKey.KEY_ESCAPE) || config.KeyboardInputs[i].AutoBindKey())
                             {
                                 datas.ui.buttons["input" + i].SetState(false);
@@ -101,7 +100,11 @@ namespace Geostorm.Core
                         if (IsMouseButtonDown(MouseButton.MOUSE_LEFT_BUTTON) && datas.ui.buttons["input" + i].IsClicked() == false)
                             datas.ui.buttons["input" + i].SetState(false);
                     }
-                    datas.ui.buttons["input" + i].SetText(config.KeyboardInputs[i].Id == -1 ? "NONE" : config.KeyboardInputs[i].Id.ToString(), new Vector2(25, 8), 35, Color.BLACK);
+                    KeyboardKey tmp = (KeyboardKey)config.KeyboardInputs[i].Id;
+                    string key = tmp.ToString();
+                    key = key.Replace("KEY", "");
+                    key = key.Replace("_", "");
+                    datas.ui.buttons["input" + i].SetText(config.KeyboardInputs[i].Id == -1 ? "NONE" : key, new Vector2(25, 8), 35, Color.BLACK);
                 }
             }
             if (timeCount > 0)
