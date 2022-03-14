@@ -24,6 +24,8 @@ namespace Geostorm.Core
         public Ui ui;
         public GridPoint[] Grid;
 
+        public List<Particle> particles = new List<Particle>();
+
         public Vector2 MapSize;
         private Player player = new Player();
         public IEnumerable<Entity> Entities { get { return entities; } }

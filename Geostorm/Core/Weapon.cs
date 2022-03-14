@@ -19,7 +19,7 @@ namespace Geostorm.Core
 
         public Weapon()
         {
-            level = 7;
+            level = 1;
         }
 
 

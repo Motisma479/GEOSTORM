@@ -99,7 +99,7 @@ namespace Geostorm.Renderer
                 Vector2 curentP = Vector2.Transform(Core.Entities.BulletTexture.Points[i], rotate) + pos;
                 Vector2 curentP2 = Vector2.Transform(Core.Entities.BulletTexture.Points[(i + 1) % Core.Entities.BulletTexture.Points.Length], rotate) + pos;
 
-                DrawLineEx(curentP, curentP2, Core.Entities.BulletTexture.thickness, Color.WHITE);
+                DrawLineEx(curentP, curentP2, Core.Entities.BulletTexture.thickness, Color.YELLOW);
 
             }
         }
@@ -108,6 +108,18 @@ namespace Geostorm.Renderer
         {
             if (CheckCollisionPointRec(posA, size) && CheckCollisionPointRec(posB, size))
                 DrawLineEx(posA, posB, 1, new Color(20, 105, 253, 60 * 255 / 100));
+        }
+
+        public void DrawParticle(Vector2 pos, float rot, Color color)
+        {
+            Vector2 p1 = new Vector2(pos.X - 5, pos.Y);
+            Vector2 p2 = new Vector2(pos.X + 5, pos.Y);
+            Matrix3x2 rotate = Matrix3x2.CreateRotation(MathHelper.ToRadians(rot));
+            Vector2 curentP = Vector2.Transform(p1, rotate) ;
+            Vector2 curentP2 = Vector2.Transform(p2, rotate) ;
+
+            DrawLineEx(p1, p2, 1, Color.YELLOW);
+            //DrawLineEx(posA, posB, 1, color);
         }
     }
 }

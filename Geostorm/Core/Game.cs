@@ -143,7 +143,14 @@ namespace Geostorm.Core
                 item.UpdatePos();
             }
 
-            data.Synchronize();
+            for(int i = 0; i < data.particles.Count(); i++)
+            {
+                data.particles[i].Update();
+                if (data.particles[i].time < 0)
+                    data.particles.RemoveAt(i);
+            }
+
+                data.Synchronize();
         }
 
         public void UpdatePause(GameInputs inputs)
@@ -179,6 +186,10 @@ namespace Geostorm.Core
                         for(int i = 0; i < data.bullets.Count; i++)
                         {
                             data.bullets[i].Draw(graphics, data.camera);
+                        }
+                        foreach (var particle in data.particles)
+                        {
+                            particle.Draw(graphics, data.camera);
                         }
 
                         //Draw enemies
