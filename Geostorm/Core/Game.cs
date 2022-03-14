@@ -13,13 +13,14 @@ namespace Geostorm.Core
 {
     class Game
     {
-        public GameData datas;
+        public GameData data;
         public GameConfig config;
+        
         List<IGameEventListener> eventListeners = new List<IGameEventListener>();
 
         public Game()
         {
-            datas = new GameData();
+            data = new GameData();
             config = new GameConfig();
         }
 
@@ -30,8 +31,8 @@ namespace Geostorm.Core
 
         public void Update(GameInputs inputs)
         {
-            datas.ui.Update();
-            switch (datas.scene)
+            data.ui.Update();
+            switch (data.scene)
             {
                 case GameData.Scene.MAIN_MENU:
                     UpdateMainMenu(inputs);
@@ -66,8 +67,8 @@ namespace Geostorm.Core
         static int timeCount = 0;
         public void UpdateSettings(GameInputs inputs)
         {
-            if (datas.ui.buttons["back"].IsClicked())
-                datas.ui.SwitchToScene(GameData.Scene.MAIN_MENU, ref datas.scene);
+            if (data.ui.buttons["back"].IsClicked())
+                data.ui.SwitchToScene(GameData.Scene.MAIN_MENU, ref data.scene);
             else
             {
                 for (int i = 0; i < 5; i++)
@@ -85,11 +86,11 @@ namespace Geostorm.Core
                         DrawText("You cannot assign a key that is already set", GetScreenWidth() / 2 - MeasureText("You cannot assign a key that is already set", 75) / 2, 100, 75, Color.RED);
                     if (!datas.ui.buttons["input" + activebuttons].IsToggle() || i == activebuttons)
                     {
-                        if (datas.ui.buttons["input" + i].IsClicked())
+                        if (data.ui.buttons["input" + i].IsClicked())
                         {
-                            datas.ui.buttons["input" + i].SetState(true);
+                            data.ui.buttons["input" + i].SetState(true);
                         }
-                        if (datas.ui.buttons["input" + i].IsToggle() == true)
+                        if (data.ui.buttons["input" + i].IsToggle() == true)
                         {
                             datas.ui.buttons["input" + i].SetText("< Key >", new Vector2(25, 8), 35, Color.BLACK);
                             if (IsKeyPressed(KeyboardKey.KEY_ESCAPE) || config.KeyboardInputs[i].AutoBindKey())
@@ -115,38 +116,43 @@ namespace Geostorm.Core
         {
             List<Event> events = new List<Event>();
 
-            datas.camera.Update(inputs, datas.Player.Position, datas.MapSize);
-            for (int i = 0; i < datas.stars.Count(); i++)
-                datas.stars[i].Update(datas.camera);
+            data.camera.Update(inputs, data.Player.Position, data.MapSize);
+            for (int i = 0; i < data.stars.Count(); i++)
+                data.stars[i].Update(data.camera);
             if (IsKeyPressed(KeyboardKey.KEY_ESCAPE))
-                datas.ui.SwitchToScene(GameData.Scene.PAUSE, ref datas.scene);
-            datas.Player.Update(inputs,datas,events);
-            for (int i = 0; i < datas.bullets.Count; i++)
-                datas.bullets[i].Update(datas);
+                data.ui.SwitchToScene(GameData.Scene.PAUSE, ref data.scene);
+            data.Player.Update(inputs,data,events);
+
+            foreach (Entities.Entity entity in data.entities)
+            {
+                entity.Update(inputs, data, events);
+            }
 
             foreach (IGameEventListener eventListener in eventListeners)
-                eventListener.HandleEvents(events, datas);
-            foreach (var item in datas.Grid)
+                eventListener.HandleEvents(events, data);
+            foreach (var item in data.Grid)
             {
-                item.UpdatePoint(datas);
+                item.UpdatePoint(data);
             }
-            foreach (var item in datas.Grid)
+            foreach (var item in data.Grid)
             {
                 item.UpdatePos();
             }
+
+            data.Synchronize();
         }
 
         public void UpdatePause(GameInputs inputs)
         {
-            if (datas.ui.buttons["resume"].IsClicked() || IsKeyPressed(KeyboardKey.KEY_ESCAPE))
-                datas.ui.SwitchToScene(GameData.Scene.IN_GAME, ref datas.scene);
-            else if (datas.ui.buttons["quit"].IsClicked())
-                datas.ui.SwitchToScene(GameData.Scene.MAIN_MENU, ref datas.scene);
+            if (data.ui.buttons["resume"].IsClicked() || IsKeyPressed(KeyboardKey.KEY_ESCAPE))
+                data.ui.SwitchToScene(GameData.Scene.IN_GAME, ref data.scene);
+            else if (data.ui.buttons["quit"].IsClicked())
+                data.ui.SwitchToScene(GameData.Scene.MAIN_MENU, ref data.scene);
         }
 
         public void Render(Graphics graphics, GameInputs inputs)
         {
-            switch (datas.scene)
+            switch (data.scene)
             {
                 case GameData.Scene.MAIN_MENU:
                     {
@@ -156,26 +162,26 @@ namespace Geostorm.Core
                 case GameData.Scene.IN_GAME:
                     {
                         // Draw element in the map.
-                        foreach (var star in datas.stars)
-                            if (IsInside(star.Pos + datas.camera.Pos * star.Speed))
-                                star.Draw(graphics,datas.camera);
-                        foreach (var point in datas.Grid)
-                            point.Draw(graphics,datas.camera);
+                        foreach (var star in data.stars)
+                            if (IsInside(star.Pos + data.camera.Pos * star.Speed))
+                                star.Draw(graphics,data.camera);
+                        foreach (var point in data.Grid)
+                            point.Draw(graphics,data.camera);
 
                         // Draw the Debug.
                         DrawDebug(inputs);
 
                         // Draw Player
-                        datas.Player.Draw(graphics, datas.camera);
+                        data.Player.Draw(graphics, data.camera);
 
-                        for(int i = 0; i < datas.bullets.Count; i++)
+                        for(int i = 0; i < data.bullets.Count; i++)
                         {
-                            datas.bullets[i].Draw(graphics, datas.camera);
+                            data.bullets[i].Draw(graphics, data.camera);
                         }
 
                         //Draw enemies
-                        foreach (var enemy in datas.enemies)
-                            enemy.Draw(graphics, datas.camera);
+                        foreach (var enemy in data.enemies)
+                            enemy.Draw(graphics, data.camera);
 
                         DrawFPS(10, 10);
                     }
@@ -183,7 +189,7 @@ namespace Geostorm.Core
                 default:
                     break;
             }
-            datas.ui.Draw(datas.scene);
+            data.ui.Draw(data.scene);
         }
 
         public bool IsInside(Vector2 pos)
@@ -204,7 +210,7 @@ namespace Geostorm.Core
             if (inputs.Shoot) DrawEllipse(150, 100, 23, 13, Color.GREEN);
             PosA = new Vector2(200, 100);
             DrawCircleV(PosA, 10, Color.GRAY);
-            DrawCircleV(PosA + MathHelper.GetVectorRot(datas.Player.WeaponRotation) * 10, 8, Color.GREEN);
+            DrawCircleV(PosA + MathHelper.GetVectorRot(data.Player.WeaponRotation) * 10, 8, Color.GREEN);
         }
     }
 }

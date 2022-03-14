@@ -17,7 +17,7 @@ namespace Geostorm.Core.Entities
         public float Rotation;
         public float CollisionRadius;
 
-        public virtual void Update(in GameInputs inputs, GameData datas, List<Event> events) { }
+        public virtual void Update(in GameInputs inputs, GameData data, List<Event> events) { }
         public virtual void Draw(Graphics graphics, Camera camera) { }
     }
 }

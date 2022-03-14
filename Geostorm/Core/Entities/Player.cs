@@ -25,7 +25,7 @@ namespace Geostorm.Core.Entities
         }
 
 
-        public void Update(GameInputs inputs, GameData data, List<Event> events)
+        public override void Update(in GameInputs inputs, GameData data, List<Event> events)
         {
             if (inputs.MoveAxis.LengthSquared() != 0.0f)
             {

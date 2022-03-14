@@ -96,6 +96,12 @@ namespace Geostorm.Core
 
         public void Synchronize()
         {
+            entities.AddRange(bulletsAdded);
+            bullets.AddRange(bulletsAdded);
+
+            bulletsAdded.Clear();
+
+            bullets.RemoveAll(Entity => Entity.IsDead);
         }
     }
 }

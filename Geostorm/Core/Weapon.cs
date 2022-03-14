@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Geostorm.Core.Entities;
@@ -28,21 +29,17 @@ namespace Geostorm.Core
                 Bullet b = new Bullet();
                 b.Position = data.Player.Position + MathHelper.GetVectorRot(data.Player.WeaponRotation) * 23;
                 b.Rotation = data.Player.WeaponRotation;
-                b.Velocity = MathHelper.GetVectorRot(b.Rotation);
+                b.Velocity =MathHelper.GetVectorRot(b.Rotation)*20;
                 b.IsDead = false;
-                
+
                 //data.AddBulletDelayed(b);
-                data.bullets.Add(b);
+                data.AddBulletDelayed(b);
 
                 // Optional
                 BulletShootEvent shootEvent = new BulletShootEvent();
                 shootEvent.Bullet = b;
                 events.Add(shootEvent);
             }
-            for (int i = 0; i < data.bullets.Count; i++)
-                if (data.bullets[i].IsDead)
-                    data.bullets.RemoveAt(i);
-            
         }
     }
 }

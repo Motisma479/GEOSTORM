@@ -14,7 +14,7 @@ namespace Geostorm.Core.Entities
         {
             CollisionRadius = 15;
         }
-        public void Update(GameData data) 
+        public override void Update(in GameInputs inputs, GameData data, List<Events.Event> events) 
         {
             Position += Velocity;
 
