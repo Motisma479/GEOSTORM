@@ -15,6 +15,7 @@ namespace Geostorm.Core
         float frequency;
         float timer;
         float speed;
+        int coolDown = 0;
 
         public Weapon()
         {
@@ -24,7 +25,7 @@ namespace Geostorm.Core
 
         public void Update(in GameInputs inputs, GameData data, List<Event> events) 
         {
-            if (inputs.Shoot)
+            if (inputs.Shoot && coolDown <= 0)
             {
                 Bullet b = new Bullet();
                 b.Position = data.Player.Position + MathHelper.GetVectorRot(data.Player.WeaponRotation) * 23;
@@ -39,7 +40,14 @@ namespace Geostorm.Core
                 BulletShootEvent shootEvent = new BulletShootEvent();
                 shootEvent.Bullet = b;
                 events.Add(shootEvent);
+                coolDown = 10;
             }
+            else
+                coolDown--;
+            for (int i = 0; i < data.bullets.Count; i++)
+                if (data.bullets[i].IsDead)
+                    data.bullets.RemoveAt(i);
+            
         }
     }
 }

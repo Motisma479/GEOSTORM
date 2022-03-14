@@ -76,14 +76,14 @@ namespace Geostorm.Core
                     
                     for (int j = 0; j < 5; j++)
                     {
+                        //Check if Already key set
                         if (i!= j && config.KeyboardInputs[i].Id == config.KeyboardInputs[j].Id)
                         {
                             config.KeyboardInputs[j].Id = -1;
                             timeCount = 360;
                         }
                     }
-                    if (timeCount > 0)
-                        DrawText("You cannot assign a key that is already set", GetScreenWidth() / 2 - MeasureText("You cannot assign a key that is already set", 75) / 2, 100, 75, Color.RED);
+                    // Check if other Buttons are clicked
                     if (!data.ui.buttons["input" + activebuttons].IsToggle() || i == activebuttons)
                     {
                         if (data.ui.buttons["input" + i].IsClicked())
@@ -101,11 +101,22 @@ namespace Geostorm.Core
                         if (IsMouseButtonDown(MouseButton.MOUSE_LEFT_BUTTON) && data.ui.buttons["input" + i].IsClicked() == false)
                             data.ui.buttons["input" + i].SetState(false);
                     }
+                    //Convert to key String
                     KeyboardKey tmp = (KeyboardKey)config.KeyboardInputs[i].Id;
-                    string key = tmp.ToString();
+                    string key;
+                    if (tmp == KeyboardKey.KEY_NULL || tmp == (KeyboardKey)1 || tmp == (KeyboardKey)2)
+                    {
+                        MouseButton tmp2 = (MouseButton)config.KeyboardInputs[i].Id;
+                        key = tmp2.ToString();
+                    }
+                    else
+                    {
+                        key = tmp.ToString();
+                    }
                     key = key.Replace("KEY", "");
                     key = key.Replace("_", "");
-                    data.ui.buttons["input" + i].SetText(config.KeyboardInputs[i].Id == -1 ? "NONE" : key, new Vector2(25, 8), 35, Color.BLACK);
+                    // Set Text Button
+                    data.ui.buttons["input" + i].SetText(config.KeyboardInputs[i].Id == -1 ? "NONE" : key, new Vector2(5, 8), 26, Color.BLACK);
                 }
             }
             if (timeCount > 0)
@@ -116,17 +127,19 @@ namespace Geostorm.Core
         {
             List<Event> events = new List<Event>();
 
+            // Update Camera
             data.camera.Update(inputs, data.Player.Position, data.MapSize);
+            //Update Starts
             for (int i = 0; i < data.stars.Count(); i++)
                 data.stars[i].Update(data.camera);
+            //Ui Update
             if (IsKeyPressed(KeyboardKey.KEY_ESCAPE))
                 data.ui.SwitchToScene(GameData.Scene.PAUSE, ref data.scene);
+            // Update Player
             data.Player.Update(inputs,data,events);
-
-            foreach (Entities.Entity entity in data.entities)
-            {
-                entity.Update(inputs, data, events);
-            }
+            // Update Bullets
+            for (int i = 0; i < data.bullets.Count; i++)
+                data.bullets[i].Update(data);
 
             foreach (IGameEventListener eventListener in eventListeners)
                 eventListener.HandleEvents(events, data);
@@ -184,6 +197,12 @@ namespace Geostorm.Core
                             enemy.Draw(graphics, data.camera);
 
                         DrawFPS(10, 10);
+                    }
+                    break;
+                case GameData.Scene.SETTINGS:
+                    {
+                        if (timeCount > 0)
+                            DrawText("You cannot assign a key that is already set", GetScreenWidth() / 2 - MeasureText("You cannot assign a key that is already set", 75) / 2, 100, 75, Color.RED);
                     }
                     break;
                 default:

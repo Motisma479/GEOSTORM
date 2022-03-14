@@ -12,7 +12,7 @@ namespace Geostorm.Renderer
 {
     class Ui
     {
-        public static string[] InputStrings = { "MoveUp", "Move Left", "Move Down", "Move Right", "Shoot" };
+        public static string[] InputStrings = { "Move Up", "Move Left", "Move Down", "Move Right", "Shoot" };
         public Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
         public Dictionary<string, Button> buttons = new Dictionary<string, Button>();
 
