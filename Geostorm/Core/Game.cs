@@ -125,6 +125,7 @@ namespace Geostorm.Core
 
         public void UpdateInGame(GameInputs inputs)
         {
+            HideCursor();
             List<Event> events = new List<Event>();
 
             // Update Camera
@@ -157,6 +158,7 @@ namespace Geostorm.Core
 
         public void UpdatePause(GameInputs inputs)
         {
+            ShowCursor();
             if (data.ui.buttons["resume"].IsClicked() || IsKeyPressed(KeyboardKey.KEY_ESCAPE))
                 data.ui.SwitchToScene(GameData.Scene.IN_GAME, ref data.scene, config);
             else if (data.ui.buttons["quit"].IsClicked())
@@ -182,8 +184,7 @@ namespace Geostorm.Core
                             point.Draw(graphics,data.camera, data.MapSize);
                         DrawRectangleLinesEx(new Rectangle(data.camera.Pos.X, data.camera.Pos.Y, data.MapSize.X, data.MapSize.Y), 5, Color.WHITE);
 
-                        // Draw the Debug.
-                        DrawDebug(inputs);
+
                         graphics.DrawCursor(inputs.ScreenPos + inputs.ShootTarget);
 
                         // Draw Player
@@ -221,18 +222,5 @@ namespace Geostorm.Core
                 return false;
         }
 
-        public void DrawDebug(GameInputs inputs)
-        {
-            Vector2 PosA = new Vector2(100, 100);
-            DrawCircleV(PosA, 10, Color.GRAY);
-            DrawCircleV(PosA + inputs.MoveAxis * 10, 8, Color.GREEN);
-            DrawCircleV(inputs.ScreenPos + inputs.ShootTarget, 8, Color.GREEN);
-            DrawEllipse(150, 100, 25, 15, Color.GRAY);
-            if (inputs.Shoot) DrawEllipse(150, 100, 23, 13, Color.GREEN);
-            PosA = new Vector2(200, 100);
-            DrawCircleV(PosA, 10, Color.GRAY);
-            DrawCircleV(PosA + MathHelper.GetVectorRot(data.Player.WeaponRotation) * 10, 8, Color.GREEN);
-            
-        }
     }
 }

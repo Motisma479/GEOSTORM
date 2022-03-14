@@ -46,6 +46,7 @@ namespace Geostorm
                 float dt = GetFrameTime();
                 inputs.Update(game.config, game.data.Player.Position);
                 game.Update(inputs);
+                
                 //----------------------------------------------------------------------------------
 
                 // Draw

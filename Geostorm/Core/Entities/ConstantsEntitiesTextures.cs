@@ -75,10 +75,10 @@ namespace Geostorm.Core.Entities
         };
         public static readonly Vector2[] Cross =
         {
-            new Vector2( 0.3f, 0.0f)     * preScale,     //c1
-            new Vector2( 0.3f, 1.5f)     * preScale,     //c2
-            new Vector2( -0.5f, 0.7f)     * preScale,     //c3
-            new Vector2( 1.0f, 0.7f)     * preScale,     //c4
+            new Vector2( 0.25f, 0.0f)     * preScale,     //c1
+            new Vector2( 0.25f, 1.5f)     * preScale,     //c2
+            new Vector2( -0.5f, 0.75f)     * preScale,     //c3
+            new Vector2( 1.0f, 0.75f)     * preScale,     //c4
         };
     }
 }
