@@ -10,15 +10,15 @@ namespace Geostorm
 
         static void Main(string[] args)
         {
-            const int screenWidth = 1920;
-            const int screenHeight = 1080;
-
             // Initialization
             //--------------------------------------------------------------------------------------
             SetConfigFlags(ConfigFlags.FLAG_WINDOW_RESIZABLE);
-            InitWindow(screenWidth, screenHeight, "GeoStorm");
+            InitWindow(1600, 900, "GeoStorm");
+            int monitor = GetCurrentMonitor();
+            SetWindowSize((int)(GetMonitorWidth(monitor) * 0.75f), (int)(GetMonitorHeight(monitor) * 0.75f));
+            SetWindowPosition((int)(GetMonitorWidth(monitor) * 0.1f), (int)(GetMonitorHeight(monitor) * 0.1f));
             SetTargetFPS(60);
-            SetMousePosition(screenWidth / 2, screenHeight / 2);
+            SetMousePosition(GetScreenWidth() / 2, GetScreenHeight() / 2);
             SetExitKey(0);
             InitAudioDevice();
 
