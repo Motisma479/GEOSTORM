@@ -21,6 +21,7 @@ namespace Geostorm.Core
         private KeyType type;
         private int id;
         public int Id { get { return id; } set { id = value; } }
+        public KeyType Type { get { return type; } set { type = value; } }
 
         public InputKey()
         {
@@ -65,7 +66,7 @@ namespace Geostorm.Core
                 case KeyType.MouseButton:
                     return MathHelper.BoolToInt(IsMouseButtonDown((MouseButton)id));
                 case KeyType.MouseAxis:
-                    return GetMouseWheelMove()*2;
+                    return MathF.Abs(GetMouseWheelMove()*2);
                 case KeyType.GamepadButton:
                     return MathHelper.BoolToInt(IsGamepadButtonDown(0, (GamepadButton)id));
                 case KeyType.GamepadAxis:
@@ -138,6 +139,26 @@ namespace Geostorm.Core
         public override string ToString()
         {
             return (int)type + " " + id;
+        }
+
+        public string GetDesc()
+        {
+            switch (type)
+            {
+                case KeyType.MouseButton:
+                    return ((MouseButton)id).ToString().Replace("MOUSE_","");
+                case KeyType.MouseAxis:
+                    return "MOUSE_WHEEL";
+                case KeyType.GamepadButton:
+                    return ((GamepadButton)id).ToString().Replace("GAMEPAD_BUTTON_","");
+                case KeyType.GamepadAxis:
+                    if (id < 0)
+                        return "NEGATIVE_" + ((GamepadAxis)(-id - 1)).ToString().Replace("GAMEPAD_AXIS_", "");
+                    else
+                        return ((GamepadAxis)(id - 1)).ToString().Replace("GAMEPAD_AXIS_", "");
+                default:
+                    return ((KeyboardKey)id).ToString().Replace("KEY_", "");
+            }
         }
     }
 }

@@ -74,12 +74,13 @@ namespace Geostorm.Core
                 for (int i = 0; i < config.KeyboardInputs.Length; i++)
                 {
                     
-                    for (int j = 0; j < 5; j++)
+                    for (int j = 0; j < config.KeyboardInputs.Length; j++)
                     {
                         //Check if Already key set
-                        if (i!= j && config.KeyboardInputs[i].Id == config.KeyboardInputs[j].Id)
+                        if (i != j && config.KeyboardInputs[i].Id == config.KeyboardInputs[j].Id && config.KeyboardInputs[i].Type == config.KeyboardInputs[j].Type)
                         {
                             config.KeyboardInputs[j].Id = -1;
+                            config.KeyboardInputs[j].Type = 0;
                             timeCount = 360;
                         }
                     }
@@ -103,18 +104,7 @@ namespace Geostorm.Core
                     }
                     //Convert to key String
                     KeyboardKey tmp = (KeyboardKey)config.KeyboardInputs[i].Id;
-                    string key;
-                    if (tmp == KeyboardKey.KEY_NULL || tmp == (KeyboardKey)1 || tmp == (KeyboardKey)2)
-                    {
-                        MouseButton tmp2 = (MouseButton)config.KeyboardInputs[i].Id;
-                        key = tmp2.ToString();
-                    }
-                    else
-                    {
-                        key = tmp.ToString();
-                    }
-                    key = key.Replace("KEY", "");
-                    key = key.Replace("_", "");
+                    string key = config.KeyboardInputs[i].GetDesc().Replace("_", " ");
                     // Set Text Button
                     data.ui.buttons["input" + i].SetText(config.KeyboardInputs[i].Id == -1 ? "NONE" : key, new Vector2(5, 8), 26, Color.BLACK);
                 }
@@ -184,12 +174,8 @@ namespace Geostorm.Core
                             point.Draw(graphics,data.camera, data.MapSize);
                         DrawRectangleLinesEx(new Rectangle(data.camera.Pos.X, data.camera.Pos.Y, data.MapSize.X, data.MapSize.Y), 5, Color.WHITE);
 
-
-                        graphics.DrawCursor(inputs.ScreenPos + inputs.ShootTarget);
-
                         // Draw Player
                         data.Player.Draw(graphics, data.camera);
-
                         for(int i = 0; i < data.bullets.Count; i++)
                         {
                             data.bullets[i].Draw(graphics, data.camera);
@@ -199,6 +185,7 @@ namespace Geostorm.Core
                         foreach (var enemy in data.enemies)
                             enemy.Draw(graphics, data.camera);
 
+                        graphics.DrawCursor(inputs.ScreenPos + inputs.ShootTarget);
                         DrawFPS(10, 10);
                     }
                     break;
@@ -221,6 +208,5 @@ namespace Geostorm.Core
             else
                 return false;
         }
-
     }
 }
