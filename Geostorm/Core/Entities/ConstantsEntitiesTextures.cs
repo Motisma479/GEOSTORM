@@ -58,7 +58,7 @@ namespace Geostorm.Core.Entities
             new Vector2( 1.0f, 0.0f)     * preScale,     //right
         };
     }
-    static class CurssorTexture
+    static class CursorTexture
     {
         public static readonly float preScale = 25.0f;
         public static float thickness = 2.5f;

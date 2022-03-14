@@ -145,7 +145,7 @@ namespace Geostorm.Core
 
             for(int i = 0; i < data.particles.Count(); i++)
             {
-                data.particles[i].Update();
+                data.particles[i].Update(data);
                 if (data.particles[i].time < 0)
                     data.particles.RemoveAt(i);
             }

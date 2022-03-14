@@ -28,7 +28,6 @@ namespace Geostorm.Core.Entities
         public override void Draw(Graphics graphics, Camera camera)
         {
             graphics.DrawBullet(Position + camera.Pos, Rotation);
-            //Raylib_cs.Raylib.DrawCircleLines((int)(Position.X + camera.Pos.X), (int)(Position.Y + camera.Pos.Y), CollisionRadius, Raylib_cs.Color.RED);
         }
     }
 }

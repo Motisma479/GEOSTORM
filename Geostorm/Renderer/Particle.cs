@@ -16,6 +16,8 @@ namespace Geostorm.Renderer
         public float Rotation;
         public Color Color;
         public float time;
+        public float CollisionRadius = 3;
+        int coolDown;
         public Particle(Vector2 position, float rotation, Color color)
         {
             time = 60;
@@ -24,9 +26,13 @@ namespace Geostorm.Renderer
             Color = color;
             Velocity = MathHelper.GetVectorRot(Rotation) * 10;
         }
-        public void Update()
+        public void Update(GameData data)
         {
             Position += Velocity;
+            if (!Raylib.CheckCollisionPointRec(Position, new Rectangle(CollisionRadius * 2, CollisionRadius * 2, data.MapSize.X - CollisionRadius * 4, data.MapSize.Y - CollisionRadius * 4)))
+            {
+                time = 0;
+            }
             time--;
         }
         public void Draw(Graphics graphics, Camera cam)

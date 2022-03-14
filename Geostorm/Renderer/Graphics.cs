@@ -52,13 +52,13 @@ namespace Geostorm.Renderer
 
         public void DrawCursor(Vector2 pos)
         {
-            Vector2 newPos = new Vector2(pos.X - Core.Entities.CurssorTexture.preScale / 4, pos.Y - Core.Entities.CurssorTexture.preScale / 1.3f);
-            DrawLineEx(Core.Entities.CurssorTexture.Cross[0] + newPos, Core.Entities.CurssorTexture.Cross[1] + newPos, Core.Entities.CurssorTexture.thickness, Color.GREEN);
-            DrawLineEx(Core.Entities.CurssorTexture.Cross[2] + newPos, Core.Entities.CurssorTexture.Cross[3] + newPos, Core.Entities.CurssorTexture.thickness, Color.GREEN);
-            for (int i = 0; i <= Core.Entities.CurssorTexture.Points.Length - 1; i++)
+            Vector2 newPos = new Vector2(pos.X - Core.Entities.CursorTexture.preScale / 4, pos.Y - Core.Entities.CursorTexture.preScale / 1.3f);
+            DrawLineEx(Core.Entities.CursorTexture.Cross[0] + newPos, Core.Entities.CursorTexture.Cross[1] + newPos, Core.Entities.CursorTexture.thickness, Color.GREEN);
+            DrawLineEx(Core.Entities.CursorTexture.Cross[2] + newPos, Core.Entities.CursorTexture.Cross[3] + newPos, Core.Entities.CursorTexture.thickness, Color.GREEN);
+            for (int i = 0; i <= Core.Entities.CursorTexture.Points.Length - 1; i++)
             {
-                DrawCircleV(Core.Entities.CurssorTexture.Points[i] + newPos, Core.Entities.CurssorTexture.thickness / 2, Color.DARKGREEN);
-                DrawLineEx(Core.Entities.CurssorTexture.Points[i] + newPos, Core.Entities.CurssorTexture.Points[(i + 1) % Core.Entities.CurssorTexture.Points.Length] + newPos, Core.Entities.CurssorTexture.thickness, Color.DARKGREEN);
+                DrawCircleV(Core.Entities.CursorTexture.Points[i] + newPos, Core.Entities.CursorTexture.thickness / 2, Color.DARKGREEN);
+                DrawLineEx(Core.Entities.CursorTexture.Points[i] + newPos, Core.Entities.CursorTexture.Points[(i + 1) % Core.Entities.CursorTexture.Points.Length] + newPos, Core.Entities.CursorTexture.thickness, Color.DARKGREEN);
             }
 
         }
@@ -112,13 +112,13 @@ namespace Geostorm.Renderer
 
         public void DrawParticle(Vector2 pos, float rot, Color color)
         {
-            Vector2 p1 = new Vector2(pos.X - 5, pos.Y);
-            Vector2 p2 = new Vector2(pos.X + 5, pos.Y);
+            Vector2 p1 = new Vector2( - 5,0);
+            Vector2 p2 = new Vector2( + 5, 0);
             Matrix3x2 rotate = Matrix3x2.CreateRotation(MathHelper.ToRadians(rot));
-            Vector2 curentP = Vector2.Transform(p1, rotate) ;
-            Vector2 curentP2 = Vector2.Transform(p2, rotate) ;
+            Vector2 curentP = Vector2.Transform(p1, rotate) + pos;
+            Vector2 curentP2 = Vector2.Transform(p2, rotate) + pos;
 
-            DrawLineEx(p1, p2, 1, Color.YELLOW);
+            DrawLineEx(curentP, curentP2, 1, Color.YELLOW);
             //DrawLineEx(posA, posB, 1, color);
         }
     }

@@ -44,7 +44,8 @@ namespace Geostorm
                     target = LoadRenderTexture(GetScreenWidth(), GetScreenHeight());
                 }
                 float dt = GetFrameTime();
-                inputs.Update(game.config, game.data.Player.Position);
+                if (game.data.scene != GameData.Scene.PAUSE)
+                    inputs.Update(game.config, game.data.Player.Position);
                 game.Update(inputs);
                 
                 //----------------------------------------------------------------------------------
