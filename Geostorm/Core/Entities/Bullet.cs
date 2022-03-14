@@ -9,17 +9,19 @@ using Geostorm.Renderer;
 namespace Geostorm.Core.Entities
 {
     class Bullet : Entity
-    {
+    {   
+
         public Bullet()
         {
 
         }
         public void Update() 
         {
+            Position += Velocity;
         }
         public override void Draw(Graphics graphics, Camera camera) 
         {
-            graphics.DrawBullet(Position, Rotation);
+            graphics.DrawBullet(Position + camera.Pos, Rotation);
         }
     }
 }

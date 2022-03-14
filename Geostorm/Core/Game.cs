@@ -25,6 +25,7 @@ namespace Geostorm.Core
         {
 
         }
+
         public void Update(GameInputs inputs)
         {
             datas.ui.Update();
@@ -46,6 +47,7 @@ namespace Geostorm.Core
                     break;
             }
         }
+
         public void UpdateMainMenu(GameInputs inputs)
         {
             if (datas.ui.buttons["start"].IsClicked())
@@ -84,12 +86,22 @@ namespace Geostorm.Core
 
         public void UpdateInGame(GameInputs inputs)
         {
+            List<Event> events = new List<Event>();
+
             datas.camera.Update(inputs, datas.Player.Position, datas.MapSize);
             for (int i = 0; i < datas.stars.Count(); i++)
                 datas.stars[i].Update(datas.camera);
-            datas.Player.Update(inputs, datas.MapSize);
+
             if (IsKeyPressed(KeyboardKey.KEY_ESCAPE))
                 datas.ui.SwitchToScene(GameData.Scene.PAUSE, ref datas.scene);
+
+            datas.Player.Update(inputs, datas, events);
+
+            for (int i = 0; i < datas.bullets.Count ; i++)
+                datas.bullets[i].Update();
+
+            foreach (IGameEventListener eventListener in eventListeners)
+                eventListener.HandleEvents(events, datas);
         }
         public void UpdatePause(GameInputs inputs)
         {
@@ -122,9 +134,14 @@ namespace Geostorm.Core
                         // Draw Player
                         datas.Player.Draw(graphics, datas.camera);
 
+                        for(int i = 0; i < datas.bullets.Count; i++)
+                        {
+                            datas.bullets[i].Draw(graphics, datas.camera);
+                        }
+
                         //Draw enemies
                         foreach (var enemy in datas.enemies)
-                            enemy.Draw();
+                            enemy.Draw(graphics, datas.camera);
 
                         DrawFPS(10, 10);
                     }

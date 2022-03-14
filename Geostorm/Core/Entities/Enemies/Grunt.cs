@@ -21,7 +21,7 @@ namespace Geostorm.Core.Entities.Enemies
         float rotation;
         
         public void DoUpdate() { }
-        public new void Draw(Graphics graphics) 
+        public override void Draw(Graphics graphics, Camera camera) 
         {
             graphics.DrawGrunt(pos, rotation, spawnTime);
         }

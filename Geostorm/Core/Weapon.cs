@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Geostorm.Core.Entities;
 using Geostorm.Core.Events;
 
 namespace Geostorm.Core
@@ -22,7 +23,21 @@ namespace Geostorm.Core
 
         public void Update(in GameInputs inputs, GameData data, List<Event> events) 
         {
+            if (inputs.Shoot)
+            {
+                Bullet b = new Bullet();
+                b.Position = data.Player.Position + MathHelper.GetVectorRot(data.Player.WeaponRotation) * 23;
+                b.Rotation = data.Player.WeaponRotation;
+                b.Velocity = MathHelper.GetVectorRot(b.Rotation);
+                
+                //data.AddBulletDelayed(b);
+                data.bullets.Add(b);
 
+                // Optional
+                BulletShootEvent shootEvent = new BulletShootEvent();
+                shootEvent.Bullet = b;
+                events.Add(shootEvent);
+            }
         }
     }
 }

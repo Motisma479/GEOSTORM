@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-
 using System.Numerics;
+
 namespace Geostorm.Core.Entities
 {
     static class PlayerTexture
@@ -27,7 +26,7 @@ namespace Geostorm.Core.Entities
     static class BulletTexture
     {
         private static readonly float preScale = 15.0f;
-        public static float thickness = 5f;
+        public static float thickness = 1f;
         public static readonly Vector2[] Points =
         {
             new Vector2(-0.3f, 0.0f)    * preScale,     //left  

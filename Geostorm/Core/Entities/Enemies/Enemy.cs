@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Geostorm.Core;
 using Geostorm.Core.Events;
-
-
+using Geostorm.Renderer;
 
 namespace Geostorm.Core.Entities.Enemies
 {
@@ -14,7 +13,7 @@ namespace Geostorm.Core.Entities.Enemies
     {
         int spawnTime;
         public sealed override void Update(in GameInputs inputs, GameData datas, List<Event> events) { }
-        public void Draw() 
+        public override void Draw(Graphics graphics, Camera camera) 
         {
         }
     }
