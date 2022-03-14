@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using Geostorm.Core;
@@ -28,24 +28,37 @@ namespace Geostorm
             var renders = new Graphics();
             renders.Load();
             game.config.LoadConfigFile();
+            Shader bloomShader = LoadShader("", "Assets/Shaders/bloom.fs");
             //--------------------------------------------------------------------------------------
+            RenderTexture2D target = LoadRenderTexture(GetScreenWidth(),GetScreenHeight());
 
             // Main game loop
             while (!WindowShouldClose() && !game.ShouldClose)
             {
                 // Update
                 //----------------------------------------------------------------------------------
+                Vector2 size = new Vector2(GetScreenWidth(), GetScreenHeight());
+                if (size != inputs.ScreenSize)
+                {
+                    UnloadRenderTexture(target);
+                    target = LoadRenderTexture(GetScreenWidth(), GetScreenHeight());
+                }
                 float dt = GetFrameTime();
                 inputs.Update(game.config, game.data.Player.Position);
                 game.Update(inputs);
                 //----------------------------------------------------------------------------------
 
-
                 // Draw
                 //----------------------------------------------------------------------------------
-                BeginDrawing();
+                BeginTextureMode(target);
                 ClearBackground(Color.BLACK);
                 game.Render(renders, inputs);
+                EndTextureMode();
+                BeginDrawing();
+                ClearBackground(Color.BLACK);
+                BeginShaderMode(bloomShader);
+                DrawTextureRec(target.texture, new Rectangle( 0, 0, (float)target.texture.width, (float)-target.texture.height), new Vector2(0, 0), Color.WHITE);
+                EndShaderMode();
                 EndDrawing();
                 //----------------------------------------------------------------------------------
             }
@@ -53,6 +66,8 @@ namespace Geostorm
             // De-Initialization
             //--------------------------------------------------------------------------------------
             game.config.WriteConfigFile();
+            UnloadShader(bloomShader);
+            UnloadRenderTexture(target);
             CloseAudioDevice();
             CloseWindow();
             //--------------------------------------------------------------------------------------
