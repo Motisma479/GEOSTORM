@@ -76,15 +76,22 @@ namespace Geostorm.Core
                     break;
                 case GameData.Scene.InGame:
                     {
-                        for (int i = 0; i < datas.stars.Count(); i++)
-                                datas.stars[i].Draw(graphics,datas.camera);
+                        // Draw element in the map.
+                        foreach (var star in datas.stars)
+                            if (IsInside(star.Pos + datas.camera.Pos * star.Speed))
+                                star.Draw(graphics,datas.camera);
                         graphics.DrawMap(datas.MapSize, datas.camera);
+
+                        // Draw the Debug.
                         DrawDebug(inputs);
+
+                        // Draw Player
                         datas.Player.Draw(graphics,datas.camera);
-                        /*
-                        for (int i = 0; i < datas.enemies.Count(); i++)
-                            datas.enemies[i].Draw();
-                        */
+
+                        //Draw enemies
+                        foreach (var enemy in datas.enemies)
+                            enemy.Draw();
+
                         DrawFPS(10, 10);
                     }
                     break;

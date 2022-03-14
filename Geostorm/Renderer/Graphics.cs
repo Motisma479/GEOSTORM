@@ -62,7 +62,8 @@ namespace Geostorm.Renderer
                 DrawLineEx(curentP, curentP2, Core.Entities.PlayerTexture.thickness, Color.WHITE);
 
             }
-            DrawCircleV(pos+MathHelper.getVectorRot(weaponRotation)*20,3.0f,Color.WHITE);
+            Vector2 WeaponPos = (pos + MathHelper.getVectorRot(weaponRotation) * 20);
+            DrawCircleV(WeaponPos,3.0f,Color.WHITE);
         }
         public void DrawGrunt(Vector2 pos, float rotation, float activeTime)
         {
