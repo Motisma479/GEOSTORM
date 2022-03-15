@@ -52,9 +52,9 @@ namespace Geostorm.Renderer
             for (int i = 0; i < connexions.Length; i++)
             {
                 float cLength = (connexions[i].pPos - pPos).Length();
-                if (cLength > 25)
+                if (cLength > 24)
                 {
-                    pVel += (connexions[i].pPos - pPos) / 1250 * (cLength - 25);
+                    pVel += (connexions[i].pPos - pPos) / 1500 * (cLength - 24);
                 }
             }
         }

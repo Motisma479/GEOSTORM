@@ -13,8 +13,6 @@ namespace Geostorm.Core
         public Vector2 ScreenPos;
         public Vector2 ScreenSize;
         public Vector2 LocalSize;
-        public float DeltaTime;
-        public float TotalTime;
         public Vector2 MoveAxis;
         public Vector2 ShootAxis;
         public bool Shoot;
@@ -23,7 +21,6 @@ namespace Geostorm.Core
         public void Update(GameConfig configs, Vector2 playerPos)
         {
             ScreenSize = new Vector2(GetScreenWidth(), GetScreenHeight());
-            DeltaTime = GetFrameTime();
             MoveAxis = new Vector2(
             configs.KeyboardInputs[3].ReadAxisKey() - configs.KeyboardInputs[1].ReadAxisKey(),
             configs.KeyboardInputs[2].ReadAxisKey() - configs.KeyboardInputs[0].ReadAxisKey()

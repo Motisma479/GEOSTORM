@@ -24,14 +24,19 @@ namespace Geostorm.Core.Entities
             Position += Velocity;
             if (!Raylib.CheckCollisionPointRec(Position, new Rectangle(CollisionRadius * 2, CollisionRadius * 2, data.MapSize.X - CollisionRadius * 4, data.MapSize.Y - CollisionRadius * 4)))
             {
-                Position = new Vector2(MathHelper.CutFloat(Position.X,0,data.MapSize.X),MathHelper.CutFloat(Position.Y,0,data.MapSize.Y));
-                IsDead = true;
-                for (int i = 0; i < Raylib.GetRandomValue(10, 20); i++)
-                {
-                    Vector3 tmpColor = Raylib.ColorToHSV(Color.YELLOW);
-                    tmpColor.X += Raylib.GetRandomValue(-30, 15);
-                    data.particles.Add(new Explosion(Position, i * Raylib.GetRandomValue(0, 360), Raylib.ColorFromHSV(tmpColor.X, tmpColor.Y, tmpColor.Z)));
-                }
+                KillEntity(data);
+            }
+        }
+
+        public override void KillEntity(GameData data)
+        {
+            Position = new Vector2(MathHelper.CutFloat(Position.X, 1, data.MapSize.X-1), MathHelper.CutFloat(Position.Y, 1, data.MapSize.Y-1));
+            IsDead = true;
+            for (int i = 0; i < Raylib.GetRandomValue(10, 20); i++)
+            {
+                Vector3 tmpColor = Raylib.ColorToHSV(Color.YELLOW);
+                tmpColor.X += Raylib.GetRandomValue(-30, 15);
+                data.particles.Add(new Explosion(Position, i * Raylib.GetRandomValue(0, 360), Raylib.ColorFromHSV(tmpColor.X, tmpColor.Y, tmpColor.Z)));
             }
         }
         public override void Draw(Graphics graphics, Camera camera)

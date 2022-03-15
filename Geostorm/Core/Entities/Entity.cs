@@ -18,9 +18,11 @@ namespace Geostorm.Core.Entities
         public float CollisionRadius;
         protected int weight;
         protected int range;
+        public readonly int Level;
         public int Weight { get => weight;}
         public virtual int Range { get => range; }
 
+        public virtual void KillEntity(GameData data) { }
         public virtual void Update(in GameInputs inputs, GameData data, List<Event> events) { }
         public virtual void Draw(Graphics graphics, Camera camera) { }
     }

@@ -42,6 +42,8 @@ namespace Geostorm.Core
         public Camera camera = new Camera();
 
         public float DeltaTime = 0;
+        public float TotalTime = 0;
+        public Random rng;
 
         // Temporary List
         private List<Enemy> enemiesAdded = new List<Enemy>();
@@ -50,6 +52,7 @@ namespace Geostorm.Core
 
         public GameData()
         {
+            rng = new Random();
             ui = new Ui(Scene.MAIN_MENU, ref scene);
             scene = Scene.MAIN_MENU;
             MapSize = new Vector2(350 * 4, 350 * 3);
@@ -88,6 +91,7 @@ namespace Geostorm.Core
         public void UpdateDeltaTime()
         {
             DeltaTime = GetFrameTime();
+            TotalTime = (float)GetTime();
         }
 
         public void AddEnemyDelayed(Enemy enemy) 
