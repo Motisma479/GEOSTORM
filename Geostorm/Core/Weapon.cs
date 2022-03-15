@@ -86,7 +86,20 @@ namespace Geostorm.Core
     }
     class Weapon2 : Weapon
     {
-        
+        public Weapon2()
+        { }
+        public override void Update(in GameInputs inputs, GameData data, List<Event> events)
+        {
+
+            if (inputs.Shoot && coolDown <= 0)
+            {
+
+                //addBullet(data, MathF.Sin(data.TotalTime));
+                coolDown = 1 / 6.0f;
+            }
+            else
+                coolDown -= data.DeltaTime;
+        }
     }
     class Weapon3 : Weapon
     {
