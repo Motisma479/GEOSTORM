@@ -20,7 +20,7 @@ namespace Geostorm.Renderer.Particles
         public virtual void Update(GameData data)
         {
         }
-        public void Draw(Graphics graphics, Camera cam)
+        public virtual void Draw(Graphics graphics, Camera cam)
         {
             graphics.DrawParticle(Position + cam.Pos, Rotation, Color, time);
         }
