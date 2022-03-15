@@ -13,18 +13,18 @@ namespace Geostorm.Core.Entities.Enemies
 {
     class Enemy : Entity
     {
-        protected int spawnTime;
+        protected float spawnTime;
         protected int Level;
 
         public override int Range { get => spawnTime > 0 ? 0 : range; }
 
-        public int SpawnTime { get => spawnTime;}
+        public float SpawnTime { get => spawnTime;}
 
-        public int ScoreDrop;
+        
 
         public sealed override void Update(in GameInputs inputs, GameData data, List<Event> events)
         {
-            spawnTime--;
+            spawnTime-= 60*data.DeltaTime;
             if (spawnTime >= 60) return;
             if (spawnTime <= 0)
             {

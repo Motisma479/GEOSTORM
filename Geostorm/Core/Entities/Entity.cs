@@ -21,6 +21,8 @@ namespace Geostorm.Core.Entities
         public int Weight { get => weight;}
         public virtual int Range { get => range; }
 
+        public int ScoreDrop;
+
         public virtual void KillEntity(GameData data) { }
         public virtual void Update(in GameInputs inputs, GameData data, List<Event> events) { }
         public virtual void Draw(Graphics graphics, Camera camera) { }
