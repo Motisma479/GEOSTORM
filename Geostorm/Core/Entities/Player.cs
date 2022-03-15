@@ -136,7 +136,6 @@ namespace Geostorm.Core.Entities
                 default:
                     break;
             }
-            System.Console.WriteLine(data.Score);
         }
         public override void Draw(Graphics graphics, Camera camera)
         {

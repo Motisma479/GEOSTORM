@@ -43,8 +43,27 @@ namespace Geostorm.Core.Entities
         {
             new Vector2(-1.0f, 0.0f)    * preScale,     //left  
             new Vector2(-0.0f,-1.0f)    * preScale,     //top  
-            new Vector2( 1.0f, 0.0f)     * preScale,     //right 
+            new Vector2( 1.0f, 0.0f)    * preScale,     //right 
             new Vector2(-0.0f, 1.0f)    * preScale      //bottom
+        };
+    }
+    static class MillTexture
+    {
+        private static readonly float preScale = 25.0f;
+        public static float thickness = 4f;
+        public static readonly Vector2[] Pal1 =
+        {
+            new Vector2( 0.0f, 1.0f)    * preScale,     //p1  
+            new Vector2( 1.0f, 1.0f)    * preScale,     //p2  
+            new Vector2(-1.0f,-1.0f)    * preScale,     //p3 
+            new Vector2( 0.0f,-1.0f)    * preScale      //p4
+        };
+        public static readonly Vector2[] Pal2 =
+        {
+            new Vector2(-1.0f, 0.0f)    * preScale,     //p5  
+            new Vector2(-1.0f, 1.0f)    * preScale,     //p6  
+            new Vector2( 1.0f,-1.0f)    * preScale,     //p7 
+            new Vector2( 1.0f, 0.0f)    * preScale      //p8
         };
     }
     static class PointerTexture
@@ -55,7 +74,7 @@ namespace Geostorm.Core.Entities
         {
             new Vector2(-1.0f, 0.0f)    * preScale,     //left  
             new Vector2(-0.0f,-1.0f)    * preScale,     //top  
-            new Vector2( 1.0f, 0.0f)     * preScale,     //right
+            new Vector2( 1.0f, 0.0f)    * preScale,     //right
         };
     }
     static class CursorTexture

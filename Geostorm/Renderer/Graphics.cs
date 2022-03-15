@@ -98,6 +98,29 @@ namespace Geostorm.Renderer
 
             }
         }
+        public void DrawMill(Vector2 pos, Vector2 renderScale, float rotation, float activeTime)
+        {
+            //Copie of the other but d
+            Matrix3x2 rotate = Matrix3x2.CreateRotation((MathHelper.ToRadians(rotation)));
+            for (int i = 0; i <= Core.Entities.MillTexture.Pal1.Length - 1; i++)
+            {
+                Vector2 curentP = Vector2.Transform(Core.Entities.MillTexture.Pal1[i], rotate) * renderScale + pos;
+                Vector2 curentP2 = Vector2.Transform(Core.Entities.MillTexture.Pal1[(i + 1) % Core.Entities.MillTexture.Pal1.Length], rotate) * renderScale + pos;
+
+                DrawCircleV(curentP, Core.Entities.MillTexture.thickness / 2, Color.PURPLE);
+                DrawLineEx(curentP, curentP2, Core.Entities.MillTexture.thickness, Color.PURPLE);
+
+            }
+            for (int i = 0; i <= Core.Entities.MillTexture.Pal2.Length - 1; i++)
+            {
+                Vector2 curentP = Vector2.Transform(Core.Entities.MillTexture.Pal2[i], rotate) * renderScale + pos;
+                Vector2 curentP2 = Vector2.Transform(Core.Entities.MillTexture.Pal2[(i + 1) % Core.Entities.MillTexture.Pal2.Length], rotate) * renderScale + pos;
+
+                DrawCircleV(curentP, Core.Entities.MillTexture.thickness / 2, Color.PURPLE);
+                DrawLineEx(curentP, curentP2, Core.Entities.MillTexture.thickness, Color.PURPLE);
+
+            }
+        }
 
         public void DrawBullet(Vector2 pos, float rotation)
         {
