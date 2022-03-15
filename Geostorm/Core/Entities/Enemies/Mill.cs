@@ -75,6 +75,7 @@ namespace Geostorm.Core.Entities.Enemies
                 tmpColor.X += data.rng.Next(-30, 15);
                 data.particles.Add(new Explosion(Position, i * data.rng.Next(0,360), Raylib.ColorFromHSV(tmpColor.X, tmpColor.Y, tmpColor.Z), data.rng.Next(40, 80)));
             }
+            data.particles.Add(new Score(ScoreDrop.ToString(), Position, GetRandomValue(0, 360), Raylib_cs.Color.LIME, GetRandomValue(40, 80)));
         }
         public override void DoDraw(Graphics graphics, Camera camera) 
         {

@@ -32,7 +32,8 @@ namespace Geostorm.Core.Entities
                 tmpColor.X += GetRandomValue(-30, 15);
                 data.particles.Add(new Explosion(Position, i * GetRandomValue(0, 360), ColorFromHSV(tmpColor.X, tmpColor.Y, tmpColor.Z), GetRandomValue(40, 80)));
             }
-            data.particles.Add(new Score(ScoreDrop.ToString(),Position, GetRandomValue(0, 360), Raylib_cs.Color.LIME, GetRandomValue(40, 80)));
+            if(ScoreDrop>0)
+                data.particles.Add(new Score(ScoreDrop.ToString(),Position, GetRandomValue(0, 360), Raylib_cs.Color.LIME, GetRandomValue(40, 80)));
         }
         public void Update(GameData data)
         {
