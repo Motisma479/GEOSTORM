@@ -94,8 +94,9 @@ namespace Geostorm.Core
             if (inputs.Shoot && coolDown <= 0)
             {
 
-                //addBullet(data, MathF.Sin(data.TotalTime));
-                coolDown = 1 / 6.0f;
+                addBullet(data, MathHelper.ToDegrees(MathF.Cos(data.TotalTime*5)/3));
+                System.Console.WriteLine(MathF.Sin(data.TotalTime));
+                coolDown = 1 / 16.0f;
             }
             else
                 coolDown -= data.DeltaTime;
