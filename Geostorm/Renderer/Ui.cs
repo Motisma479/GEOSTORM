@@ -12,14 +12,15 @@ namespace Geostorm.Renderer
 {
     class Ui
     {
+        public static string[] AimType = { "Mouse Move cursor", "Joystick Move cursor", "Joystick Set Cursor"};
         public static string[] InputStrings = { "Move Up", "Move Left", "Move Down", "Move Right", "Shoot", "Move Cursor Up", "Move Cursor Left", "Move Cursor Down", "Move Cursor Right" };
         public Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
         public Dictionary<string, Button> buttons = new Dictionary<string, Button>();
 
         public Ui() { }
-        public Ui(GameData.Scene scene, ref GameData.Scene currentScene)
+        public Ui(GameData.Scene scene, ref GameData.Scene currentScene, GameData data)
         {
-            SwitchToScene(scene, ref currentScene, new GameConfig());
+            SwitchToScene(scene, ref currentScene, new GameConfig(), data);
         }
         public void Update()
         {
@@ -54,8 +55,9 @@ namespace Geostorm.Renderer
                     {
                         for (int i = 0; i < config.KeyboardInputs.Length; i++)
                         {
-                            DrawText(InputStrings[i], 200, 100 + 100 * i, 50, BLUE);
+                            DrawText(InputStrings[i], 200, 100 + 75 * i, 50, BLUE);
                         }
+                        DrawText("Aim Type : ", GetScreenWidth() - 400 - MeasureText("Aim Type : ", 50), GetScreenHeight() - 200, 50, BLUE);
                         foreach (var button in buttons)
                             button.Value.Draw();
                     }
@@ -64,7 +66,7 @@ namespace Geostorm.Renderer
                     break;
             }
         }
-        public void SwitchToScene(GameData.Scene scene, ref GameData.Scene currentScene, GameConfig config)
+        public void SwitchToScene(GameData.Scene scene, ref GameData.Scene currentScene, GameConfig config, GameData data)
         {
             sprites.Clear();
             buttons.Clear();
@@ -83,7 +85,13 @@ namespace Geostorm.Renderer
                     break;
                 case GameData.Scene.IN_GAME:
                     {
-
+                        data.enemies.Clear();
+                        data.entities.Clear();
+                        data.particles.Clear();
+                        data.blackHoles.Clear();
+                        data.stars.Clear();
+                        data.InitGameData();
+                        data.Player = new Core.Entities.Player();
                     }
                     break;
                 case GameData.Scene.PAUSE:
@@ -98,11 +106,13 @@ namespace Geostorm.Renderer
                     {
                         for (int i = 0; i < config.KeyboardInputs.Length; i++)
                         {
-                            buttons["input" + i] = new Button(new Vector2(GetScreenWidth() / 2 + 350, 100 + 100 * i), new Vector2(300, 50), ButtonType.MANUAL, DARKBLUE);
+                            buttons["input" + i] = new Button(new Vector2(GetScreenWidth() / 2 + 350, 100 + 75 * i), new Vector2(300, 50), ButtonType.MANUAL, DARKBLUE);
                             buttons["input" + i].SetText("", new Vector2(85, 8), 90, BLACK);
                         }
                         buttons["back"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, GetScreenHeight() - 200), new Vector2(400, 100), ButtonType.TEXT, DARKBLUE);
                         buttons["back"].SetText("BACK", new Vector2(85, 8), 90, BLACK);
+                        buttons["aimtype"] = new Button(new Vector2(GetScreenWidth() - 400, GetScreenHeight() - 200), new Vector2(300, 50), ButtonType.TEXT, DARKBLUE);
+                        buttons["aimtype"].SetText(Geostorm.Renderer.Ui.AimType[config.AimType], new Vector2(10, 10), 26, Color.BLACK);
                     }
                     break;
                 default:

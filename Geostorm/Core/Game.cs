@@ -55,9 +55,9 @@ namespace Geostorm.Core
         public void UpdateMainMenu(GameInputs inputs)
         {
             if (data.ui.buttons["start"].IsClicked())
-                data.ui.SwitchToScene(GameData.Scene.IN_GAME, ref data.scene, config);
+                data.ui.SwitchToScene(GameData.Scene.IN_GAME, ref data.scene, config, data);
             else if (data.ui.buttons["settings"].IsClicked())
-                data.ui.SwitchToScene(GameData.Scene.SETTINGS, ref data.scene, config);
+                data.ui.SwitchToScene(GameData.Scene.SETTINGS, ref data.scene, config, data);
             else if (data.ui.buttons["quit"].IsClicked())
                 ShouldClose = true;
             if (IsKeyPressed(KeyboardKey.KEY_ESCAPE))
@@ -68,8 +68,14 @@ namespace Geostorm.Core
         static int timeCount = 0;
         public void UpdateSettings(GameInputs inputs)
         {
+            if (data.ui.buttons["aimtype"].IsClicked())
+            {
+                config.AimType = (config.AimType + 1) % 3;
+                data.ui.buttons["aimtype"].SetText(Geostorm.Renderer.Ui.AimType[config.AimType], new Vector2(10, 10), 26, Color.BLACK);
+            }
+
             if (data.ui.buttons["back"].IsClicked())
-                data.ui.SwitchToScene(GameData.Scene.MAIN_MENU, ref data.scene, config);
+                data.ui.SwitchToScene(GameData.Scene.MAIN_MENU, ref data.scene, config, data);
             else
             {
                 for (int i = 0; i < config.KeyboardInputs.Length; i++)
@@ -126,12 +132,12 @@ namespace Geostorm.Core
                 data.stars[i].Update(data.camera);
             //Ui Update
             if (IsKeyPressed(KeyboardKey.KEY_ESCAPE))
-                data.ui.SwitchToScene(GameData.Scene.PAUSE, ref data.scene, config);
+                data.ui.SwitchToScene(GameData.Scene.PAUSE, ref data.scene, config, data);
             // Update Player
-            data.Player.Update(inputs,data,events);
+            data.Player.Update(inputs, data, events);
             // Update Entities
             for (int i = 0; i < data.entities.Count; i++)
-                data.entities[i].Update(inputs,data,events);
+                data.entities[i].Update(inputs, data, events);
 
             foreach (IGameEventListener eventListener in eventListeners)
                 eventListener.HandleEvents(events, data);
@@ -159,9 +165,9 @@ namespace Geostorm.Core
         {
             ShowCursor();
             if (data.ui.buttons["resume"].IsClicked() || IsKeyPressed(KeyboardKey.KEY_ESCAPE))
-                data.ui.SwitchToScene(GameData.Scene.IN_GAME, ref data.scene, config);
+                data.ui.SwitchToScene(GameData.Scene.IN_GAME, ref data.scene, config, data);
             else if (data.ui.buttons["quit"].IsClicked())
-                data.ui.SwitchToScene(GameData.Scene.MAIN_MENU, ref data.scene, config);
+                data.ui.SwitchToScene(GameData.Scene.MAIN_MENU, ref data.scene, config, data);
         }
 
         public void Render(Graphics graphics, GameInputs inputs)
@@ -212,7 +218,7 @@ namespace Geostorm.Core
                 case GameData.Scene.SETTINGS:
                     {
                         if (timeCount > 0)
-                            DrawText("You cannot assign a key that is already set", GetScreenWidth() / 2 - MeasureText("You cannot assign a key that is already set", 75) / 2, 100, 75, Color.RED);
+                            DrawText("You cannot assign a key that is already set", GetScreenWidth() / 2 - MeasureText("You cannot assign a key that is already set", 75) / 2, 20, 75, Color.RED);
                     }
                     break;
                 default:
