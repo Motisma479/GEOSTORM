@@ -109,7 +109,7 @@ namespace Geostorm.Core.Entities
                     range = 100;
                 }
             }
-
+            //
             switch (WeaponLevel)
             {
                 case 0:
@@ -120,49 +120,49 @@ namespace Geostorm.Core.Entities
                     }
                     break;
                 case 1:
-                    if (data.Score > 2500)
+                    if (data.Score > 1875)
                     {
                         weapon = new Weapon2();
                         WeaponLevel++;
                     }
                     break;
                 case 2:
-                    if (data.Score > 3750)
+                    if (data.Score > 2812)
                     {
                         weapon = new Weapon3();
                         WeaponLevel++;
                     }
                     break;
                 case 3:
-                    if (data.Score > 5000)
+                    if (data.Score > 4218)
                     {
                         weapon = new Weapon4();
                         WeaponLevel++;
                     }
                     break;
                 case 4:
-                    if (data.Score > 6250)
+                    if (data.Score > 6328)
                     {
                         weapon = new Weapon5();
                         WeaponLevel++;
                     }
                     break;
                 case 5:
-                    if (data.Score > 7500)
+                    if (data.Score > 9492)
                     {
                         weapon = new Weapon6();
                         WeaponLevel++;
                     }
                     break;
                 case 6:
-                    if (data.Score > 10000)
+                    if (data.Score > 14238)
                     {
                         weapon = new Weapon7();
                         WeaponLevel++;
                     }
                     break;
                 case 7:
-                    if (data.Score > 30000)
+                    if (data.Score > 28476)
                     {
                         weapon = new Weapon8();
                         WeaponLevel++;
