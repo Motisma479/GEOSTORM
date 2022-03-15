@@ -75,6 +75,13 @@ namespace Geostorm.Renderer
             {
                 case GameData.Scene.MAIN_MENU:
                     {
+                        data.enemies.Clear();
+                        data.entities.Clear();
+                        data.particles.Clear();
+                        data.blackHoles.Clear();
+                        data.stars.Clear();
+                        data.InitGameData();
+                        data.Player = new Core.Entities.Player();
                         buttons["start"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, 400), new Vector2(400, 100), ButtonType.TEXT, DARKBLUE);
                         buttons["start"].SetText("START", new Vector2(15, 0), 100, BLACK);
                         buttons["settings"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, 600), new Vector2(400, 100), ButtonType.TEXT, DARKBLUE);
@@ -85,13 +92,6 @@ namespace Geostorm.Renderer
                     break;
                 case GameData.Scene.IN_GAME:
                     {
-                        data.enemies.Clear();
-                        data.entities.Clear();
-                        data.particles.Clear();
-                        data.blackHoles.Clear();
-                        data.stars.Clear();
-                        data.InitGameData();
-                        data.Player = new Core.Entities.Player();
                     }
                     break;
                 case GameData.Scene.PAUSE:

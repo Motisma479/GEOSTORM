@@ -16,6 +16,7 @@ namespace Geostorm.Core
         public GameData data;
         public GameConfig config;
         public bool ShouldClose = false;
+        float time;
         List<IGameEventListener> eventListeners = new List<IGameEventListener>();
 
         public Game()
@@ -158,7 +159,16 @@ namespace Geostorm.Core
             }
             foreach (var blackhole in data.blackHoles)
                 blackhole.Update(data);
+            
+            if (data.enemies.Count() <= 0 && data.blackHoles.Count() <= 0 && (time <= 0))
+            {
+                time = 60/6.0f;
+                data.ChangeRound();
+            }
+            
             data.Synchronize();
+            time -= data.DeltaTime;
+            Console.WriteLine(time);
         }
 
         public void UpdatePause(GameInputs inputs)

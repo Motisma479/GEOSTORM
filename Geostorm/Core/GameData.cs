@@ -20,6 +20,7 @@ namespace Geostorm.Core
             PAUSE,
             SETTINGS
         }
+        public int round = 0;
 
         public Scene scene;
         public Ui ui;
@@ -130,11 +131,15 @@ namespace Geostorm.Core
                 }
                 Grid[i].AddPoints(connect, count);
             }
-            //! Temporary
-            for (int i = 0; i < 200; i++)
+        }
+
+        public void ChangeRound()
+        {
+            round++;
+            for (int i = 0; i < round * 200; i++)
                 AddEnemyDelayed(new Core.Entities.Enemies.Grunt(50 + 5 * i, this));
-            var tmp = new BlackHole(new Vector2(100, 100), GetRandomValue(35, 50));
-            AddBlackHoleDelayed(tmp);
+            for (int i = 0; i < round * 2; i++)
+                AddBlackHoleDelayed(new BlackHole(new Vector2(rng.Next(100, (int)(MapSize.X - 100)), rng.Next(100, (int)(MapSize.Y - 100))), GetRandomValue(35, 50)));
         }
     }
 }
