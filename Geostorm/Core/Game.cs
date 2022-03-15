@@ -49,6 +49,7 @@ namespace Geostorm.Core
                 default:
                     break;
             }
+            data.UpdateDeltaTime();
         }
 
         public void UpdateMainMenu(GameInputs inputs)

@@ -41,6 +41,7 @@ namespace Geostorm.Core
         public List<Star> stars = new List<Star>();
         public Camera camera = new Camera();
 
+        public float DeltaTime = 0;
 
         // Temporary List
         private List<Enemy> enemiesAdded = new List<Enemy>();
@@ -82,6 +83,11 @@ namespace Geostorm.Core
                 }
                 Grid[i].AddPoints(connect, count);
             }
+        }
+
+        public void UpdateDeltaTime()
+        {
+            DeltaTime = GetFrameTime();
         }
 
         public void AddEnemyDelayed(Enemy enemy) 

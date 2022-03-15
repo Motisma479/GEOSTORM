@@ -17,9 +17,11 @@ namespace Geostorm.Core.Entities
         Weapon weapon;
         float targetRotation = 0;
         public float WeaponRotation = 0;
+
+        int Weaponlevel;
         public Player()
         {
-            weapon = new Weapon();
+            weapon = new Weapon0();
             CollisionRadius = 20;
             Position.X = 200;
             Position.Y = 200;
