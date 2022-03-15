@@ -14,17 +14,18 @@ namespace Geostorm.Core.Entities
     class BlackHole : Entity
     {
         bool active = false;
-        float attraction = 0.01f;
         public BlackHole(Vector2 pos, float Radius)
         {
             Position = pos;
             CollisionRadius = Radius;
+            range = (int)(CollisionRadius+50);
+            weight = 100000;
         }
         public override void KillEntity(GameData data)
         {
             Position = new Vector2(MathHelper.CutFloat(Position.X, 1, data.MapSize.X - 1), MathHelper.CutFloat(Position.Y, 1, data.MapSize.Y - 1));
             IsDead = true;
-            for (int i = 0; i < GetRandomValue(100, 150); i++)
+            for (int i = 0; i < GetRandomValue(150, 200); i++)
             {
                 Vector3 tmpColor = ColorToHSV(RED);
                 tmpColor.X += GetRandomValue(-30, 15);
@@ -36,37 +37,44 @@ namespace Geostorm.Core.Entities
             foreach (var bullet in data.bullets)
                 if (CheckCollisionCircles(bullet.Position, bullet.CollisionRadius, Position, CollisionRadius))
                 {
-                    CollisionRadius -= 1f;
+                    CollisionRadius -= 3f;
+                    bullet.KillEntity(data);
                 }
-            if (MathHelper.SuperiorOrEqual(data.Player.Position, Position + new Vector2(-25, -25)) && MathHelper.InferiorOrEqual(data.Player.Position, Position + new Vector2(25, 25)))
-                data.Player.RemoveLife(data);
-            if (CollisionRadius <= 30)
+            if (CollisionRadius <= 30 && !active)
+            {
+                range = (int)(CollisionRadius * 3);
                 active = true;
+            }
             if (active)
             {
-                if (CheckCollisionCircles(data.Player.Position, data.Player.CollisionRadius, Position, CollisionRadius + 50))
+                weight = (int)(-(200 - CollisionRadius) * 500);
+                float pLength = (data.Player.Position - Position).Length() - (data.Player.CollisionRadius + CollisionRadius + 300);
+                if (pLength < 0)
                 {
-                    attraction = 1f;
-                    if (CheckCollisionCircles(data.Player.Position, data.Player.CollisionRadius, Position, CollisionRadius - 30))
-                        attraction = 3f;
-                    if (data.Player.Position.X < Position.X)
-                        data.Player.Position.X += attraction;
-                    else if (data.Player.Position.X > Position.X)
-                        data.Player.Position.X -= attraction;
-                    if (data.Player.Position.Y < Position.X)
-                        data.Player.Position.Y += attraction;
-                    else if (data.Player.Position.Y > Position.X)
-                        data.Player.Position.Y -= attraction;
+                    data.Player.Position += (data.Player.Position - Position) / 8000 * pLength;
                 }
-                CollisionRadius += 0.1f;
+                foreach (var item in data.entities)
+                {
+                    if (item.IsDead || item.Range == 0.0f || (item == this)) continue;
+                    float mLength = (item.Position - Position).Length() - (item.CollisionRadius + CollisionRadius + 300);
+                    if (mLength < 0)
+                    {
+                        item.Position += (item.Position - Position) / 500000 * -mLength*mLength;
+                        if (mLength < -300)
+                        {
+                            item.KillEntity(data);
+                            CollisionRadius += 0.5f;
+                        }
+                    }
+                }
             }
             if (CollisionRadius <= 20)
             {
-                IsDead = true;
+                KillEntity(data);
             }
             if (CollisionRadius >= 100)
             {
-                IsDead = true;
+                KillEntity(data);
 
             }
         }

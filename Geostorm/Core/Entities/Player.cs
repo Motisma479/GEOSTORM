@@ -7,6 +7,8 @@ using System.Numerics;
 using Geostorm.Renderer;
 using Geostorm.Core.Events;
 using static Raylib_cs.Raylib;
+using Geostorm.Renderer.Particles;
+using Raylib_cs;
 
 namespace Geostorm.Core.Entities
 {
@@ -24,8 +26,8 @@ namespace Geostorm.Core.Entities
         {
             weapon = new Weapon0();
             CollisionRadius = 20;
-            Position.X = 200;
-            Position.Y = 200;
+            Position.X = 400;
+            Position.Y = 400;
             weight = 2222222;
             range = 100;
         }
@@ -35,16 +37,33 @@ namespace Geostorm.Core.Entities
             foreach (var entity in data.entities)
                 entity.KillEntity(data);
             life -= 1;
+            weight = 6000000;
+            range = 500;
             if (life <= 0)
                 IsDead = true;
             cooldown = 120;
+            for (int i = 0; i < data.rng.Next(200,250); i++)
+            {
+                Vector3 tmpColor = Raylib.ColorToHSV(Color.GREEN);
+                tmpColor.X += data.rng.Next(-30, 15);
+                data.particles.Add(new Explosion(Position, data.rng.Next(0, 360), Raylib.ColorFromHSV(tmpColor.X, tmpColor.Y, tmpColor.Z), data.rng.Next(40, 80)));
+            }
         }
 
         public override void Update(in GameInputs inputs, GameData data, List<Event> events)
         {
-            foreach (var enemies in data.enemies)
-                if (CheckCollisionCircles(enemies.Position, enemies.CollisionRadius, Position, CollisionRadius))
+            foreach (var enemy in data.enemies)
+            {
+                if (enemy.IsDead || enemy.SpawnTime >= 0) continue;
+                if ((enemy.Position - Position).Length() < (enemy.CollisionRadius+CollisionRadius))
                     RemoveLife(data);
+            }
+            foreach (var item in data.blackHoles)
+            {
+                if (item.IsDead) continue;
+                if ((item.Position - Position).Length() < (item.CollisionRadius + CollisionRadius))
+                    RemoveLife(data);
+            }
 
             if (inputs.MoveAxis.LengthSquared() != 0.0f)
             {
@@ -73,7 +92,14 @@ namespace Geostorm.Core.Entities
 
             weapon.Update(inputs, data, events);
             if (cooldown > 0)
+            {
                 cooldown--;
+                if (cooldown < 70)
+                {
+                    weight = 2222222;
+                    range = 100;
+                }
+            }
 
             switch (WeaponLevel)
             {
@@ -135,7 +161,6 @@ namespace Geostorm.Core.Entities
                     break;
                 default:
                     break;
-            }
         }
         public override void Draw(Graphics graphics, Camera camera)
         {

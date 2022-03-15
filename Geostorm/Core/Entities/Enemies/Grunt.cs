@@ -61,10 +61,10 @@ namespace Geostorm.Core.Entities.Enemies
         {
             Position = new Vector2(MathHelper.CutFloat(Position.X, 0, data.MapSize.X), MathHelper.CutFloat(Position.Y, 0, data.MapSize.Y));
             IsDead = true;
-            for (int i = 0; i < data.rng.Next(10, 20); i++)
+            for (int i = 0; i < data.rng.Next(30, 40); i++)
             {
                 Vector3 tmpColor = Raylib.ColorToHSV(Color.BLUE);
-                tmpColor.Y += data.rng.Next(-30, 15);
+                tmpColor.X += data.rng.Next(-30, 15);
                 data.particles.Add(new Explosion(Position, i * data.rng.Next(0,360), Raylib.ColorFromHSV(tmpColor.X, tmpColor.Y, tmpColor.Z), data.rng.Next(40, 80)));
             }
         }

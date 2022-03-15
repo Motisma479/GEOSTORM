@@ -32,7 +32,7 @@ namespace Geostorm.Core.Entities
         {
             Position = new Vector2(MathHelper.CutFloat(Position.X, 1, data.MapSize.X-1), MathHelper.CutFloat(Position.Y, 1, data.MapSize.Y-1));
             IsDead = true;
-            for (int i = 0; i < data.rng.Next(10, 20); i++)
+            for (int i = 0; i < data.rng.Next(20, 30); i++)
             {
                 Vector3 tmpColor = Raylib.ColorToHSV(Color.YELLOW);
                 tmpColor.X += data.rng.Next(-30, 15);

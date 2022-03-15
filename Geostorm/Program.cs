@@ -32,7 +32,6 @@ namespace Geostorm
             //--------------------------------------------------------------------------------------
             RenderTexture2D target = LoadRenderTexture(GetScreenWidth(),GetScreenHeight());
 
-
             // Main game loop
             while (!WindowShouldClose() && !game.ShouldClose)
             {
