@@ -36,8 +36,7 @@ namespace Geostorm.Core.Entities
         {
             foreach (var item in data.enemies)
             {
-                if (item.IsDead || item.SpawnTime >= 30) item.IsDead = true;
-                 else item.KillEntity(data);
+                 if (!item.IsDead && item.SpawnTime <= 90) item.KillEntity(data);
             }
             foreach (var item in data.blackHoles)
             {

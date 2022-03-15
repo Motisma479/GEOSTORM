@@ -62,8 +62,15 @@ namespace Geostorm.Core.Entities
                         item.Position += (item.Position - Position) / 550000 * -mLength*mLength;
                         if (mLength < -250)
                         {
-                            item.KillEntity(data);
-                            CollisionRadius += 0.5f;
+                            if (item.GetType() == this.GetType())
+                            {
+
+                            }
+                            else
+                            {
+                                item.KillEntity(data);
+                                CollisionRadius += 0.5f;
+                            }
                         }
                     }
                 }
