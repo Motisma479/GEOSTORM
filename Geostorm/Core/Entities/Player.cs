@@ -154,14 +154,14 @@ namespace Geostorm.Core.Entities
                     }
                     break;
                 case 6:
-                    if (data.Score > 8125)
+                    if (data.Score > 10000)
                     {
                         weapon = new Weapon7();
                         WeaponLevel++;
                     }
                     break;
                 case 7:
-                    if (data.Score > 8750)
+                    if (data.Score > 30000)
                     {
                         weapon = new Weapon8();
                         WeaponLevel++;
