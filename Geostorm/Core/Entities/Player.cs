@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Numerics;
 using Geostorm.Renderer;
 using Geostorm.Core.Events;
+using static Raylib_cs.Raylib;
 
 namespace Geostorm.Core.Entities
 {
@@ -30,6 +31,16 @@ namespace Geostorm.Core.Entities
             if (inputs.MoveAxis.LengthSquared() != 0.0f)
             {
                 Velocity += inputs.MoveAxis*3;
+
+                for (int i = 0; i < GetRandomValue(4, 10); i++)
+                {
+                    Vector2 p1 = new Vector2(-15, GetRandomValue(-2,2));
+                    Matrix3x2 rotate = Matrix3x2.CreateRotation(MathHelper.ToRadians(Rotation));
+                    Vector2 curentP = Vector2.Transform(p1, rotate) + Position;
+                    Vector3 tmpColor = ColorToHSV(Raylib_cs.Color.ORANGE);
+                    tmpColor.X += GetRandomValue(-15, 15);
+                    data.particles.Add(new Geostorm.Renderer.Particles.Fire(curentP, GetRandomValue((int)(Rotation - 180 + 15), (int)(Rotation - 180 - 15)), ColorFromHSV(tmpColor.X, tmpColor.Y, tmpColor.Z)));
+                }
             }
             if (MathHelper.GetRotation(Velocity,ref targetRotation))
             {

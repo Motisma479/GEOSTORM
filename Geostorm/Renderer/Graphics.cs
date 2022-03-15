@@ -110,16 +110,15 @@ namespace Geostorm.Renderer
                 DrawLineEx(posA, posB, 1, new Color(20, 105, 253, 60 * 255 / 100));
         }
 
-        public void DrawParticle(Vector2 pos, float rot, Color color)
+        public void DrawParticle(Vector2 pos, float rot, Color color, float time)
         {
-            Vector2 p1 = new Vector2( - 5,0);
-            Vector2 p2 = new Vector2( + 5, 0);
+            Vector2 p1 = new Vector2(- 6, 0);
+            Vector2 p2 = new Vector2((float)(-8 + time * 0.3), 0);
             Matrix3x2 rotate = Matrix3x2.CreateRotation(MathHelper.ToRadians(rot));
             Vector2 curentP = Vector2.Transform(p1, rotate) + pos;
             Vector2 curentP2 = Vector2.Transform(p2, rotate) + pos;
 
-            DrawLineEx(curentP, curentP2, 1, Color.YELLOW);
-            //DrawLineEx(posA, posB, 1, color);
+            DrawLineEx(curentP, curentP2, 1, color);
         }
     }
 }

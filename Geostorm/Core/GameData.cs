@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Geostorm.Core.Entities;
 using Geostorm.Core.Entities.Enemies;
+using Geostorm.Renderer.Particles;
 using Geostorm.Renderer;
 using static Raylib_cs.Raylib;
 using System.Numerics;
