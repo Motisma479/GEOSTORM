@@ -142,6 +142,7 @@ namespace Geostorm.Core
                 }
             }
             round = 0;
+            particles.Clear();
             ChangeRound();
         }
 
@@ -149,11 +150,10 @@ namespace Geostorm.Core
         {
             enemies.Clear();
             entities.Clear();
-            particles.Clear();
             blackHoles.Clear();
             round++;
             for (int i = 0; i < round * 2; i++)
-                AddEnemyDelayed(new Core.Entities.Enemies.Grunt(50 + 5 * i, this));
+                AddEnemyDelayed(new Core.Entities.Enemies.Grunt(90 + rng.Next(0,round*50+100), this));
             for (int i = 0; i < rng.Next(2,3); i++)
                 AddBlackHoleDelayed(new BlackHole(new Vector2(rng.Next(100, (int)(MapSize.X - 100)), rng.Next(100, (int)(MapSize.Y - 100))), GetRandomValue(35, 50)));
             Synchronize();

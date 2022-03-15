@@ -93,11 +93,11 @@ namespace Geostorm.Renderer
         public void DrawGrunt(Vector2 pos, Vector2 renderScale, float rotation, float activeTime)
         {
             Color renderColor = Color.BLUE;
-            if (activeTime > 30) return;
+            if (activeTime > 60) return;
             if (activeTime > 0)
             {
                 renderScale = new Vector2(1 + ((activeTime % 10) / 10) * 2);
-                renderColor = Fade(Color.BLUE,1-activeTime/30);
+                renderColor = Fade(Color.BLUE,1-activeTime/60);
             }
             //Copie of the other but d
             Matrix3x2 rotate = Matrix3x2.CreateRotation((MathHelper.ToRadians(rotation)));

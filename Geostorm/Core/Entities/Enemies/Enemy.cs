@@ -25,7 +25,7 @@ namespace Geostorm.Core.Entities.Enemies
         public sealed override void Update(in GameInputs inputs, GameData data, List<Event> events)
         {
             spawnTime--;
-            if (spawnTime >= 30) return;
+            if (spawnTime >= 60) return;
             if (spawnTime <= 0)
             {
                 DoUpdate(inputs, data, events);
