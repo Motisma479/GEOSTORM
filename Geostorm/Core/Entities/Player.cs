@@ -47,14 +47,14 @@ namespace Geostorm.Core.Entities
             {
                 Velocity += inputs.MoveAxis * 3;
 
-                for (int i = 0; i < GetRandomValue(4, 10); i++)
+                for (int i = 0; i < data.rng.Next(4, 10); i++)
                 {
-                    Vector2 p1 = new Vector2(-15, GetRandomValue(-2, 2));
+                    Vector2 p1 = new Vector2(-15, data.rng.Next(-2,2));
                     Matrix3x2 rotate = Matrix3x2.CreateRotation(MathHelper.ToRadians(Rotation));
                     Vector2 curentP = Vector2.Transform(p1, rotate) + Position;
                     Vector3 tmpColor = ColorToHSV(Raylib_cs.Color.ORANGE);
-                    tmpColor.X += GetRandomValue(-15, 15);
-                    data.particles.Add(new Geostorm.Renderer.Particles.Fire(curentP, GetRandomValue((int)(Rotation - 180 + 15), (int)(Rotation - 180 - 15)), ColorFromHSV(tmpColor.X, tmpColor.Y, tmpColor.Z)));
+                    tmpColor.X += data.rng.Next(-15, 15);
+                    data.particles.Add(new Geostorm.Renderer.Particles.Fire(curentP, data.rng.Next(-15,15)+(Rotation - 180), ColorFromHSV(tmpColor.X, tmpColor.Y, tmpColor.Z)));
                 }
             }
             if (MathHelper.GetRotation(Velocity, ref targetRotation))

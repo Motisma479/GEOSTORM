@@ -18,7 +18,6 @@ namespace Geostorm.Core.Entities
         public float CollisionRadius;
         protected int weight;
         protected int range;
-        public readonly int Level;
         public int Weight { get => weight;}
         public virtual int Range { get => range; }
 

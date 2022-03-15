@@ -15,13 +15,14 @@ namespace Geostorm.Core.Entities.Enemies
 {
     class Grunt : Enemy
     {
-        public Grunt(int spawnTime, GameData datas)
+        public Grunt(int spawnTime, GameData datas, int lvl = 1)
         {
             this.spawnTime = spawnTime;
             weight = 5000000;
             range = 140;
             CollisionRadius = 18;
             Position = new Vector2(datas.rng.Next(20, (int)(datas.MapSize.X- CollisionRadius - 5)), datas.rng.Next(20, (int)(datas.MapSize.Y - CollisionRadius - 5)));
+            Level = lvl;
         }
         float targetRotation = 0;
         Vector2 renderScale = new Vector2(1,1);
@@ -34,21 +35,6 @@ namespace Geostorm.Core.Entities.Enemies
                 Rotation = (Rotation - targetRotation) % 360.0f;
             }
             Position += MathHelper.GetVectorRot(Rotation)*2;
-            bool hit = false;
-            foreach (var item in data.bullets)
-            {
-                if (item.IsDead) continue;
-                if ((item.Position - Position).Length() < (item.CollisionRadius + CollisionRadius))
-                {
-                    hit = true;
-                    item.KillEntity(data);
-                    break;
-                }
-            }
-            if (hit || !CheckCollisionPointRec(Position, new Rectangle(CollisionRadius * 2, CollisionRadius * 2, data.MapSize.X - CollisionRadius * 4, data.MapSize.Y - CollisionRadius * 4)))
-            {
-                KillEntity(data);
-            }
             float deform = 0.2f*MathF.Sin(data.TotalTime * 6);
             renderScale = new Vector2(0.9f+deform,0.9f-deform);
         }
@@ -57,11 +43,11 @@ namespace Geostorm.Core.Entities.Enemies
         {
             Position = new Vector2(MathHelper.CutFloat(Position.X, 0, data.MapSize.X), MathHelper.CutFloat(Position.Y, 0, data.MapSize.Y));
             IsDead = true;
-            for (int i = 0; i < Raylib.GetRandomValue(10, 20); i++)
+            for (int i = 0; i < data.rng.Next(10, 20); i++)
             {
                 Vector3 tmpColor = Raylib.ColorToHSV(Color.BLUE);
-                tmpColor.Y += Raylib.GetRandomValue(-30, 15);
-                data.particles.Add(new Explosion(Position, i * Raylib.GetRandomValue(0, 360), Raylib.ColorFromHSV(tmpColor.X, tmpColor.Y, tmpColor.Z), data.rng.Next(40,80)));
+                tmpColor.Y += data.rng.Next(-30, 15);
+                data.particles.Add(new Explosion(Position, i * data.rng.Next(0,360), Raylib.ColorFromHSV(tmpColor.X, tmpColor.Y, tmpColor.Z), data.rng.Next(40, 80)));
             }
         }
         public override void DoDraw(Graphics graphics, Camera camera) 

@@ -32,11 +32,11 @@ namespace Geostorm.Core.Entities
         {
             Position = new Vector2(MathHelper.CutFloat(Position.X, 1, data.MapSize.X-1), MathHelper.CutFloat(Position.Y, 1, data.MapSize.Y-1));
             IsDead = true;
-            for (int i = 0; i < Raylib.GetRandomValue(10, 20); i++)
+            for (int i = 0; i < data.rng.Next(10, 20); i++)
             {
                 Vector3 tmpColor = Raylib.ColorToHSV(Color.YELLOW);
-                tmpColor.X += Raylib.GetRandomValue(-30, 15);
-                data.particles.Add(new Explosion(Position, i * Raylib.GetRandomValue(0, 360), Raylib.ColorFromHSV(tmpColor.X, tmpColor.Y, tmpColor.Z), data.rng.Next(40,80)));
+                tmpColor.X += data.rng.Next(-30, 15);
+                data.particles.Add(new Explosion(Position, data.rng.Next(0, 360), Raylib.ColorFromHSV(tmpColor.X, tmpColor.Y, tmpColor.Z), data.rng.Next(40, 80)));
             }
         }
         public override void Draw(Graphics graphics, Camera camera)

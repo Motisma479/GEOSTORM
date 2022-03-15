@@ -79,6 +79,13 @@ namespace Geostorm.Renderer
         }
         public void DrawGrunt(Vector2 pos, Vector2 renderScale, float rotation, float activeTime)
         {
+            Color renderColor = Color.BLUE;
+            if (activeTime > 30) return;
+            if (activeTime > 0)
+            {
+                renderScale = new Vector2(1 + ((activeTime % 10) / 10) * 2);
+                renderColor = Fade(Color.BLUE,1-activeTime/30);
+            }
             //Copie of the other but d
             Matrix3x2 rotate = Matrix3x2.CreateRotation((MathHelper.ToRadians(rotation)));
             for (int i = 0; i <= Core.Entities.GruntTexture.Points.Length - 1; i++)
@@ -86,8 +93,8 @@ namespace Geostorm.Renderer
                 Vector2 curentP = Vector2.Transform(Core.Entities.GruntTexture.Points[i], rotate) * renderScale + pos;
                 Vector2 curentP2 = Vector2.Transform(Core.Entities.GruntTexture.Points[(i + 1) % Core.Entities.GruntTexture.Points.Length], rotate) * renderScale + pos;
 
-                DrawCircleV(curentP, Core.Entities.GruntTexture.thickness / 2, Color.BLUE);
-                DrawLineEx(curentP, curentP2, Core.Entities.GruntTexture.thickness, Color.BLUE);
+                DrawCircleV(curentP, Core.Entities.GruntTexture.thickness / 2, renderColor);
+                DrawLineEx(curentP, curentP2, Core.Entities.GruntTexture.thickness, renderColor);
 
             }
         }
