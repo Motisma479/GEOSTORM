@@ -11,12 +11,14 @@ namespace Geostorm.Renderer.Particles
 {
     class Score : Particle
     {
-        public Score(Vector2 position, float rotation, Color color, float time)
+        string text;
+        public Score(string text,Vector2 position, float rotation, Color color, float time)
         {
             this.time = time;
             Position = position;
             Rotation = rotation;
             Color = color;
+            this.text = text;
             Velocity = MathHelper.GetVectorRot(Rotation) * 10;
         }
 
@@ -32,7 +34,7 @@ namespace Geostorm.Renderer.Particles
 
         public override void Draw(Graphics graphics, Camera cam)
         {
-            graphics.DrawParticle(Position + cam.Pos, Rotation, Color, time);
+            graphics.DrawScoreParticle(text,Position + cam.Pos, Color, time);
         }
     }
 }

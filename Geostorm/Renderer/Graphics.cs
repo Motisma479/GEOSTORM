@@ -165,6 +165,11 @@ namespace Geostorm.Renderer
             DrawLineEx(curentP, curentP2, 2, color);
         }
 
+        public void DrawScoreParticle(string text, Vector2 pos, Color color, float time)
+        {
+            DrawText(text, (int)pos.X, (int)pos.Y, (int)time, color);
+        }
+
         public void DrawBlackHole(Vector2 pos, float radius)
         {
             for (int i = 0; i < 5; i++)
