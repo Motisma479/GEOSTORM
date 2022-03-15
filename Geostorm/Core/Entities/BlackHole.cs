@@ -68,6 +68,7 @@ namespace Geostorm.Core.Entities
                             }
                             else
                             {
+                                ScoreDrop += item.ScoreDrop;
                                 item.KillEntity(data);
                                 CollisionRadius += 0.5f;
                             }
@@ -78,10 +79,12 @@ namespace Geostorm.Core.Entities
             if (CollisionRadius <= 20)
             {
                 KillEntity(data);
+                data.Score += ScoreDrop;
             }
             if (CollisionRadius >= 100)
             {
                 KillEntity(data);
+                data.Score += ScoreDrop;
 
             }
         }
