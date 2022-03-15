@@ -9,6 +9,8 @@ using Geostorm.Renderer.Particles;
 using Geostorm.Renderer;
 using static Raylib_cs.Raylib;
 using System.Numerics;
+using System.IO;
+
 namespace Geostorm.Core
 {
     class GameData
@@ -18,9 +20,11 @@ namespace Geostorm.Core
             MAIN_MENU,
             IN_GAME,
             PAUSE,
-            SETTINGS
+            SETTINGS,
+            GAME_OVER
         }
         public int round = 0;
+        public int highscore;
 
         public Scene scene;
         public Ui ui;
@@ -88,6 +92,7 @@ namespace Geostorm.Core
                 }
                 Grid[i].AddPoints(connect, count);
             }
+            ReadHighscore();
             ui = new Ui(Scene.MAIN_MENU, ref scene, this);
         }
 
@@ -164,6 +169,19 @@ namespace Geostorm.Core
             for (int i = 0; i < rng.Next(1,(round > 2 ? 4 : 3)); i++)
                 AddBlackHoleDelayed(new BlackHole(new Vector2(rng.Next(100, (int)(MapSize.X - 100)), rng.Next(100, (int)(MapSize.Y - 100))), GetRandomValue(35, 50)));
             Synchronize();
+        }
+        public void ReadHighscore()
+        {
+            var installDirectory = AppContext.BaseDirectory;
+            string[] inputs = File.ReadAllLines(installDirectory + "highscore.txt");
+            this.highscore = Int32.Parse(inputs[0]);
+        }
+        public void WriteHighscore(int x)
+        {
+            var installDirectory = AppContext.BaseDirectory;
+            string[] txt = new string[1];
+            txt[0] = (x.ToString());
+            File.WriteAllLines(installDirectory + "highscore.txt", txt);
         }
     }
 }

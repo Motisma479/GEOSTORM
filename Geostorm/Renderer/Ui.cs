@@ -62,6 +62,13 @@ namespace Geostorm.Renderer
                             button.Value.Draw();
                     }
                     break;
+                case GameData.Scene.GAME_OVER:
+                    {
+                        DrawText("GAME OVER", GetScreenWidth() / 2 - MeasureText("GAME OVER", 200)/2, 400, 200, RED);
+                        foreach (var button in buttons)
+                            button.Value.Draw();
+                    }
+                    break;
                 default:
                     break;
             }
@@ -87,10 +94,12 @@ namespace Geostorm.Renderer
                     break;
                 case GameData.Scene.IN_GAME:
                     {
+                        HideCursor();
                     }
                     break;
                 case GameData.Scene.PAUSE:
                     {
+                        ShowCursor();
                         buttons["resume"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, 400), new Vector2(400, 100), ButtonType.TEXT, DARKBLUE);
                         buttons["resume"].SetText("RESUME", new Vector2(10, 8), 90, BLACK);
                         buttons["quit"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, 600), new Vector2(400, 100), ButtonType.TEXT, DARKBLUE);
@@ -108,6 +117,18 @@ namespace Geostorm.Renderer
                         buttons["back"].SetText("BACK", new Vector2(85, 8), 90, BLACK);
                         buttons["aimtype"] = new Button(new Vector2(GetScreenWidth() - 400, GetScreenHeight() - 200), new Vector2(300, 50), ButtonType.TEXT, DARKBLUE);
                         buttons["aimtype"].SetText(Geostorm.Renderer.Ui.AimType[config.AimType], new Vector2(10, 10), 26, Color.BLACK);
+                    }
+                    break;
+                case GameData.Scene.GAME_OVER:
+                    {
+                        ShowCursor();
+                        buttons["back"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, GetScreenHeight() - 200), new Vector2(400, 100), ButtonType.TEXT, DARKBLUE);
+                        buttons["back"].SetText("BACK", new Vector2(85, 8), 90, BLACK);
+                        if (data.highscore < data.Score)
+                        {
+                            data.WriteHighscore(data.Score);
+                            data.highscore = data.Score;
+                        }
                     }
                     break;
                 default:

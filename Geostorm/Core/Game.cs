@@ -47,6 +47,11 @@ namespace Geostorm.Core
                 case GameData.Scene.SETTINGS:
                     UpdateSettings(inputs);
                     break;
+                case GameData.Scene.GAME_OVER:
+                    {
+                        UpdateGameOver(inputs);
+                    }
+                    break;
                 default:
                     break;
             }
@@ -123,7 +128,6 @@ namespace Geostorm.Core
 
         public void UpdateInGame(GameInputs inputs)
         {
-            HideCursor();
             List<Event> events = new List<Event>();
 
             // Update Camera
@@ -159,26 +163,34 @@ namespace Geostorm.Core
             }
             foreach (var blackhole in data.blackHoles)
                 blackhole.Update(data);
-            
+
             if (data.enemies.Count() <= 0 && data.blackHoles.Count() <= 0 && (time <= 0))
             {
-                time = 60/6.0f;
+                time = 60 / 6.0f;
                 data.ChangeRound();
             }
-            
             data.Synchronize();
             time -= data.DeltaTime;
+
+            if (data.Player.Life <= 0)
+            {
+                data.ui.SwitchToScene(GameData.Scene.GAME_OVER, ref data.scene, config, data);
+            }
         }
 
         public void UpdatePause(GameInputs inputs)
         {
-            ShowCursor();
             if (data.ui.buttons["resume"].IsClicked() || IsKeyPressed(KeyboardKey.KEY_ESCAPE))
                 data.ui.SwitchToScene(GameData.Scene.IN_GAME, ref data.scene, config, data);
             else if (data.ui.buttons["quit"].IsClicked())
                 data.ui.SwitchToScene(GameData.Scene.MAIN_MENU, ref data.scene, config, data);
         }
 
+        public void UpdateGameOver(GameInputs inputs)
+        {
+            if (data.ui.buttons["back"].IsClicked())
+                data.ui.SwitchToScene(GameData.Scene.MAIN_MENU, ref data.scene, config, data);
+        }
         public void Render(Graphics graphics, GameInputs inputs)
         {
             switch (data.scene)
@@ -226,6 +238,8 @@ namespace Geostorm.Core
                         }
                         DrawText("Score", 200, 50, 50, Color.GREEN);
                         DrawText($"{data.Score}", 200, 100, 50, Color.GREEN);
+                        DrawText("Highscore", GetScreenWidth() - MeasureText("Highscore", 50) / 2 - 200, 50, 50, Color.GREEN);
+                        DrawText($"{data.highscore}", GetScreenWidth() - 320, 100, 50, Color.GREEN);
 
 
                         graphics.DrawCursor(inputs.ScreenPos + inputs.ShootTarget);
@@ -236,6 +250,12 @@ namespace Geostorm.Core
                     {
                         if (timeCount > 0)
                             DrawText("You cannot assign a key that is already set", GetScreenWidth() / 2 - MeasureText("You cannot assign a key that is already set", 75) / 2, 20, 75, Color.RED);
+                    }
+                    break;
+                case GameData.Scene.GAME_OVER:
+                    {
+                        DrawText($"Score : {data.Score}", GetScreenWidth() / 2 - MeasureText($"Score : {data.Score}", 50) / 2, 600, 50, Color.BLUE);
+                        DrawText($"High Score : {data.highscore}", GetScreenWidth() / 2 - MeasureText($"High Score : {data.highscore}", 100) / 2, 700, 100, Color.GREEN);
                     }
                     break;
                 default:
