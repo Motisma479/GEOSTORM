@@ -34,8 +34,17 @@ namespace Geostorm.Core.Entities
 
         public void RemoveLife(GameData data)
         {
-            foreach (var entity in data.entities)
-                entity.KillEntity(data);
+            foreach (var item in data.enemies)
+            {
+                if (item.IsDead || item.SpawnTime >= 30) item.IsDead = true;
+                 else item.KillEntity(data);
+            }
+            foreach (var item in data.blackHoles)
+            {
+                if (item.IsDead) continue;
+                item.KillEntity(data);
+            }
+
             life -= 1;
             weight = 6000000;
             range = 500;
@@ -161,6 +170,7 @@ namespace Geostorm.Core.Entities
                     break;
                 default:
                     break;
+            }
         }
         public override void Draw(Graphics graphics, Camera camera)
         {

@@ -47,7 +47,7 @@ namespace Geostorm.Core.Entities
             }
             if (active)
             {
-                weight = (int)(-(200 - CollisionRadius) * 500);
+                weight = (int)(-(200 - CollisionRadius) * 300);
                 float pLength = (data.Player.Position - Position).Length() - (data.Player.CollisionRadius + CollisionRadius + 300);
                 if (pLength < 0)
                 {
@@ -56,11 +56,11 @@ namespace Geostorm.Core.Entities
                 foreach (var item in data.entities)
                 {
                     if (item.IsDead || item.Range == 0.0f || (item == this)) continue;
-                    float mLength = (item.Position - Position).Length() - (item.CollisionRadius + CollisionRadius + 300);
+                    float mLength = (item.Position - Position).Length() - (item.CollisionRadius + CollisionRadius + 250);
                     if (mLength < 0)
                     {
-                        item.Position += (item.Position - Position) / 500000 * -mLength*mLength;
-                        if (mLength < -300)
+                        item.Position += (item.Position - Position) / 550000 * -mLength*mLength;
+                        if (mLength < -250)
                         {
                             item.KillEntity(data);
                             CollisionRadius += 0.5f;

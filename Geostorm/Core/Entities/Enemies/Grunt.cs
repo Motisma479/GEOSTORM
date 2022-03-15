@@ -61,6 +61,7 @@ namespace Geostorm.Core.Entities.Enemies
         {
             Position = new Vector2(MathHelper.CutFloat(Position.X, 0, data.MapSize.X), MathHelper.CutFloat(Position.Y, 0, data.MapSize.Y));
             IsDead = true;
+            if (range == 0.0f) return;
             for (int i = 0; i < data.rng.Next(30, 40); i++)
             {
                 Vector3 tmpColor = Raylib.ColorToHSV(Color.BLUE);

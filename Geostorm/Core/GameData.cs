@@ -56,7 +56,6 @@ namespace Geostorm.Core
         public GameData()
         {
             rng = new Random();
-            ui = new Ui(Scene.MAIN_MENU, ref scene, this);
             scene = Scene.MAIN_MENU;
             MapSize = new Vector2(350 * 4, 350 * 3);
             for (int i = 0; i < 1400; i++)
@@ -89,12 +88,7 @@ namespace Geostorm.Core
                 }
                 Grid[i].AddPoints(connect, count);
             }
-            //! Temporary
-            var tmp = new BlackHole(new Vector2(100, 100), GetRandomValue(35,50));
-            AddBlackHoleDelayed(tmp);
-
-            for (int i = 0; i < 20; i++) AddEnemyDelayed(new Core.Entities.Enemies.Grunt(150 + 5 * i, this));
-            InitGameData();
+            ui = new Ui(Scene.MAIN_MENU, ref scene, this);
         }
 
         public void UpdateDeltaTime()
@@ -136,37 +130,23 @@ namespace Geostorm.Core
 
         public void InitGameData()
         {
-            MapSize = new Vector2(350 * 4, 350 * 3);
-            for (int i = 0; i < 1400; i++)
-            {
-                stars.Add(new Star(new Vector2(GetRandomValue(-500, (int)(MapSize.X + 500)), GetRandomValue(-500, (int)(MapSize.Y + 500))), GetRandomValue(1, 4)));
-            }
+            enemies.Clear();
+            entities.Clear();
+            particles.Clear();
+            blackHoles.Clear();
             int square = 25;
             int width = (int)MapSize.X / square + 1;
             int height = (int)MapSize.Y / square + 1;
-            Grid = new GridPoint[width * height];
             for (int j = 0; j < height; j++)
             {
                 for (int i = 0; i < width; i++)
                 {
-                    Grid[j * width + i] = new GridPoint(new Vector2(i * square, j * square), (i == 0 || i == width - 1 || j == 0 || j == height - 1));
+                    Grid[j * width + i].pPos = new Vector2(i * square, j * square);
+                    Grid[j * width + i].pVel = new Vector2();
                 }
             }
-            for (int i = 0; i < width * height; i++)
-            {
-                GridPoint[] connect = new GridPoint[4];
-                int count = 0;
-                for (int j = 0; j < 4; j++)
-                {
-                    Vector2 pos = new Vector2(i % width, i / width) + Directions.Dir[j];
-                    if (pos.X >= 0 && pos.X < width && pos.Y >= 0 && pos.Y < height)
-                    {
-                        connect[count] = Grid[(int)pos.X + (int)pos.Y * width];
-                        count++;
-                    }
-                }
-                Grid[i].AddPoints(connect, count);
-            }
+            round = 0;
+            ChangeRound();
         }
 
         public void ChangeRound()
@@ -176,6 +156,7 @@ namespace Geostorm.Core
                 AddEnemyDelayed(new Core.Entities.Enemies.Grunt(50 + 5 * i, this));
             for (int i = 0; i < round * 2; i++)
                 AddBlackHoleDelayed(new BlackHole(new Vector2(rng.Next(100, (int)(MapSize.X - 100)), rng.Next(100, (int)(MapSize.Y - 100))), GetRandomValue(35, 50)));
+            Synchronize();
         }
     }
 }
