@@ -86,6 +86,9 @@ namespace Geostorm.Core
                 }
                 Grid[i].AddPoints(connect, count);
             }
+            //! Temporary
+            var tmp = new BlackHole(new Vector2(100, 100), GetRandomValue(35,50));
+            AddBlackHoleDelayed(tmp);
         }
 
         public void UpdateDeltaTime()
@@ -111,6 +114,7 @@ namespace Geostorm.Core
         {
             entities.AddRange(bulletsAdded);
             bullets.AddRange(bulletsAdded);
+
             bulletsAdded.Clear();
             bullets.RemoveAll(Entity => Entity.IsDead);
             entities.AddRange(blackHoleAdded);

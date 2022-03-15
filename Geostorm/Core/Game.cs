@@ -74,7 +74,7 @@ namespace Geostorm.Core
             {
                 for (int i = 0; i < config.KeyboardInputs.Length; i++)
                 {
-                    
+
                     for (int j = 0; j < config.KeyboardInputs.Length; j++)
                     {
                         //Check if Already key set
@@ -144,14 +144,15 @@ namespace Geostorm.Core
                 item.UpdatePos();
             }
 
-            for(int i = 0; i < data.particles.Count(); i++)
+            for (int i = 0; i < data.particles.Count(); i++)
             {
                 data.particles[i].Update(data);
                 if (data.particles[i].time < 0)
                     data.particles.RemoveAt(i);
             }
-
-                data.Synchronize();
+            foreach (var blackhole in data.blackHoles)
+                blackhole.Update(data);
+            data.Synchronize();
         }
 
         public void UpdatePause(GameInputs inputs)
@@ -177,11 +178,15 @@ namespace Geostorm.Core
                         // Draw element in the map.
                         foreach (var star in data.stars)
                             if (IsInside(star.Pos + data.camera.Pos * star.Speed))
-                                star.Draw(graphics,data.camera);
+                                star.Draw(graphics, data.camera);
                         foreach (var point in data.Grid)
-                            point.Draw(graphics,data.camera, data.MapSize);
+                            point.Draw(graphics, data.camera, data.MapSize);
                         DrawRectangleLinesEx(new Rectangle(data.camera.Pos.X, data.camera.Pos.Y, data.MapSize.X, data.MapSize.Y), 5, Color.WHITE);
 
+                        foreach (var particle in data.particles)
+                        {
+                            particle.Draw(graphics, data.camera);
+                        }
                         // Draw Player
                         data.Player.Draw(graphics, data.camera);
 
@@ -193,6 +198,12 @@ namespace Geostorm.Core
                         {
                             particle.Draw(graphics, data.camera);
                         }
+
+                        foreach (var blackhole in data.blackHoles)
+                            blackhole.Draw(graphics, data.camera);
+                        //Draw enemies
+                        foreach (var enemy in data.enemies)
+                            enemy.Draw(graphics, data.camera);
 
                         graphics.DrawCursor(inputs.ScreenPos + inputs.ShootTarget);
                         DrawFPS(10, 10);

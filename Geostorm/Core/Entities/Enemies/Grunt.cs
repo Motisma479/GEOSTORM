@@ -61,7 +61,7 @@ namespace Geostorm.Core.Entities.Enemies
             {
                 Vector3 tmpColor = Raylib.ColorToHSV(Color.BLUE);
                 tmpColor.Y += Raylib.GetRandomValue(-30, 15);
-                data.particles.Add(new Explosion(Position, i * Raylib.GetRandomValue(0, 360), Raylib.ColorFromHSV(tmpColor.X, tmpColor.Y, tmpColor.Z)));
+                data.particles.Add(new Explosion(Position, i * Raylib.GetRandomValue(0, 360), Raylib.ColorFromHSV(tmpColor.X, tmpColor.Y, tmpColor.Z), data.rng.Next(40,80)));
             }
         }
         public override void DoDraw(Graphics graphics, Camera camera) 

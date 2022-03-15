@@ -12,8 +12,10 @@ namespace Geostorm.Core.Entities
 {
     class Player : Entity
     {
-        int Life { get { return Life; } set { Life = value; } }
+        int life = 5;
+        public int Life { get { return life; } set { life = value; } }
         int Score { get { return Score; } set { Score = value; } }
+        int cooldown = 0;
         Weapon weapon;
         float targetRotation = 0;
         public float WeaponRotation = 0;
@@ -29,16 +31,25 @@ namespace Geostorm.Core.Entities
             range = 100;
         }
 
+        public void RemoveLife(GameData data)
+        {
+            foreach (var entity in data.entities)
+                entity.IsDead = true;
+            life -= 1;
+            if (life <= 0)
+                IsDead = true;
+            cooldown = 120;
+        }
 
         public override void Update(in GameInputs inputs, GameData data, List<Event> events)
         {
             if (inputs.MoveAxis.LengthSquared() != 0.0f)
             {
-                Velocity += inputs.MoveAxis*3;
+                Velocity += inputs.MoveAxis * 3;
 
                 for (int i = 0; i < GetRandomValue(4, 10); i++)
                 {
-                    Vector2 p1 = new Vector2(-15, GetRandomValue(-2,2));
+                    Vector2 p1 = new Vector2(-15, GetRandomValue(-2, 2));
                     Matrix3x2 rotate = Matrix3x2.CreateRotation(MathHelper.ToRadians(Rotation));
                     Vector2 curentP = Vector2.Transform(p1, rotate) + Position;
                     Vector3 tmpColor = ColorToHSV(Raylib_cs.Color.ORANGE);
@@ -46,22 +57,25 @@ namespace Geostorm.Core.Entities
                     data.particles.Add(new Geostorm.Renderer.Particles.Fire(curentP, GetRandomValue((int)(Rotation - 180 + 15), (int)(Rotation - 180 - 15)), ColorFromHSV(tmpColor.X, tmpColor.Y, tmpColor.Z)));
                 }
             }
-            if (MathHelper.GetRotation(Velocity,ref targetRotation))
+            if (MathHelper.GetRotation(Velocity, ref targetRotation))
             {
-                targetRotation = MathHelper.CutFloat(MathHelper.ModuloFloat(Rotation - targetRotation,-180.0f,180.0f), -20.0f,20.0f);
+                targetRotation = MathHelper.CutFloat(MathHelper.ModuloFloat(Rotation - targetRotation, -180.0f, 180.0f), -20.0f, 20.0f);
                 Rotation = (Rotation - targetRotation) % 360.0f;
             }
             Vector2 weaponDir = inputs.ShootTarget - Position;
-            MathHelper.GetRotation(weaponDir,ref WeaponRotation);
+            MathHelper.GetRotation(weaponDir, ref WeaponRotation);
             Velocity *= 0.7f;
             Position += Velocity;
-            Position = new Vector2(MathHelper.CutFloat(Position.X,CollisionRadius, data.MapSize.X-CollisionRadius), MathHelper.CutFloat(Position.Y, CollisionRadius, data.MapSize.Y-CollisionRadius));
+            Position = new Vector2(MathHelper.CutFloat(Position.X, CollisionRadius, data.MapSize.X - CollisionRadius), MathHelper.CutFloat(Position.Y, CollisionRadius, data.MapSize.Y - CollisionRadius));
 
             weapon.Update(inputs, data, events);
+            if (cooldown > 0)
+                cooldown--;
         }
-        public override void Draw(Graphics graphics, Camera camera) 
+        public override void Draw(Graphics graphics, Camera camera)
         {
-            graphics.DrawPlayer(Position+camera.Pos, Rotation, WeaponRotation);
+            if (cooldown % 6 == 0 || cooldown == 0)
+                graphics.DrawPlayer(Position + camera.Pos, Rotation, WeaponRotation);
         }
     }
 }

@@ -121,5 +121,12 @@ namespace Geostorm.Renderer
 
             DrawLineEx(curentP, curentP2, 2, color);
         }
+
+        public void DrawBlackHole(Vector2 pos, float radius)
+        {
+            for (int i = 0; i < 5; i++)
+                DrawCircleLines((int)pos.X, (int)pos.Y, (float)(radius + i*0.5), Color.RED);
+        }
+
     }
 }

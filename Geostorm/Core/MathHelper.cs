@@ -77,6 +77,14 @@ namespace Geostorm.Core
             return value ? 1 : 0;
         }
 
+        public static float GetDistanceBetween(Vector2 a, Vector2 b)
+        {
+            float i = a.X - b.X;
+            float j = a.Y - b.Y;
+            return MathF.Sqrt(i * i + j * j);
+
+        }
+
         public static int GetInt(string buf, ref int index, int maxSize = 0)
         {
             if (maxSize == 0) maxSize = buf.Length;
@@ -99,6 +107,21 @@ namespace Geostorm.Core
                 n = buf[index];
             }
             return (negative ? -value : value);
+        }
+
+        public static bool InferiorOrEqual(Vector2 a, Vector2 b)
+        {
+            if (a.X <= b.X && a.Y <= b.Y)
+                return true;
+            else
+                return false;
+        }
+        public static bool SuperiorOrEqual(Vector2 a, Vector2 b)
+        {
+            if (a.X >= b.X && a.Y >= b.Y)
+                return true;
+            else
+                return false;
         }
     }
 }

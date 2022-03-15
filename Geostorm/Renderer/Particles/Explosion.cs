@@ -11,9 +11,9 @@ namespace Geostorm.Renderer.Particles
 {
     class Explosion : Particle
     {
-        public Explosion(Vector2 position, float rotation, Color color)
+        public Explosion(Vector2 position, float rotation, Color color, float time)
         {
-            time = 60;
+            this.time = time;
             Position = position;
             Rotation = rotation;
             Color = color;
