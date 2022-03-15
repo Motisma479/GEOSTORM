@@ -21,7 +21,8 @@ namespace Geostorm.Core.Entities
         float targetRotation = 0;
         public float WeaponRotation = 0;
 
-        int WeaponLevel;
+        public int WeaponLevel;
+
         public Player()
         {
             weapon = new Weapon0();
@@ -176,6 +177,11 @@ namespace Geostorm.Core.Entities
             graphics.DrawPlayer(Position + camera.Pos, Rotation, WeaponRotation);
             if (cooldown % 12 == 1)
                 DrawCircleLines((int)(Position.X + camera.Pos.X), (int)(Position.Y + camera.Pos.Y), CollisionRadius, Raylib_cs.Color.WHITE);
+        }
+
+        public void ResetWeapon()
+        {
+            weapon = new Weapon0();
         }
     }
 }

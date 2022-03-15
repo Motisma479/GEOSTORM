@@ -142,6 +142,9 @@ namespace Geostorm.Core
                 }
             }
             round = 0;
+            Player.WeaponLevel = 0;
+            Player.ResetWeapon();
+            Score = 0;
             particles.Clear();
             ChangeRound();
         }
