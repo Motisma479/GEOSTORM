@@ -77,16 +77,17 @@ namespace Geostorm.Renderer
             }
             DrawPointer(pos + MathHelper.GetVectorRot(weaponRotation) * 23, weaponRotation);
         }
-        public void DrawGrunt(Vector2 pos, float rotation, float activeTime)
+        public void DrawGrunt(Vector2 pos, Vector2 renderScale, float rotation, float activeTime)
         {
             //Copie of the other but d
             Matrix3x2 rotate = Matrix3x2.CreateRotation((MathHelper.ToRadians(rotation)));
             for (int i = 0; i <= Core.Entities.GruntTexture.Points.Length - 1; i++)
             {
-                Vector2 curentP = Vector2.Transform(Core.Entities.GruntTexture.Points[i], rotate) + pos;
-                Vector2 curentP2 = Vector2.Transform(Core.Entities.GruntTexture.Points[(i + 1) % Core.Entities.GruntTexture.Points.Length], rotate) + pos;
+                Vector2 curentP = Vector2.Transform(Core.Entities.GruntTexture.Points[i], rotate) * renderScale + pos;
+                Vector2 curentP2 = Vector2.Transform(Core.Entities.GruntTexture.Points[(i + 1) % Core.Entities.GruntTexture.Points.Length], rotate) * renderScale + pos;
 
-                DrawLineEx(curentP, curentP2, Core.Entities.GruntTexture.thickness, Color.WHITE);
+                DrawCircleV(curentP, Core.Entities.GruntTexture.thickness / 2, Color.BLUE);
+                DrawLineEx(curentP, curentP2, Core.Entities.GruntTexture.thickness, Color.BLUE);
 
             }
         }
@@ -118,7 +119,7 @@ namespace Geostorm.Renderer
             Vector2 curentP = Vector2.Transform(p1, rotate) + pos;
             Vector2 curentP2 = Vector2.Transform(p2, rotate) + pos;
 
-            DrawLineEx(curentP, curentP2, 1, color);
+            DrawLineEx(curentP, curentP2, 2, color);
         }
     }
 }

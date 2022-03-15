@@ -101,10 +101,17 @@ namespace Geostorm.Core
         {
             entities.AddRange(bulletsAdded);
             bullets.AddRange(bulletsAdded);
-
             bulletsAdded.Clear();
-
             bullets.RemoveAll(Entity => Entity.IsDead);
+            entities.AddRange(blackHoleAdded);
+            blackHoles.AddRange(blackHoleAdded);
+            blackHoleAdded.Clear();
+            blackHoles.RemoveAll(Entity => Entity.IsDead);
+            entities.AddRange(enemiesAdded);
+            enemies.AddRange(enemiesAdded);
+            enemiesAdded.Clear();
+            enemies.RemoveAll(Entity => Entity.IsDead);
+            entities.RemoveAll(Entity => Entity.IsDead);
         }
     }
 }

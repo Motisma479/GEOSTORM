@@ -128,9 +128,9 @@ namespace Geostorm.Core
                 data.ui.SwitchToScene(GameData.Scene.PAUSE, ref data.scene, config);
             // Update Player
             data.Player.Update(inputs,data,events);
-            // Update Bullets
-            for (int i = 0; i < data.bullets.Count; i++)
-                data.bullets[i].Update(data);
+            // Update Entities
+            for (int i = 0; i < data.entities.Count; i++)
+                data.entities[i].Update(inputs,data,events);
 
             foreach (IGameEventListener eventListener in eventListeners)
                 eventListener.HandleEvents(events, data);
@@ -183,18 +183,15 @@ namespace Geostorm.Core
 
                         // Draw Player
                         data.Player.Draw(graphics, data.camera);
-                        for(int i = 0; i < data.bullets.Count; i++)
-                        {
-                            data.bullets[i].Draw(graphics, data.camera);
-                        }
+
+                        //Draw entities
+                        foreach (var entity in data.entities)
+                            entity.Draw(graphics, data.camera);
+
                         foreach (var particle in data.particles)
                         {
                             particle.Draw(graphics, data.camera);
                         }
-
-                        //Draw enemies
-                        foreach (var enemy in data.enemies)
-                            enemy.Draw(graphics, data.camera);
 
                         graphics.DrawCursor(inputs.ScreenPos + inputs.ShootTarget);
                         DrawFPS(10, 10);

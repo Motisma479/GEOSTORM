@@ -14,6 +14,7 @@ namespace Geostorm.Core
         public Vector2 ScreenSize;
         public Vector2 LocalSize;
         public float DeltaTime;
+        public float TotalTime;
         public Vector2 MoveAxis;
         public Vector2 ShootAxis;
         public bool Shoot;

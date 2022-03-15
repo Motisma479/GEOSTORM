@@ -32,6 +32,8 @@ namespace Geostorm
             //--------------------------------------------------------------------------------------
             RenderTexture2D target = LoadRenderTexture(GetScreenWidth(),GetScreenHeight());
 
+            game.data.AddEnemyDelayed(new Core.Entities.Enemies.Grunt(50));
+
             // Main game loop
             while (!WindowShouldClose() && !game.ShouldClose)
             {

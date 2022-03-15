@@ -35,29 +35,35 @@ namespace Geostorm.Renderer
 
         public void UpdatePoint(GameData data)
         {
-                foreach (var item in data.bullets)
-                {
-                    float mLength = (item.Position - pPos).Length();
-                    if (mLength < 70)
-                    {
-                        pVel += (item.Position - pPos) / 1000000 * -MathF.Pow(mLength - 70, 2) * 1.5f;
-                    }
+            float pLength = (data.Player.Position - pPos).Length();
+            if (pLength < data.Player.Range)
+            {
+                pVel += (data.Player.Position - pPos) / data.Player.Weight * -MathF.Pow(pLength - data.Player.Range, 2);
             }
-                for (int i = 0; i < connexions.Length; i++)
+            foreach (var item in data.entities)
+            {
+                if (item.IsDead) continue;
+                float mLength = (item.Position - pPos).Length();
+                if (mLength < item.Range)
                 {
-                    float pLength = (connexions[i].pPos - pPos).Length();
-                    if (pLength > 22)
-                    {
-                        pVel = pVel + (connexions[i].pPos - pPos) / 10000 * (pLength - 22) * 32;
-                    }
+                    pVel += (item.Position - pPos) / item.Weight * -MathF.Pow(mLength - item.Range, 2);
                 }
+            }
+            for (int i = 0; i < connexions.Length; i++)
+            {
+                float cLength = (connexions[i].pPos - pPos).Length();
+                if (cLength > 25)
+                {
+                    pVel += (connexions[i].pPos - pPos) / 1250 * (cLength - 25);
+                }
+            }
         }
 
         public void UpdatePos()
         {
-                pVel = new Vector2(MathHelper.CutFloat(pVel.X, -40, 40), MathHelper.CutFloat(pVel.Y, -40, 40));
-                pVel = pVel * 0.95f;
-                if (!fixedPoint) pPos = pPos + pVel;
+            pVel = new Vector2(MathHelper.CutFloat(pVel.X, -40, 40), MathHelper.CutFloat(pVel.Y, -40, 40));
+            pVel = pVel * 0.95f;
+            if (!fixedPoint) pPos = pPos + pVel;
         }
 
         public void Draw(Graphics graphics, Camera camera, Vector2 size)

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
 using Geostorm.Renderer;
+using Geostorm.Core.Events;
 using Geostorm.Renderer.Particles;
 using Raylib_cs;
 
@@ -15,12 +16,15 @@ namespace Geostorm.Core.Entities
         public Bullet()
         {
             CollisionRadius = 5;
+            weight = 222222;
+            range = 70;
         }
-        public void Update(GameData data)
+        public override void Update(in GameInputs inputs, GameData data, List<Event> events)
         {
             Position += Velocity;
             if (!Raylib.CheckCollisionPointRec(Position, new Rectangle(CollisionRadius * 2, CollisionRadius * 2, data.MapSize.X - CollisionRadius * 4, data.MapSize.Y - CollisionRadius * 4)))
             {
+                Position = new Vector2(MathHelper.CutFloat(Position.X,0,data.MapSize.X),MathHelper.CutFloat(Position.Y,0,data.MapSize.Y));
                 IsDead = true;
                 for (int i = 0; i < Raylib.GetRandomValue(10, 20); i++)
                 {

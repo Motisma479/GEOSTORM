@@ -23,6 +23,8 @@ namespace Geostorm.Core.Entities
             CollisionRadius = 20;
             Position.X = 200;
             Position.Y = 200;
+            weight = 2222222;
+            range = 100;
         }
 
 
