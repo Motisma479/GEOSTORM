@@ -77,6 +77,19 @@ namespace Geostorm.Renderer
             }
             DrawPointer(pos + MathHelper.GetVectorRot(weaponRotation) * 23, weaponRotation);
         }
+        public void DrawPlayerOverlay(Vector2 pos, float rotation)
+        {
+            Matrix3x2 rotate = Matrix3x2.CreateRotation((MathHelper.ToRadians(rotation)));
+            for (int i = 0; i <= Core.Entities.PlayerTexture.Points.Length - 1; i++)
+            {
+                Vector2 curentP = Vector2.Transform(Core.Entities.PlayerTexture.Points[i], rotate) + pos;
+                Vector2 curentP2 = Vector2.Transform(Core.Entities.PlayerTexture.Points[(i + 1) % Core.Entities.PlayerTexture.Points.Length], rotate) + pos;
+
+                DrawCircleV(curentP, Core.Entities.PlayerTexture.thickness / 2, Color.GREEN);
+                DrawLineEx(curentP, curentP2, Core.Entities.PlayerTexture.thickness, Color.GREEN);
+
+            }
+        }
         public void DrawGrunt(Vector2 pos, Vector2 renderScale, float rotation, float activeTime)
         {
             Color renderColor = Color.BLUE;

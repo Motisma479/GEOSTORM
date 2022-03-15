@@ -168,7 +168,6 @@ namespace Geostorm.Core
             
             data.Synchronize();
             time -= data.DeltaTime;
-            Console.WriteLine(time);
         }
 
         public void UpdatePause(GameInputs inputs)
@@ -220,6 +219,14 @@ namespace Geostorm.Core
                         //Draw enemies
                         foreach (var enemy in data.enemies)
                             enemy.Draw(graphics, data.camera);
+
+                        for (int i = 0; i < data.Player.Life; i++)
+                        {
+                            graphics.DrawPlayerOverlay(new Vector2(GetScreenWidth() / 2 - 125 + 50 * i, 85), 90);
+                        }
+                        DrawText("Score", 200, 50, 50, Color.GREEN);
+                        DrawText($"{data.Score}", 200, 100, 50, Color.GREEN);
+
 
                         graphics.DrawCursor(inputs.ScreenPos + inputs.ShootTarget);
                         DrawFPS(10, 10);

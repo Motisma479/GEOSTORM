@@ -80,12 +80,12 @@ namespace Geostorm.Core.Entities
 
                 for (int i = 0; i < data.rng.Next(4, 10); i++)
                 {
-                    Vector2 p1 = new Vector2(-15, data.rng.Next(-2,2));
+                    Vector2 p1 = new Vector2(-15, data.rng.Next(-2, 2));
                     Matrix3x2 rotate = Matrix3x2.CreateRotation(MathHelper.ToRadians(Rotation));
                     Vector2 curentP = Vector2.Transform(p1, rotate) + Position;
                     Vector3 tmpColor = ColorToHSV(Raylib_cs.Color.ORANGE);
                     tmpColor.X += data.rng.Next(-15, 15);
-                    data.particles.Add(new Geostorm.Renderer.Particles.Fire(curentP, data.rng.Next(-15,15)+(Rotation - 180), ColorFromHSV(tmpColor.X, tmpColor.Y, tmpColor.Z)));
+                    data.particles.Add(new Geostorm.Renderer.Particles.Fire(curentP, data.rng.Next(-15, 15) + (Rotation - 180), ColorFromHSV(tmpColor.X, tmpColor.Y, tmpColor.Z)));
                 }
             }
             if (MathHelper.GetRotation(Velocity, ref targetRotation))
@@ -174,8 +174,9 @@ namespace Geostorm.Core.Entities
         }
         public override void Draw(Graphics graphics, Camera camera)
         {
-            if (cooldown % 6 == 0 || cooldown == 0)
-                graphics.DrawPlayer(Position + camera.Pos, Rotation, WeaponRotation);
+            graphics.DrawPlayer(Position + camera.Pos, Rotation, WeaponRotation);
+            if (cooldown % 12 == 1)
+                DrawCircleLines((int)(Position.X + camera.Pos.X), (int)(Position.Y + camera.Pos.Y), CollisionRadius, Raylib_cs.Color.WHITE);
         }
     }
 }
