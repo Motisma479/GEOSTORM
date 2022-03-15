@@ -13,30 +13,39 @@ using Geostorm.Renderer.Particles;
 
 namespace Geostorm.Core.Entities.Enemies
 {
-    class Grunt : Enemy
+    class Mill : Enemy
     {
-        public Grunt(int spawnTime, GameData datas, int lvl = 1)
+        public Mill(int spawnTime, GameData datas, int lvl = 1)
         {
             this.spawnTime = spawnTime;
             weight = 5000000;
             range = 140;
-            CollisionRadius = 18;
+            CollisionRadius = 20;
             Position = new Vector2(datas.rng.Next(20, (int)(datas.MapSize.X- CollisionRadius - 5)), datas.rng.Next(20, (int)(datas.MapSize.Y - CollisionRadius - 5)));
             Level = lvl;
 
-            ScoreDrop = 50;
+            ScoreDrop = 200;
         }
-        float targetRotation = 0;
-        Vector2 renderScale = new Vector2(1,1);
 
         public override void DoUpdate(in GameInputs inputs, GameData data, List<Event> events)
         {
-            if (MathHelper.GetRotation(data.Player.Position- Position, ref targetRotation))
+            Rotation += data.DeltaTime * 240;
+            Vector2 dir = (data.Player.Position - Position);
+            if (dir.LengthSquared() != 0)
             {
-                targetRotation = MathHelper.CutFloat(MathHelper.ModuloFloat(Rotation - targetRotation, -180.0f, 180.0f), -10.0f, 10.0f);
-                Rotation = (Rotation - targetRotation) % 360.0f;
+                Velocity = Velocity * 0.8f + (dir / dir.Length()) * 0.8f;
             }
-            Position += MathHelper.GetVectorRot(Rotation)*2;
+            foreach (var item in data.bullets)
+            {
+                if (item.IsDead) continue;
+                Vector2 dir2 = (Position - item.Position);
+                if (dir2.Length() < 150)
+                {
+                    Velocity = Velocity * 0.8f + dir2 * 0.04f;
+                }
+            }
+            Position += Velocity;
+            Position = new Vector2(MathHelper.CutFloat(Position.X,CollisionRadius, data.MapSize.X- CollisionRadius), MathHelper.CutFloat(Position.Y, CollisionRadius, data.MapSize.Y - CollisionRadius));
             bool hit = false;
             foreach (var item in data.bullets)
             {
@@ -53,8 +62,6 @@ namespace Geostorm.Core.Entities.Enemies
                 KillEntity(data);
                 data.Score+=ScoreDrop;
             }
-            float deform = 0.2f*MathF.Sin(data.TotalTime * 6);
-            renderScale = new Vector2(0.9f+deform,0.9f-deform);
         }
 
         public override void KillEntity(GameData data)
@@ -64,15 +71,14 @@ namespace Geostorm.Core.Entities.Enemies
             if (range == 0.0f) return;
             for (int i = 0; i < data.rng.Next(30, 40); i++)
             {
-                Vector3 tmpColor = Raylib.ColorToHSV(Color.BLUE);
+                Vector3 tmpColor = Raylib.ColorToHSV(Color.PURPLE);
                 tmpColor.X += data.rng.Next(-30, 15);
                 data.particles.Add(new Explosion(Position, i * data.rng.Next(0,360), Raylib.ColorFromHSV(tmpColor.X, tmpColor.Y, tmpColor.Z), data.rng.Next(40, 80)));
             }
-            data.particles.Add(new Score(ScoreDrop.ToString(), Position, GetRandomValue(0, 360), Raylib_cs.Color.LIME, GetRandomValue(40, 80)));
         }
         public override void DoDraw(Graphics graphics, Camera camera) 
         {
-            graphics.DrawGrunt(Position + camera.Pos, renderScale, 0, spawnTime);
+            graphics.DrawMill(Position + camera.Pos, Rotation, spawnTime);
         }
     }
 }

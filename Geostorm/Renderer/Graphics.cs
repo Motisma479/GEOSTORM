@@ -99,7 +99,6 @@ namespace Geostorm.Renderer
                 renderScale = new Vector2(1 + ((activeTime % 10) / 10) * 2);
                 renderColor = Fade(Color.BLUE,1-activeTime/60);
             }
-            //Copie of the other but d
             Matrix3x2 rotate = Matrix3x2.CreateRotation((MathHelper.ToRadians(rotation)));
             for (int i = 0; i <= Core.Entities.GruntTexture.Points.Length - 1; i++)
             {
@@ -111,26 +110,31 @@ namespace Geostorm.Renderer
 
             }
         }
-        public void DrawMill(Vector2 pos, Vector2 renderScale, float rotation, float activeTime)
+        public void DrawMill(Vector2 pos, float rotation, float activeTime)
         {
-            //Copie of the other but d
+            Color renderColor = Color.PURPLE;
+            if (activeTime > 60) return;
+            if (activeTime > 0)
+            {
+                rotation = activeTime * 10;
+            }
             Matrix3x2 rotate = Matrix3x2.CreateRotation((MathHelper.ToRadians(rotation)));
             for (int i = 0; i <= Core.Entities.MillTexture.Pal1.Length - 1; i++)
             {
-                Vector2 curentP = Vector2.Transform(Core.Entities.MillTexture.Pal1[i], rotate) * renderScale + pos;
-                Vector2 curentP2 = Vector2.Transform(Core.Entities.MillTexture.Pal1[(i + 1) % Core.Entities.MillTexture.Pal1.Length], rotate) * renderScale + pos;
+                Vector2 curentP = Vector2.Transform(Core.Entities.MillTexture.Pal1[i], rotate) + pos;
+                Vector2 curentP2 = Vector2.Transform(Core.Entities.MillTexture.Pal1[(i + 1) % Core.Entities.MillTexture.Pal1.Length], rotate) + pos;
 
-                DrawCircleV(curentP, Core.Entities.MillTexture.thickness / 2, Color.PURPLE);
-                DrawLineEx(curentP, curentP2, Core.Entities.MillTexture.thickness, Color.PURPLE);
+                DrawCircleV(curentP, Core.Entities.MillTexture.thickness / 2, renderColor);
+                DrawLineEx(curentP, curentP2, Core.Entities.MillTexture.thickness, renderColor);
 
             }
             for (int i = 0; i <= Core.Entities.MillTexture.Pal2.Length - 1; i++)
             {
-                Vector2 curentP = Vector2.Transform(Core.Entities.MillTexture.Pal2[i], rotate) * renderScale + pos;
-                Vector2 curentP2 = Vector2.Transform(Core.Entities.MillTexture.Pal2[(i + 1) % Core.Entities.MillTexture.Pal2.Length], rotate) * renderScale + pos;
+                Vector2 curentP = Vector2.Transform(Core.Entities.MillTexture.Pal2[i], rotate) + pos;
+                Vector2 curentP2 = Vector2.Transform(Core.Entities.MillTexture.Pal2[(i + 1) % Core.Entities.MillTexture.Pal2.Length], rotate) + pos;
 
-                DrawCircleV(curentP, Core.Entities.MillTexture.thickness / 2, Color.PURPLE);
-                DrawLineEx(curentP, curentP2, Core.Entities.MillTexture.thickness, Color.PURPLE);
+                DrawCircleV(curentP, Core.Entities.MillTexture.thickness / 2, renderColor);
+                DrawLineEx(curentP, curentP2, Core.Entities.MillTexture.thickness, renderColor);
 
             }
         }

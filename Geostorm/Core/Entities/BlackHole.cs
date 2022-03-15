@@ -14,6 +14,7 @@ namespace Geostorm.Core.Entities
     class BlackHole : Entity
     {
         bool active = false;
+        public int SpawnTime = 90;
         public BlackHole(Vector2 pos, float Radius)
         {
             Position = pos;
@@ -35,6 +36,7 @@ namespace Geostorm.Core.Entities
         }
         public void Update(GameData data)
         {
+            SpawnTime--;
             foreach (var bullet in data.bullets)
                 if (CheckCollisionCircles(bullet.Position, bullet.CollisionRadius, Position, CollisionRadius))
                 {

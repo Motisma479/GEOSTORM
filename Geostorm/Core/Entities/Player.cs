@@ -69,7 +69,7 @@ namespace Geostorm.Core.Entities
             }
             foreach (var item in data.blackHoles)
             {
-                if (item.IsDead) continue;
+                if (item.IsDead || item.SpawnTime > 0) continue;
                 if ((item.Position - Position).Length() < (item.CollisionRadius + CollisionRadius))
                     RemoveLife(data);
             }

@@ -49,7 +49,7 @@ namespace Geostorm.Core.Entities
     }
     static class MillTexture
     {
-        private static readonly float preScale = 25.0f;
+        private static readonly float preScale = 20.0f;
         public static float thickness = 4f;
         public static readonly Vector2[] Pal1 =
         {
