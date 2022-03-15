@@ -19,7 +19,7 @@ namespace Geostorm.Core.Entities
         {
             Position = pos;
             CollisionRadius = Radius;
-            range = (int)(CollisionRadius+50);
+            range = (int)(CollisionRadius + 50);
             weight = 100000;
         }
         public override void KillEntity(GameData data)
@@ -63,7 +63,7 @@ namespace Geostorm.Core.Entities
                     float mLength = (item.Position - Position).Length() - (item.CollisionRadius + CollisionRadius + 250);
                     if (mLength < 0)
                     {
-                        item.Position += (item.Position - Position) / 550000 * -mLength*mLength;
+                        item.Position += (item.Position - Position) / 550000 * -mLength * mLength;
                         if (mLength < -250)
                         {
                             if (item.GetType() == this.GetType())
@@ -94,7 +94,7 @@ namespace Geostorm.Core.Entities
         }
         public override void Draw(Graphics graphics, Camera camera)
         {
-            graphics.DrawBlackHole(Position + camera.Pos, CollisionRadius);
+                graphics.DrawBlackHole(Position + camera.Pos, CollisionRadius);
         }
     }
 }

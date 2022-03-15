@@ -18,6 +18,7 @@ namespace Geostorm.Core.Entities
         public int Life { get { return life; } set { life = value; } }
         int cooldown = 0;
         Weapon weapon;
+        bool godmode;
         float targetRotation = 0;
         public float WeaponRotation = 0;
 
@@ -35,6 +36,7 @@ namespace Geostorm.Core.Entities
 
         public void RemoveLife(GameData data)
         {
+            if (!godmode) {
             foreach (var item in data.enemies)
             {
                  if (!item.IsDead && item.SpawnTime <= 90) item.KillEntity(data);
@@ -45,22 +47,25 @@ namespace Geostorm.Core.Entities
                 item.KillEntity(data);
             }
 
-            life -= 1;
-            weight = 6000000;
-            range = 500;
-            if (life <= 0)
-                IsDead = true;
-            cooldown = 120;
-            for (int i = 0; i < data.rng.Next(200,250); i++)
-            {
-                Vector3 tmpColor = Raylib.ColorToHSV(Color.GREEN);
-                tmpColor.X += data.rng.Next(-30, 15);
-                data.particles.Add(new Explosion(Position, data.rng.Next(0, 360), Raylib.ColorFromHSV(tmpColor.X, tmpColor.Y, tmpColor.Z), data.rng.Next(40, 80)));
+                life -= 1;
+                weight = 6000000;
+                range = 500;
+                if (life <= 0)
+                    IsDead = true;
+                cooldown = 120;
+                for (int i = 0; i < data.rng.Next(200, 250); i++)
+                {
+                    Vector3 tmpColor = Raylib.ColorToHSV(Color.GREEN);
+                    tmpColor.X += data.rng.Next(-30, 15);
+                    data.particles.Add(new Explosion(Position, data.rng.Next(0, 360), Raylib.ColorFromHSV(tmpColor.X, tmpColor.Y, tmpColor.Z), data.rng.Next(40, 80)));
+                }
             }
         }
 
         public override void Update(in GameInputs inputs, GameData data, List<Event> events)
         {
+            if (IsKeyPressed(KeyboardKey.KEY_KP_0))
+                godmode = !godmode;
             foreach (var enemy in data.enemies)
             {
                 if (enemy.IsDead || enemy.SpawnTime >= 0) continue;
@@ -174,6 +179,8 @@ namespace Geostorm.Core.Entities
         }
         public override void Draw(Graphics graphics, Camera camera)
         {
+            if (godmode)
+                DrawText("GODMODE", GetScreenWidth() - 100 - MeasureText("GODMODE", 50), GetScreenHeight() - 100, 50, Color.RED);
             graphics.DrawPlayer(Position + camera.Pos, Rotation, WeaponRotation);
             if (cooldown % 12 == 1)
                 DrawCircleLines((int)(Position.X + camera.Pos.X), (int)(Position.Y + camera.Pos.Y), CollisionRadius, Raylib_cs.Color.WHITE);
