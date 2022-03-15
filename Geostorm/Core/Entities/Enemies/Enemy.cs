@@ -20,6 +20,8 @@ namespace Geostorm.Core.Entities.Enemies
 
         public int SpawnTime { get => spawnTime;}
 
+        public int ScoreDrop;
+
         public sealed override void Update(in GameInputs inputs, GameData data, List<Event> events)
         {
             spawnTime--;

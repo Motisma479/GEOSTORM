@@ -45,6 +45,8 @@ namespace Geostorm.Core
         public float TotalTime = 0;
         public Random rng;
 
+        public int Score;
+
         // Temporary List
         private List<Enemy> enemiesAdded = new List<Enemy>();
         private List<Bullet> bulletsAdded = new List<Bullet>();

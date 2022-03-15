@@ -95,7 +95,6 @@ namespace Geostorm.Core
             {
 
                 addBullet(data, MathHelper.ToDegrees(MathF.Cos(data.TotalTime*5)/3));
-                System.Console.WriteLine(MathF.Sin(data.TotalTime));
                 coolDown = 1 / 16.0f;
             }
             else

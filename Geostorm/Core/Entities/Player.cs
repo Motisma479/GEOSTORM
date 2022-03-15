@@ -14,13 +14,12 @@ namespace Geostorm.Core.Entities
     {
         int life = 5;
         public int Life { get { return life; } set { life = value; } }
-        int Score { get { return Score; } set { Score = value; } }
         int cooldown = 0;
         Weapon weapon;
         float targetRotation = 0;
         public float WeaponRotation = 0;
 
-        int Weaponlevel;
+        int WeaponLevel;
         public Player()
         {
             weapon = new Weapon0();
@@ -75,6 +74,69 @@ namespace Geostorm.Core.Entities
             weapon.Update(inputs, data, events);
             if (cooldown > 0)
                 cooldown--;
+
+            switch (WeaponLevel)
+            {
+                case 0:
+                    if (data.Score > 1250)
+                    {
+                        weapon = new Weapon1();
+                        WeaponLevel++;
+                    }
+                    break;
+                case 1:
+                    if (data.Score > 2500)
+                    {
+                        weapon = new Weapon2();
+                        WeaponLevel++;
+                    }
+                    break;
+                case 2:
+                    if (data.Score > 3750)
+                    {
+                        weapon = new Weapon3();
+                        WeaponLevel++;
+                    }
+                    break;
+                case 3:
+                    if (data.Score > 5000)
+                    {
+                        weapon = new Weapon4();
+                        WeaponLevel++;
+                    }
+                    break;
+                case 4:
+                    if (data.Score > 6250)
+                    {
+                        weapon = new Weapon5();
+                        WeaponLevel++;
+                    }
+                    break;
+                case 5:
+                    if (data.Score > 7500)
+                    {
+                        weapon = new Weapon6();
+                        WeaponLevel++;
+                    }
+                    break;
+                case 6:
+                    if (data.Score > 8125)
+                    {
+                        weapon = new Weapon7();
+                        WeaponLevel++;
+                    }
+                    break;
+                case 7:
+                    if (data.Score > 8750)
+                    {
+                        weapon = new Weapon8();
+                        WeaponLevel++;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            System.Console.WriteLine(data.Score);
         }
         public override void Draw(Graphics graphics, Camera camera)
         {

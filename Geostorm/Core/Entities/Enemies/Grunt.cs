@@ -23,6 +23,8 @@ namespace Geostorm.Core.Entities.Enemies
             CollisionRadius = 18;
             Position = new Vector2(datas.rng.Next(20, (int)(datas.MapSize.X- CollisionRadius - 5)), datas.rng.Next(20, (int)(datas.MapSize.Y - CollisionRadius - 5)));
             Level = lvl;
+
+            ScoreDrop = 50;
         }
         float targetRotation = 0;
         Vector2 renderScale = new Vector2(1,1);
@@ -35,6 +37,22 @@ namespace Geostorm.Core.Entities.Enemies
                 Rotation = (Rotation - targetRotation) % 360.0f;
             }
             Position += MathHelper.GetVectorRot(Rotation)*2;
+            bool hit = false;
+            foreach (var item in data.bullets)
+            {
+                if (item.IsDead) continue;
+                if ((item.Position - Position).Length() < (item.CollisionRadius + CollisionRadius))
+                {
+                    hit = true;
+                    item.KillEntity(data);
+                    break;
+                }
+            }
+            if (hit || !CheckCollisionPointRec(Position, new Rectangle(CollisionRadius * 2, CollisionRadius * 2, data.MapSize.X - CollisionRadius * 4, data.MapSize.Y - CollisionRadius * 4)))
+            {
+                KillEntity(data);
+                data.Score+=ScoreDrop;
+            }
             float deform = 0.2f*MathF.Sin(data.TotalTime * 6);
             renderScale = new Vector2(0.9f+deform,0.9f-deform);
         }
