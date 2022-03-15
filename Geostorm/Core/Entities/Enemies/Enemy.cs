@@ -30,13 +30,11 @@ namespace Geostorm.Core.Entities.Enemies
             {
                 DoUpdate(inputs, data, events);
             }
-            bool hit = false;
             foreach (var item in data.bullets)
             {
                 if (item.IsDead) continue;
                 if ((item.Position - Position).Length() < (item.CollisionRadius + CollisionRadius))
                 {
-                    hit = true;
                     item.KillEntity(data);
                     KillEntity(data);
                     break;
