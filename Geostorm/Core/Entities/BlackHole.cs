@@ -20,12 +20,23 @@ namespace Geostorm.Core.Entities
             Position = pos;
             CollisionRadius = Radius;
         }
+        public override void KillEntity(GameData data)
+        {
+            Position = new Vector2(MathHelper.CutFloat(Position.X, 1, data.MapSize.X - 1), MathHelper.CutFloat(Position.Y, 1, data.MapSize.Y - 1));
+            IsDead = true;
+            for (int i = 0; i < GetRandomValue(100, 150); i++)
+            {
+                Vector3 tmpColor = ColorToHSV(RED);
+                tmpColor.X += GetRandomValue(-30, 15);
+                data.particles.Add(new Explosion(Position, i * GetRandomValue(0, 360), ColorFromHSV(tmpColor.X, tmpColor.Y, tmpColor.Z), GetRandomValue(40, 80)));
+            }
+        }
         public void Update(GameData data)
         {
             foreach (var bullet in data.bullets)
                 if (CheckCollisionCircles(bullet.Position, bullet.CollisionRadius, Position, CollisionRadius))
                 {
-                    CollisionRadius -= 0.01f;
+                    CollisionRadius -= 1f;
                 }
             if (MathHelper.SuperiorOrEqual(data.Player.Position, Position + new Vector2(-25, -25)) && MathHelper.InferiorOrEqual(data.Player.Position, Position + new Vector2(25, 25)))
                 data.Player.RemoveLife(data);
@@ -35,9 +46,9 @@ namespace Geostorm.Core.Entities
             {
                 if (CheckCollisionCircles(data.Player.Position, data.Player.CollisionRadius, Position, CollisionRadius + 50))
                 {
-                    attraction = 0.001f;
+                    attraction = 1f;
                     if (CheckCollisionCircles(data.Player.Position, data.Player.CollisionRadius, Position, CollisionRadius - 30))
-                        attraction = 0.01f;
+                        attraction = 3f;
                     if (data.Player.Position.X < Position.X)
                         data.Player.Position.X += attraction;
                     else if (data.Player.Position.X > Position.X)
@@ -47,7 +58,7 @@ namespace Geostorm.Core.Entities
                     else if (data.Player.Position.Y > Position.X)
                         data.Player.Position.Y -= attraction;
                 }
-                CollisionRadius += 0.0001f;
+                CollisionRadius += 0.1f;
             }
             if (CollisionRadius <= 20)
             {
@@ -57,15 +68,6 @@ namespace Geostorm.Core.Entities
             {
                 IsDead = true;
 
-            }
-            if (IsDead)
-            {
-                for (int i = 0; i < GetRandomValue(30, 50); i++)
-                {
-                    Vector3 tmpColor = ColorToHSV(RED);
-                    tmpColor.X += GetRandomValue(-30, 15);
-                    data.particles.Add(new Explosion(Position, i * GetRandomValue(0, 360), ColorFromHSV(tmpColor.X, tmpColor.Y, tmpColor.Z), GetRandomValue(40, 80)));
-                }
             }
         }
         public override void Draw(Graphics graphics, Camera camera)

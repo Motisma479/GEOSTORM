@@ -34,7 +34,7 @@ namespace Geostorm.Core.Entities
         public void RemoveLife(GameData data)
         {
             foreach (var entity in data.entities)
-                entity.IsDead = true;
+                entity.KillEntity(data);
             life -= 1;
             if (life <= 0)
                 IsDead = true;
@@ -43,6 +43,10 @@ namespace Geostorm.Core.Entities
 
         public override void Update(in GameInputs inputs, GameData data, List<Event> events)
         {
+            foreach (var enemies in data.enemies)
+                if (CheckCollisionCircles(enemies.Position, enemies.CollisionRadius, Position, CollisionRadius))
+                    RemoveLife(data);
+
             if (inputs.MoveAxis.LengthSquared() != 0.0f)
             {
                 Velocity += inputs.MoveAxis * 3;
