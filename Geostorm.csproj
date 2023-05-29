@@ -1,9 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
+    <ApplicationIcon>GEOSTORM.ico</ApplicationIcon>
+    <StartupObject></StartupObject>
+    <Authors>Robion Mathieu; Lepine Quentin; Bourgogne Romain</Authors>
+    <Company>NONE</Company>
+    <PackageIcon>GEOSTORM.png</PackageIcon>
+    <PackageIconUrl />
+    <Version>1.1.0</Version>
+    <Win32Resource />
+    <RootNamespace>Geostorm</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="GEOSTORM.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Raylib-cs" Version="3.7.0" />
@@ -22,6 +35,15 @@
     <None Update="inputs.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Assets\GEOSTORM.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="GEOSTORM.ico" />
   </ItemGroup>
 
 </Project>

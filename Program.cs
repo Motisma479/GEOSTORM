@@ -17,6 +17,8 @@ namespace Geostorm
             int monitor = GetCurrentMonitor();
             SetWindowSize((int)(GetMonitorWidth(monitor) * 0.75f), (int)(GetMonitorHeight(monitor) * 0.75f));
             SetWindowPosition((int)(GetMonitorWidth(monitor) * 0.1f), (int)(GetMonitorHeight(monitor) * 0.1f));
+            Image icon = LoadImage("Assets/GEOSTORM.png");
+            SetWindowIcon(icon);
             SetTargetFPS(60);
             SetMousePosition(GetScreenWidth() / 2, GetScreenHeight() / 2);
             SetExitKey(0);
