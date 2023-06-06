@@ -168,6 +168,8 @@ namespace Geostorm.Core
                 AddEnemyDelayed(new Mill(90 + rng.Next(0, round * 50 + 100), this));
             for (int i = 0; i < rng.Next(1,(round > 2 ? 4 : 3)); i++)
                 AddBlackHoleDelayed(new BlackHole(new Vector2(rng.Next(100, (int)(MapSize.X - 100)), rng.Next(100, (int)(MapSize.Y - 100))), GetRandomValue(35, 50)));
+            for (int i = 0; i < Grid.Length; ++i)
+                Grid[i].ReinitGrid();
             Synchronize();
         }
         public void ReadHighscore()

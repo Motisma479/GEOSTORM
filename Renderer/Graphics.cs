@@ -62,8 +62,21 @@ namespace Geostorm.Renderer
             }
 
         }
+        public void DrawTurret(Vector2 pos, float rotation)
+        {
+            //DrawCircleV(pos, 3.0f, Color.WHITE);
+            Matrix3x2 rotate = Matrix3x2.CreateRotation((MathHelper.ToRadians(rotation)));
+            for (int i = 0; i <= Core.Entities.TuretTexture.Points.Length - 1; i++)
+            {
+                Vector2 curentP = Vector2.Transform(Core.Entities.TuretTexture.Points[i], rotate) + pos;
+                Vector2 curentP2 = Vector2.Transform(Core.Entities.TuretTexture.Points[(i + 1) % Core.Entities.TuretTexture.Points.Length], rotate) + pos;
 
-        public void DrawPlayer(Vector2 pos, float rotation, float weaponRotation)
+                DrawCircleV(curentP, Core.Entities.TuretTexture.thickness / 2, Color.WHITE);
+                DrawLineEx(curentP, curentP2, Core.Entities.TuretTexture.thickness, Color.WHITE);
+
+            }
+        }
+        public void DrawPlayer(Vector2 pos, float rotation, float weaponRotation, UInt32 turretNumber = 0)
         {
             Matrix3x2 rotate = Matrix3x2.CreateRotation((MathHelper.ToRadians(rotation)));
             for (int i = 0; i <= Core.Entities.PlayerTexture.Points.Length - 1; i++)
@@ -75,7 +88,27 @@ namespace Geostorm.Renderer
                 DrawLineEx(curentP, curentP2, Core.Entities.PlayerTexture.thickness, Color.WHITE);
 
             }
-            DrawPointer(pos + MathHelper.GetVectorRot(weaponRotation) * 23, weaponRotation);
+
+            Vector2 delta = MathHelper.GetVectorRot(weaponRotation);
+            Vector2 norm = new Vector2(-delta.Y, delta.X);
+            if(turretNumber %2 ==0)
+            {
+                for (int i = 0; i < turretNumber; i++)
+                {
+                    DrawTurret(pos + (i % 2 == 0 ? delta + (norm * (i + 1)) : delta - (norm * i)) * 23, weaponRotation);
+
+                }
+            }
+            else
+            {
+                for (int i = 0; i < turretNumber; i++)
+                {
+                    DrawTurret(pos + (i % 2 == 0 ? delta + (norm * (i)) : delta - (norm * (i+1))) * 23, weaponRotation);
+
+                }
+            }
+            
+            DrawPointer(pos + delta * 23, weaponRotation);
         }
         public void DrawPlayerOverlay(Vector2 pos, float rotation)
         {

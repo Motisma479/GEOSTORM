@@ -9,12 +9,17 @@ using Geostorm.Core;
 
 namespace Geostorm.Renderer
 {
+    struct GridConnexion
+    {
+        public GridPoint point;
+        public int strength;
+    }
     class GridPoint
     {
         public Vector2 pVel;
         public Vector2 pPos;
         readonly bool fixedPoint;
-        public GridPoint[] connexions;
+        public GridConnexion[] connexions;
 
         public GridPoint(Vector2 position, bool isFixed)
         {
@@ -26,10 +31,11 @@ namespace Geostorm.Renderer
 
         public void AddPoints(GridPoint[] points, int count)
         {
-            connexions = new GridPoint[count];
+            connexions = new GridConnexion[count];
             for (int i = 0; i < count; i++)
             {
-                connexions[i] = points[i];
+                connexions[i].point = points[i];
+                connexions[i].strength = 60;
             }
         }
 
@@ -51,10 +57,13 @@ namespace Geostorm.Renderer
             }
             for (int i = 0; i < connexions.Length; i++)
             {
-                float cLength = (connexions[i].pPos - pPos).Length();
+                if (connexions[i].strength == 0) continue;
+                else if (connexions[i].strength > 1) connexions[i].strength--;
+                float cLength = (connexions[i].point.pPos - pPos).Length();
                 if (cLength > 24)
                 {
-                    pVel += (connexions[i].pPos - pPos) / 1500 * (cLength - 24);
+                    pVel += (connexions[i].point.pPos - pPos) / 1500 * (cLength - 24);
+                    if (connexions[i].strength == 1 && cLength > 90) connexions[i].strength = 0;
                 }
             }
         }
@@ -66,11 +75,20 @@ namespace Geostorm.Renderer
             if (!fixedPoint) pPos = pPos + pVel;
         }
 
+        public void ReinitGrid()
+        {
+            for (int i = 0; i < connexions.Length; i++)
+            {
+                connexions[i].strength = 60;
+            }
+        }
+
         public void Draw(Graphics graphics, Camera camera, Vector2 size)
         {
             for (int i = 0; i < connexions.Length; i++)
             {
-                graphics.DrawGridLine((connexions[i].pPos + pPos) / 2 + camera.Pos, pPos + camera.Pos, new Raylib_cs.Rectangle(camera.Pos.X, camera.Pos.Y, size.X, size.Y));
+                if (connexions[i].strength == 0) continue;
+                graphics.DrawGridLine((connexions[i].point.pPos + pPos) / 2 + camera.Pos, pPos + camera.Pos, new Raylib_cs.Rectangle(camera.Pos.X, camera.Pos.Y, size.X, size.Y));
             }
         }
     }

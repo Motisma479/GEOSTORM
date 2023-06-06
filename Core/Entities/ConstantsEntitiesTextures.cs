@@ -24,6 +24,22 @@ namespace Geostorm.Core.Entities
             new Vector2(-0.3f,0.8f)     * preScale      //bottomOuterWing
         };
     }
+    static class TuretTexture
+    {
+        private static readonly float preScale = 10.0f;
+        public static float thickness = 2.5f;
+        public static readonly Vector2[] Points =
+        {
+            new Vector2(-0.9f, 0.0f)    * preScale,     //outerCenter 
+            new Vector2(-0.3f,-1f)    * preScale,     //topOuterWing 
+            new Vector2(0.7f,0f)     * preScale,     //topGun
+            new Vector2(-0.1f, -0.55f)  * preScale,     //topInnerWing
+            new Vector2(-0.4f, 0.0f)    * preScale,     //innerCenter 
+            new Vector2(-0.1f,0.55f)    * preScale,     //bottomInnerWing
+            new Vector2(0.7f,0f)      * preScale,     //bottomGun
+            new Vector2(-0.3f,1f)     * preScale      //bottomOuterWing
+        };
+    }
     static class BulletTexture
     {
         private static readonly float preScale = 15.0f;

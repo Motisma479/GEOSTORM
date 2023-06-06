@@ -181,7 +181,7 @@ namespace Geostorm.Core.Entities
         {
             if (godmode)
                 DrawText("GODMODE", GetScreenWidth() - 100 - MeasureText("GODMODE", 50), GetScreenHeight() - 100, 50, Color.RED);
-            graphics.DrawPlayer(Position + camera.Pos, Rotation, WeaponRotation);
+            graphics.DrawPlayer(Position + camera.Pos, Rotation, WeaponRotation,5);
             if (cooldown % 12 == 1)
                 DrawCircleLines((int)(Position.X + camera.Pos.X), (int)(Position.Y + camera.Pos.Y), CollisionRadius, Raylib_cs.Color.WHITE);
         }
