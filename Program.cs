@@ -8,10 +8,8 @@ namespace Geostorm
     class Program
     {
 
-        static void Main(string[] args)
+        private static void InitializeWindow()
         {
-            // Initialization
-            //--------------------------------------------------------------------------------------
             SetConfigFlags(ConfigFlags.FLAG_WINDOW_RESIZABLE);
             InitWindow(1600, 900, "GeoStorm");
             int monitor = GetCurrentMonitor();
@@ -23,16 +21,23 @@ namespace Geostorm
             SetMousePosition(GetScreenWidth() / 2, GetScreenHeight() / 2);
             SetExitKey(0);
             InitAudioDevice();
+        }
+
+        static void Main(string[] args)
+        {
+            // Initialization
+            //--------------------------------------------------------------------------------------
+            InitializeWindow();
 
             var game = new Game();
+            game.LoadConfigFile();
+
             var inputs = new GameInputs();
-            inputs.LocalSize = game.data.MapSize;
-            var renders = new Graphics();
-            renders.Load();
-            game.config.LoadConfigFile();
+            inputs.LocalSize = game.gameData.MapSize;
+
             Shader bloomShader = LoadShader("", "Assets/Shaders/bloom.fs");
             //--------------------------------------------------------------------------------------
-            RenderTexture2D target = LoadRenderTexture(GetScreenWidth(),GetScreenHeight());
+            RenderTexture2D renderTexture = LoadRenderTexture(GetScreenWidth(),GetScreenHeight());
 
             // Main game loop
             while (!WindowShouldClose() && !game.ShouldClose)
@@ -40,28 +45,32 @@ namespace Geostorm
                 // Update
                 //----------------------------------------------------------------------------------
                 Vector2 size = new Vector2(GetScreenWidth(), GetScreenHeight());
+
                 if (size != inputs.ScreenSize)
                 {
-                    UnloadRenderTexture(target);
-                    target = LoadRenderTexture(GetScreenWidth(), GetScreenHeight());
+                    UnloadRenderTexture(renderTexture);
+                    renderTexture = LoadRenderTexture(GetScreenWidth(), GetScreenHeight());
                 }
-                float dt = GetFrameTime();
-                if (game.data.scene != GameData.Scene.PAUSE)
-                    inputs.Update(game.config, game.data.Player.Position);
+
+                if (game.gameData.scene != GameData.Scene.PAUSE)
+                    inputs.Update(game.config, game.gameData.player.Position);
                 game.Update(inputs);
-                
                 //----------------------------------------------------------------------------------
 
                 // Draw
                 //----------------------------------------------------------------------------------
-                BeginTextureMode(target);
+
+                // Draw Scene
+                BeginTextureMode(renderTexture);
                 ClearBackground(Color.BLACK);
-                game.Render(renders, inputs);
+                game.Render(inputs);
                 EndTextureMode();
+
+                // Draw FrameBuffer Rect
                 BeginDrawing();
                 ClearBackground(Color.BLACK);
                 BeginShaderMode(bloomShader);
-                DrawTextureRec(target.texture, new Rectangle( 0, 0, (float)target.texture.width, (float)-target.texture.height), new Vector2(0, 0), Color.WHITE);
+                DrawTextureRec(renderTexture.texture, new Rectangle( 0, 0, (float)renderTexture.texture.width, (float)-renderTexture.texture.height), new Vector2(0, 0), Color.WHITE);
                 EndShaderMode();
                 EndDrawing();
                 //----------------------------------------------------------------------------------
@@ -69,9 +78,10 @@ namespace Geostorm
 
             // De-Initialization
             //--------------------------------------------------------------------------------------
-            game.config.WriteConfigFile();
+            game.WriteConfigFile();
+
             UnloadShader(bloomShader);
-            UnloadRenderTexture(target);
+            UnloadRenderTexture(renderTexture);
             CloseAudioDevice();
             CloseWindow();
             //--------------------------------------------------------------------------------------

@@ -5,7 +5,6 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Geostorm.Core.Entities;
-using Geostorm.Core.Events;
 
 namespace Geostorm.Core
 {
@@ -24,9 +23,9 @@ namespace Geostorm.Core
         protected void addBullet(GameData data, float distance)
         {
             Bullet b = new Bullet();
-            b.Position = data.Player.Position + MathHelper.GetVectorRot(data.Player.WeaponRotation) * 23;
-            b.Rotation = data.Player.WeaponRotation;
-            b.Position += MathHelper.GetVectorRot(data.Player.WeaponRotation + 90) * distance;
+            b.Position = data.player.Position + MathHelper.GetVectorRot(data.player.WeaponRotation) * 23;
+            b.Rotation = data.player.WeaponRotation;
+            b.Position += MathHelper.GetVectorRot(data.player.WeaponRotation + 90) * distance;
             b.Velocity = MathHelper.GetVectorRot(b.Rotation) * 20;
             b.IsDead = false;
             data.AddBulletDelayed(b);
@@ -35,33 +34,27 @@ namespace Geostorm.Core
         protected void addBulletStatic(GameData data, float degree)
         {
             Bullet b = new Bullet();
-            b.Position = data.Player.Position + MathHelper.GetVectorRot(degree) * 23;
+            b.Position = data.player.Position + MathHelper.GetVectorRot(degree) * 23;
             b.Rotation = degree;
-            b.Velocity = MathHelper.GetVectorRot(b.Rotation)* 20;
+            b.Velocity = MathHelper.GetVectorRot(b.Rotation) * 20;
             data.AddBulletDelayed(b);
         }
 
-    public virtual void Update(in GameInputs inputs, GameData data, List<Event> events) 
+        public virtual void Update(in GameInputs inputs, GameData data)
         {
-            if (inputs.Shoot && coolDown <= 0)
-            {
-                // Optional
-                /*BulletShootEvent shootEvent = new BulletShootEvent();
-                shootEvent.Bullet = b;
-                events.Add(shootEvent);*/
-            }
+
         }
     }
     class Weapon0 : Weapon
     {
         public Weapon0()
-        {}
-        public override void Update(in GameInputs inputs, GameData data, List<Event> events)
+        { }
+        public override void Update(in GameInputs inputs, GameData data)
         {
 
             if (inputs.Shoot && coolDown <= 0)
             {
-                addBullet(data,0);
+                addBullet(data, 0);
                 coolDown = 1 / 6.0f;
             }
             else
@@ -71,13 +64,13 @@ namespace Geostorm.Core
     class Weapon1 : Weapon
     {
         public Weapon1()
-        {}
-        public override void Update(in GameInputs inputs, GameData data, List<Event> events)
+        { }
+        public override void Update(in GameInputs inputs, GameData data)
         {
 
             if (inputs.Shoot && coolDown <= 0)
             {
-                addBullet(data,0);
+                addBullet(data, 0);
                 coolDown = 1 / 12.0f;
             }
             else
@@ -88,13 +81,13 @@ namespace Geostorm.Core
     {
         public Weapon2()
         { }
-        public override void Update(in GameInputs inputs, GameData data, List<Event> events)
+        public override void Update(in GameInputs inputs, GameData data)
         {
 
             if (inputs.Shoot && coolDown <= 0)
             {
 
-                addBullet(data, MathHelper.ToDegrees(MathF.Cos(data.TotalTime*5)/3));
+                addBullet(data, MathHelper.ToDegrees(MathF.Cos(data.TotalTime * 5) / 3));
                 coolDown = 1 / 16.0f;
             }
             else
@@ -104,13 +97,13 @@ namespace Geostorm.Core
     class Weapon3 : Weapon
     {
         public Weapon3()
-        {}
-        public override void Update(in GameInputs inputs, GameData data, List<Event> events)
+        { }
+        public override void Update(in GameInputs inputs, GameData data)
         {
 
             if (inputs.Shoot && coolDown <= 0)
             {
-                addBullet(data,-10);
+                addBullet(data, -10);
                 addBullet(data, 10);
                 coolDown = 1 / 6.0f;
             }
@@ -121,8 +114,8 @@ namespace Geostorm.Core
     class Weapon4 : Weapon
     {
         public Weapon4()
-        {}
-        public override void Update(in GameInputs inputs, GameData data, List<Event> events)
+        { }
+        public override void Update(in GameInputs inputs, GameData data)
         {
 
             if (inputs.Shoot && coolDown <= 0)
@@ -138,8 +131,8 @@ namespace Geostorm.Core
     class Weapon5 : Weapon
     {
         public Weapon5()
-        {}
-        public override void Update(in GameInputs inputs, GameData data, List<Event> events)
+        { }
+        public override void Update(in GameInputs inputs, GameData data)
         {
 
             if (inputs.Shoot && coolDown <= 0)
@@ -154,8 +147,8 @@ namespace Geostorm.Core
     class Weapon6 : Weapon
     {
         public Weapon6()
-        {}
-        public override void Update(in GameInputs inputs, GameData data, List<Event> events)
+        { }
+        public override void Update(in GameInputs inputs, GameData data)
         {
 
             if (inputs.Shoot && coolDown <= 0)
@@ -171,14 +164,14 @@ namespace Geostorm.Core
     class Weapon7 : Weapon
     {
         public Weapon7()
-        {}
-        public override void Update(in GameInputs inputs, GameData data, List<Event> events)
+        { }
+        public override void Update(in GameInputs inputs, GameData data)
         {
 
             if (inputs.Shoot && coolDown <= 0)
             {
-                addBullet(data,-10);
-                addBullet(data,  0);
+                addBullet(data, -10);
+                addBullet(data, 0);
                 addBullet(data, 10);
                 coolDown = 1 / 60.0f;
             }
@@ -189,8 +182,8 @@ namespace Geostorm.Core
     class Weapon8 : Weapon
     {
         public Weapon8()
-        {}
-        public override void Update(in GameInputs inputs, GameData data, List<Event> events)
+        { }
+        public override void Update(in GameInputs inputs, GameData data)
         {
             if (inputs.Shoot && coolDown <= 0)
             {

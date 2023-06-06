@@ -41,10 +41,10 @@ namespace Geostorm.Renderer
 
         public void UpdatePoint(GameData data)
         {
-            float pLength = (data.Player.Position - pPos).Length();
-            if (pLength < data.Player.Range)
+            float pLength = (data.player.Position - pPos).Length();
+            if (pLength < data.player.Range)
             {
-                pVel += (data.Player.Position - pPos) / data.Player.Weight * -MathF.Pow(pLength - data.Player.Range, 2);
+                pVel += (data.player.Position - pPos) / data.player.Weight * -MathF.Pow(pLength - data.player.Range, 2);
             }
             foreach (var item in data.entities)
             {
@@ -83,12 +83,13 @@ namespace Geostorm.Renderer
             }
         }
 
-        public void Draw(Graphics graphics, Camera camera, Vector2 size)
+        public void Draw(Camera camera, Vector2 size)
         {
             for (int i = 0; i < connexions.Length; i++)
             {
                 if (connexions[i].strength == 0) continue;
-                graphics.DrawGridLine((connexions[i].point.pPos + pPos) / 2 + camera.Pos, pPos + camera.Pos, new Raylib_cs.Rectangle(camera.Pos.X, camera.Pos.Y, size.X, size.Y));
+                Graphics.DrawGridLine((connexions[i].pPos + pPos) / 2 + camera.Pos, pPos + camera.Pos, new Raylib_cs.Rectangle(camera.Pos.X, camera.Pos.Y, size.X, size.Y));
+                //graphics.DrawGridLine((connexions[i].point.pPos + pPos) / 2 + camera.Pos, pPos + camera.Pos, new Raylib_cs.Rectangle(camera.Pos.X, camera.Pos.Y, size.X, size.Y));
             }
         }
     }

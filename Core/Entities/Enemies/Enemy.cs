@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Geostorm.Core;
-using Geostorm.Core.Events;
 using Geostorm.Renderer;
 using static Raylib_cs.Raylib;
 using Raylib_cs;
@@ -22,13 +21,13 @@ namespace Geostorm.Core.Entities.Enemies
 
         
 
-        public sealed override void Update(in GameInputs inputs, GameData data, List<Event> events)
+        public sealed override void Update(in GameInputs inputs, GameData data)
         {
             spawnTime-= 60*data.DeltaTime;
             if (spawnTime >= 60) return;
             if (spawnTime <= 0)
             {
-                DoUpdate(inputs, data, events);
+                DoUpdate(inputs, data);
             }
             foreach (var item in data.bullets)
             {
@@ -42,12 +41,12 @@ namespace Geostorm.Core.Entities.Enemies
             }
         }
 
-        public virtual void DoUpdate(in GameInputs inputs, GameData data, List<Event> events) { }
-        public sealed override void Draw(Graphics graphics, Camera camera)
+        public virtual void DoUpdate(in GameInputs inputs, GameData data) { }
+        public sealed override void Draw(Camera camera)
         {
-            DoDraw(graphics,camera);
+            DoDraw(camera);
         }
 
-        public virtual void DoDraw(Graphics graphics, Camera camera) { }
+        public virtual void DoDraw(Camera camera) { }
     }
 }

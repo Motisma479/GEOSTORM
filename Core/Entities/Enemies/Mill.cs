@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Geostorm.Core;
 using System.Numerics;
-using Geostorm.Core.Events;
 using Geostorm.Renderer;
 using static Raylib_cs.Raylib;
 using Raylib_cs;
@@ -27,10 +26,10 @@ namespace Geostorm.Core.Entities.Enemies
             ScoreDrop = 200;
         }
 
-        public override void DoUpdate(in GameInputs inputs, GameData data, List<Event> events)
+        public override void DoUpdate(in GameInputs inputs, GameData data)
         {
             Rotation += data.DeltaTime * 240;
-            Vector2 dir = (data.Player.Position - Position);
+            Vector2 dir = (data.player.Position - Position);
             if (dir.LengthSquared() != 0)
             {
                 Velocity = Velocity * 0.8f + (dir / dir.Length()) * 0.8f;
@@ -77,9 +76,9 @@ namespace Geostorm.Core.Entities.Enemies
             }
             data.particles.Add(new Score(ScoreDrop.ToString(), Position, GetRandomValue(0, 360), Raylib_cs.Color.LIME, GetRandomValue(40, 80)));
         }
-        public override void DoDraw(Graphics graphics, Camera camera) 
+        public override void DoDraw(Camera camera) 
         {
-            graphics.DrawMill(Position + camera.Pos, Rotation, spawnTime);
+            Graphics.DrawMill(Position + camera.Pos, Rotation, spawnTime);
         }
     }
 }

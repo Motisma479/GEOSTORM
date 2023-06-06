@@ -12,39 +12,40 @@ namespace Geostorm.Core
 {
     class Star
     {
-        public Vector2 Pos;
-        int Depth;
-        public float Speed = 1;
+        public Vector2 position;
+        private int depth;
+        public float speed = 1;
 
-        public Star(Vector2 pos, int depth)
+        public Star(Vector2 pos, int _depth)
         {
-            this.Depth = depth;
-            this.Pos = pos;
-            switch (Depth)
+            depth = _depth;
+            position = pos;
+            switch (depth)
             {
                 default:
                 case 0:
-                    Speed = 0.6f;
+                    speed = 0.6f;
                     break;
                 case 1:
-                    Speed = 0.5f;
+                    speed = 0.5f;
                     break;
                 case 2:
-                    Speed = 0.3f;
+                    speed = 0.3f;
                     break;
                 case 3:
-                    Speed = 0.25f;
+                    speed = 0.25f;
                     break;
             }
         }
+
         public void Update(Camera cam) 
         {
 
         }
 
-        public void Draw(Graphics graphics, Camera cam)
+        public void Draw(Camera cam)
         {
-            graphics.DrawStar(Pos + cam.Pos * Speed);
+            Graphics.DrawStar(position + cam.Pos * speed);
         }
     }
 }

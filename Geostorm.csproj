@@ -15,6 +15,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Core\Events\BulletShootEvent.cs" />
+    <Compile Remove="Core\Events\EnemyKilledEvent.cs" />
+    <Compile Remove="Core\Events\Event.cs" />
+    <Compile Remove="Core\Events\IGameEventListener.cs" />
+    <Compile Remove="Renderer\Sound.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="GEOSTORM.ico" />
   </ItemGroup>
 
@@ -44,6 +52,10 @@
 
   <ItemGroup>
     <Resource Include="GEOSTORM.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Core\Events\" />
   </ItemGroup>
 
 </Project>

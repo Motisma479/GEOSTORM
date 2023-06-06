@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Geostorm.Core.Events;
 using Geostorm.Renderer;
 using System.Numerics;
 using static Raylib_cs.Raylib;
@@ -13,27 +12,21 @@ namespace Geostorm.Core
 {
     class Game
     {
-        public GameData data;
+        public GameData gameData;
         public GameConfig config;
         public bool ShouldClose = false;
         float time;
-        List<IGameEventListener> eventListeners = new List<IGameEventListener>();
 
         public Game()
         {
-            data = new GameData();
+            gameData = new GameData();
             config = new GameConfig();
-        }
-
-        public void AddEventListener(IGameEventListener listener)
-        {
-
         }
 
         public void Update(GameInputs inputs)
         {
-            data.ui.Update();
-            switch (data.scene)
+            gameData.ui.Update();
+            switch (gameData.scene)
             {
                 case GameData.Scene.MAIN_MENU:
                     UpdateMainMenu(inputs);
@@ -48,40 +41,39 @@ namespace Geostorm.Core
                     UpdateSettings(inputs);
                     break;
                 case GameData.Scene.GAME_OVER:
-                    {
-                        UpdateGameOver(inputs);
-                    }
+                    UpdateGameOver(inputs);
                     break;
                 default:
                     break;
             }
-            data.UpdateDeltaTime();
+            gameData.UpdateDeltaTime();
         }
 
         public void UpdateMainMenu(GameInputs inputs)
         {
-            if (data.ui.buttons["start"].IsClicked())
-                data.ui.SwitchToScene(GameData.Scene.IN_GAME, ref data.scene, config, data);
-            else if (data.ui.buttons["settings"].IsClicked())
-                data.ui.SwitchToScene(GameData.Scene.SETTINGS, ref data.scene, config, data);
-            else if (data.ui.buttons["quit"].IsClicked())
+            if (gameData.ui.buttons["start"].IsClicked())
+                gameData.ui.SwitchToScene(GameData.Scene.IN_GAME, ref gameData.scene, config, gameData);
+            else if (gameData.ui.buttons["settings"].IsClicked())
+                gameData.ui.SwitchToScene(GameData.Scene.SETTINGS, ref gameData.scene, config, gameData);
+            else if (gameData.ui.buttons["quit"].IsClicked())
                 ShouldClose = true;
             if (IsKeyPressed(KeyboardKey.KEY_ESCAPE))
                 ShouldClose = true;
-
         }
+
         static int activebuttons = 0;
         static int timeCount = 0;
+
         public void UpdateSettings(GameInputs inputs)
         {
-            if (data.ui.buttons["aimtype"].IsClicked())
+            if (gameData.ui.buttons["aimtype"].IsClicked())
             {
                 config.AimType = (config.AimType + 1) % 3;
-                data.ui.buttons["aimtype"].SetText(Geostorm.Renderer.Ui.AimType[config.AimType], new Vector2(10, 10), 26, Color.BLACK);
+                gameData.ui.buttons["aimtype"].SetText(Geostorm.Renderer.Ui.AimType[config.AimType], new Vector2(10, 10), 26, Color.BLACK);
             }
 
-            if (data.ui.buttons["back"].IsClicked())
-                data.ui.SwitchToScene(GameData.Scene.MAIN_MENU, ref data.scene, config, data);
+            if (gameData.ui.buttons["back"].IsClicked())
+                gameData.ui.SwitchToScene(GameData.Scene.MAIN_MENU, ref gameData.scene, config, gameData);
             else
             {
                 for (int i = 0; i < config.KeyboardInputs.Length; i++)
@@ -98,28 +90,28 @@ namespace Geostorm.Core
                         }
                     }
                     // Check if other Buttons are clicked
-                    if (!data.ui.buttons["input" + activebuttons].IsToggle() || i == activebuttons)
+                    if (!gameData.ui.buttons["input" + activebuttons].IsToggle() || i == activebuttons)
                     {
-                        if (data.ui.buttons["input" + i].IsClicked())
+                        if (gameData.ui.buttons["input" + i].IsClicked())
                         {
-                            data.ui.buttons["input" + i].SetState(true);
+                            gameData.ui.buttons["input" + i].SetState(true);
                         }
-                        if (data.ui.buttons["input" + i].IsToggle() == true)
+                        if (gameData.ui.buttons["input" + i].IsToggle() == true)
                         {
-                            data.ui.buttons["input" + i].SetText("< Key >", new Vector2(25, 8), 35, Color.BLACK);
+                            gameData.ui.buttons["input" + i].SetText("< Key >", new Vector2(25, 8), 35, Color.BLACK);
                             if (IsKeyPressed(KeyboardKey.KEY_ESCAPE) || config.KeyboardInputs[i].AutoBindKey())
                             {
-                                data.ui.buttons["input" + i].SetState(false);
+                                gameData.ui.buttons["input" + i].SetState(false);
                             }
                         }
-                        if (IsMouseButtonDown(MouseButton.MOUSE_LEFT_BUTTON) && data.ui.buttons["input" + i].IsClicked() == false)
-                            data.ui.buttons["input" + i].SetState(false);
+                        if (IsMouseButtonDown(MouseButton.MOUSE_LEFT_BUTTON) && gameData.ui.buttons["input" + i].IsClicked() == false)
+                            gameData.ui.buttons["input" + i].SetState(false);
                     }
                     //Convert to key String
                     KeyboardKey tmp = (KeyboardKey)config.KeyboardInputs[i].Id;
                     string key = config.KeyboardInputs[i].GetDesc().Replace("_", " ");
                     // Set Text Button
-                    data.ui.buttons["input" + i].SetText(config.KeyboardInputs[i].Id == -1 ? "NONE" : key, new Vector2(5, 8), 26, Color.BLACK);
+                    gameData.ui.buttons["input" + i].SetText(config.KeyboardInputs[i].Id == -1 ? "NONE" : key, new Vector2(5, 8), 26, Color.BLACK);
                 }
             }
             if (timeCount > 0)
@@ -128,72 +120,68 @@ namespace Geostorm.Core
 
         public void UpdateInGame(GameInputs inputs)
         {
-            List<Event> events = new List<Event>();
-
             // Update Camera
-            data.camera.Update(inputs, data.Player.Position, data.MapSize);
-            //Update Starts
-            for (int i = 0; i < data.stars.Count(); i++)
-                data.stars[i].Update(data.camera);
+            gameData.camera.Update(inputs, gameData.player.Position, gameData.MapSize);
+
+            //Update Stars
+            for (int i = 0; i < gameData.stars.Count(); i++)
+                gameData.stars[i].Update(gameData.camera);
+
             //Ui Update
             if (IsKeyPressed(KeyboardKey.KEY_ESCAPE))
-                data.ui.SwitchToScene(GameData.Scene.PAUSE, ref data.scene, config, data);
+                gameData.ui.SwitchToScene(GameData.Scene.PAUSE, ref gameData.scene, config, gameData);
+
             // Update Player
-            data.Player.Update(inputs, data, events);
+            gameData.player.Update(inputs, gameData);
+
             // Update Entities
-            for (int i = 0; i < data.entities.Count; i++)
-                data.entities[i].Update(inputs, data, events);
+            foreach (var entity in gameData.entities)
+                entity.Update(inputs, gameData);
 
-            foreach (IGameEventListener eventListener in eventListeners)
-                eventListener.HandleEvents(events, data);
-            foreach (var item in data.Grid)
+            gameData.grid.Update(gameData);
+
+            for (int i = 0; i < gameData.particles.Count(); i++)
             {
-                item.UpdatePoint(data);
-            }
-            foreach (var item in data.Grid)
-            {
-                item.UpdatePos();
+                gameData.particles[i].Update(gameData);
+                if (gameData.particles[i].time < 0)
+                    gameData.particles.RemoveAt(i);
             }
 
-            for (int i = 0; i < data.particles.Count(); i++)
-            {
-                data.particles[i].Update(data);
-                if (data.particles[i].time < 0)
-                    data.particles.RemoveAt(i);
-            }
-            foreach (var blackhole in data.blackHoles)
-                blackhole.Update(data);
+            foreach (var blackhole in gameData.blackHoles)
+                blackhole.Update(gameData);
 
-            if (data.enemies.Count() <= 0 && data.blackHoles.Count() <= 0 && (time <= 0))
+            if (gameData.enemies.Count() <= 0 && gameData.blackHoles.Count() <= 0 && (time <= 0))
             {
                 time = 60 / 6.0f;
-                data.ChangeRound();
+                gameData.ChangeRound();
             }
-            data.Synchronize();
-            time -= data.DeltaTime;
 
-            if (data.Player.Life <= 0)
+            gameData.Synchronize();
+            time -= gameData.DeltaTime;
+
+            if (gameData.player.Life <= 0)
             {
-                data.ui.SwitchToScene(GameData.Scene.GAME_OVER, ref data.scene, config, data);
+                gameData.ui.SwitchToScene(GameData.Scene.GAME_OVER, ref gameData.scene, config, gameData);
             }
         }
 
         public void UpdatePause(GameInputs inputs)
         {
-            if (data.ui.buttons["resume"].IsClicked() || IsKeyPressed(KeyboardKey.KEY_ESCAPE))
-                data.ui.SwitchToScene(GameData.Scene.IN_GAME, ref data.scene, config, data);
-            else if (data.ui.buttons["quit"].IsClicked())
-                data.ui.SwitchToScene(GameData.Scene.MAIN_MENU, ref data.scene, config, data);
+            if (gameData.ui.buttons["resume"].IsClicked() || IsKeyPressed(KeyboardKey.KEY_ESCAPE))
+                gameData.ui.SwitchToScene(GameData.Scene.IN_GAME, ref gameData.scene, config, gameData);
+            else if (gameData.ui.buttons["quit"].IsClicked())
+                gameData.ui.SwitchToScene(GameData.Scene.MAIN_MENU, ref gameData.scene, config, gameData);
         }
 
         public void UpdateGameOver(GameInputs inputs)
         {
-            if (data.ui.buttons["back"].IsClicked())
-                data.ui.SwitchToScene(GameData.Scene.MAIN_MENU, ref data.scene, config, data);
+            if (gameData.ui.buttons["back"].IsClicked())
+                gameData.ui.SwitchToScene(GameData.Scene.MAIN_MENU, ref gameData.scene, config, gameData);
         }
-        public void Render(Graphics graphics, GameInputs inputs)
+
+        public void Render(GameInputs inputs)
         {
-            switch (data.scene)
+            switch (gameData.scene)
             {
                 case GameData.Scene.MAIN_MENU:
                     {
@@ -203,46 +191,38 @@ namespace Geostorm.Core
                 case GameData.Scene.IN_GAME:
                     {
                         // Draw element in the map.
-                        foreach (var star in data.stars)
-                            if (IsInside(star.Pos + data.camera.Pos * star.Speed))
-                                star.Draw(graphics, data.camera);
-                        foreach (var point in data.Grid)
-                            point.Draw(graphics, data.camera, data.MapSize);
-                        DrawRectangleLinesEx(new Rectangle(data.camera.Pos.X, data.camera.Pos.Y, data.MapSize.X, data.MapSize.Y), 5, Color.WHITE);
+                        foreach (var star in gameData.stars)
+                            if (IsInside(star.position + gameData.camera.Pos * star.speed))
+                                star.Draw(gameData.camera);
 
-                        foreach (var particle in data.particles)
+                        gameData.grid.Draw(gameData);
+
+                        foreach (var particle in gameData.particles)
                         {
-                            particle.Draw(graphics, data.camera);
+                            particle.Draw(gameData.camera);
                         }
                         // Draw Player
-                        data.Player.Draw(graphics, data.camera);
+                        gameData.player.Draw(gameData.camera);
 
                         //Draw entities
-                        foreach (var entity in data.entities)
-                            entity.Draw(graphics, data.camera);
-
-                        foreach (var particle in data.particles)
                         {
-                            particle.Draw(graphics, data.camera);
+                            foreach (var entity in gameData.entities)
+                                entity.Draw(gameData.camera);
+
+                            foreach (var particle in gameData.particles)
+                                particle.Draw(gameData.camera);
                         }
 
-                        foreach (var blackhole in data.blackHoles)
-                            blackhole.Draw(graphics, data.camera);
-                        //Draw enemies
-                        foreach (var enemy in data.enemies)
-                            enemy.Draw(graphics, data.camera);
+                        for (int i = 0; i < gameData.player.Life; i++)
+                            Graphics.DrawPlayerOverlay(new Vector2(GetScreenWidth() / 2 - 125 + 50 * i, 85), 90);
 
-                        for (int i = 0; i < data.Player.Life; i++)
-                        {
-                            graphics.DrawPlayerOverlay(new Vector2(GetScreenWidth() / 2 - 125 + 50 * i, 85), 90);
-                        }
                         DrawText("Score", 200, 50, 50, Color.GREEN);
-                        DrawText($"{data.Score}", 200, 100, 50, Color.GREEN);
+                        DrawText($"{gameData.Score}", 200, 100, 50, Color.GREEN);
                         DrawText("Highscore", GetScreenWidth() - MeasureText("Highscore", 50) / 2 - 200, 50, 50, Color.GREEN);
-                        DrawText($"{data.highscore}", GetScreenWidth() - 320, 100, 50, Color.GREEN);
+                        DrawText($"{gameData.highscore}", GetScreenWidth() - 320, 100, 50, Color.GREEN);
 
+                        Graphics.DrawCursor(inputs.ScreenPos + inputs.ShootTarget);
 
-                        graphics.DrawCursor(inputs.ScreenPos + inputs.ShootTarget);
                         DrawFPS(10, 10);
                     }
                     break;
@@ -254,14 +234,14 @@ namespace Geostorm.Core
                     break;
                 case GameData.Scene.GAME_OVER:
                     {
-                        DrawText($"Score : {data.Score}", GetScreenWidth() / 2 - MeasureText($"Score : {data.Score}", 50) / 2, 600, 50, Color.BLUE);
-                        DrawText($"High Score : {data.highscore}", GetScreenWidth() / 2 - MeasureText($"High Score : {data.highscore}", 100) / 2, 700, 100, Color.GREEN);
+                        DrawText($"Score : {gameData.Score}", GetScreenWidth() / 2 - MeasureText($"Score : {gameData.Score}", 50) / 2, 600, 50, Color.BLUE);
+                        DrawText($"High Score : {gameData.highscore}", GetScreenWidth() / 2 - MeasureText($"High Score : {gameData.highscore}", 100) / 2, 700, 100, Color.GREEN);
                     }
                     break;
                 default:
                     break;
             }
-            data.ui.Draw(data.scene, config);
+            gameData.ui.Draw(gameData.scene, config);
         }
 
         public bool IsInside(Vector2 pos)
@@ -270,6 +250,16 @@ namespace Geostorm.Core
                 return true;
             else
                 return false;
+        }
+
+        public void LoadConfigFile()
+        {
+            config.LoadConfigFile();
+        }
+
+        public void WriteConfigFile()
+        {
+            config.WriteConfigFile();
         }
     }
 }

@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
 using Geostorm.Renderer;
-using Geostorm.Core.Events;
 using Geostorm.Renderer.Particles;
 using Raylib_cs;
 
@@ -19,7 +18,7 @@ namespace Geostorm.Core.Entities
             weight = 222222;
             range = 70;
         }
-        public override void Update(in GameInputs inputs, GameData data, List<Event> events)
+        public override void Update(in GameInputs inputs, GameData data)
         {
             Position += Velocity;
             if (!Raylib.CheckCollisionPointRec(Position, new Rectangle(CollisionRadius * 2, CollisionRadius * 2, data.MapSize.X - CollisionRadius * 4, data.MapSize.Y - CollisionRadius * 4)))
@@ -39,9 +38,9 @@ namespace Geostorm.Core.Entities
                 data.particles.Add(new Explosion(Position, data.rng.Next(0, 360), Raylib.ColorFromHSV(tmpColor.X, tmpColor.Y, tmpColor.Z), data.rng.Next(40, 80)));
             }
         }
-        public override void Draw(Graphics graphics, Camera camera)
+        public override void Draw(Camera camera)
         {
-            graphics.DrawBullet(Position + camera.Pos, Rotation);
+            Graphics.DrawBullet(Position + camera.Pos, Rotation);
         }
     }
 }
