@@ -52,10 +52,10 @@ namespace Geostorm.Core.Entities
             if (active)
             {
                 weight = (int)(-(200 - CollisionRadius) * 300);
-                float pLength = (data.Player.Position - Position).Length() - (data.Player.CollisionRadius + CollisionRadius + 300);
+                float pLength = (data.player.Position - Position).Length() - (data.player.CollisionRadius + CollisionRadius + 300);
                 if (pLength < 0)
                 {
-                    data.Player.Position += (data.Player.Position - Position) / 8000 * pLength;
+                    data.player.Position += (data.player.Position - Position) / 8000 * pLength;
                 }
                 foreach (var item in data.entities)
                 {
@@ -92,9 +92,10 @@ namespace Geostorm.Core.Entities
 
             }
         }
-        public override void Draw(Graphics graphics, Camera camera)
+
+        public override void Draw(Camera camera)
         {
-                graphics.DrawBlackHole(Position + camera.Pos, CollisionRadius);
+            Graphics.DrawBlackHole(Position + camera.Pos, CollisionRadius);
         }
     }
 }

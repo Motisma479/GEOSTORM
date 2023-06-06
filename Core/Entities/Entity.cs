@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
-using Geostorm.Core.Events;
 using Geostorm.Renderer;
 
 namespace Geostorm.Core.Entities
@@ -24,7 +23,7 @@ namespace Geostorm.Core.Entities
         public int ScoreDrop;
 
         public virtual void KillEntity(GameData data) { }
-        public virtual void Update(in GameInputs inputs, GameData data, List<Event> events) { }
-        public virtual void Draw(Graphics graphics, Camera camera) { }
+        public virtual void Update(in GameInputs inputs, GameData data) { }
+        public virtual void Draw(Camera camera) { }
     }
 }

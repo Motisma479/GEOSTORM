@@ -28,14 +28,13 @@ namespace Geostorm.Core
 
         public Scene scene;
         public Ui ui;
-        public GridPoint[] Grid;
+        public Grid grid;
 
         public List<Particle> particles = new List<Particle>();
 
         public Vector2 MapSize;
-        private Player player = new Player();
+        public Player player = new Player();
         public IEnumerable<Entity> Entities { get { return entities; } }
-        public Player Player { get { return player; } set { player = value; } }
         public IEnumerable<Bullet> Bullets { get { return bullets; } }
         public IEnumerable<BlackHole> BlackHoles { get { return blackHoles; } }
 
@@ -66,32 +65,7 @@ namespace Geostorm.Core
             {
                 stars.Add(new Star(new Vector2(GetRandomValue(-500, (int)(MapSize.X + 500)), GetRandomValue(-500, (int)(MapSize.Y + 500))), GetRandomValue(1, 4)));
             }
-            int square = 25;
-            int width = (int)MapSize.X / square + 1;
-            int height = (int)MapSize.Y / square + 1;
-            Grid = new GridPoint[width*height];
-            for (int j = 0; j < height; j++)
-            {
-                for (int i = 0; i < width; i++)
-                {
-                    Grid[j * width + i] = new GridPoint(new Vector2(i * square, j * square), (i == 0 || i == width - 1 || j == 0 || j == height - 1));
-                }
-            }
-            for (int i = 0; i < width * height; i++)
-            {
-                GridPoint[] connect = new GridPoint[4];
-                int count = 0;
-                for (int j = 0; j < 4; j++)
-                {
-                    Vector2 pos = new Vector2(i % width, i / width) + Directions.Dir[j];
-                    if (pos.X >= 0 && pos.X < width && pos.Y >= 0 && pos.Y < height)
-                    {
-                        connect[count] = Grid[(int)pos.X + (int)pos.Y * width];
-                        count++;
-                    }
-                }
-                Grid[i].AddPoints(connect, count);
-            }
+            grid = new Grid(MapSize);
             ReadHighscore();
             ui = new Ui(Scene.MAIN_MENU, ref scene, this);
         }
@@ -140,20 +114,12 @@ namespace Geostorm.Core
             enemies.Clear();
             particles.Clear();
             blackHoles.Clear();
-            int square = 25;
-            int width = (int)MapSize.X / square + 1;
-            int height = (int)MapSize.Y / square + 1;
-            for (int j = 0; j < height; j++)
-            {
-                for (int i = 0; i < width; i++)
-                {
-                    Grid[j * width + i].pPos = new Vector2(i * square, j * square);
-                    Grid[j * width + i].pVel = new Vector2();
-                }
-            }
+
+            grid.Initialize();
+
             round = 0;
-            Player.WeaponLevel = 0;
-            Player.ResetWeapon();
+            player.WeaponLevel = 0;
+            player.ResetWeapon();
             Score = 0;
             particles.Clear();
             ChangeRound();
@@ -170,12 +136,14 @@ namespace Geostorm.Core
                 AddBlackHoleDelayed(new BlackHole(new Vector2(rng.Next(100, (int)(MapSize.X - 100)), rng.Next(100, (int)(MapSize.Y - 100))), GetRandomValue(35, 50)));
             Synchronize();
         }
+
         public void ReadHighscore()
         {
             var installDirectory = AppContext.BaseDirectory;
             string[] inputs = File.ReadAllLines(installDirectory + "highscore.txt");
             this.highscore = Int32.Parse(inputs[0]);
         }
+
         public void WriteHighscore(int x)
         {
             var installDirectory = AppContext.BaseDirectory;

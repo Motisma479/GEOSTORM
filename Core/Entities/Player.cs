@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
 using Geostorm.Renderer;
-using Geostorm.Core.Events;
 using static Raylib_cs.Raylib;
 using Geostorm.Renderer.Particles;
 using Raylib_cs;
@@ -62,7 +61,7 @@ namespace Geostorm.Core.Entities
             }
         }
 
-        public override void Update(in GameInputs inputs, GameData data, List<Event> events)
+        public override void Update(in GameInputs inputs, GameData data)
         {
             if (IsKeyPressed(KeyboardKey.KEY_KP_0))
                 godmode = !godmode;
@@ -104,7 +103,7 @@ namespace Geostorm.Core.Entities
             Position += Velocity;
             Position = new Vector2(MathHelper.CutFloat(Position.X, CollisionRadius, data.MapSize.X - CollisionRadius), MathHelper.CutFloat(Position.Y, CollisionRadius, data.MapSize.Y - CollisionRadius));
 
-            weapon.Update(inputs, data, events);
+            weapon.Update(inputs, data);
             if (cooldown > 0)
             {
                 cooldown--;
@@ -177,13 +176,13 @@ namespace Geostorm.Core.Entities
                     break;
             }
         }
-        public override void Draw(Graphics graphics, Camera camera)
+        public override void Draw(Camera camera)
         {
             if (godmode)
                 DrawText("GODMODE", GetScreenWidth() - 100 - MeasureText("GODMODE", 50), GetScreenHeight() - 100, 50, Color.RED);
-            graphics.DrawPlayer(Position + camera.Pos, Rotation, WeaponRotation);
+            Graphics.DrawPlayer(Position + camera.Pos, Rotation, WeaponRotation);
             if (cooldown % 12 == 1)
-                DrawCircleLines((int)(Position.X + camera.Pos.X), (int)(Position.Y + camera.Pos.Y), CollisionRadius, Raylib_cs.Color.WHITE);
+                DrawCircleLines((int)(Position.X + camera.Pos.X), (int)(Position.Y + camera.Pos.Y), CollisionRadius, Color.WHITE);
         }
 
         public void ResetWeapon()

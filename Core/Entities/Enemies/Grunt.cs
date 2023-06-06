@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Geostorm.Core;
 using System.Numerics;
-using Geostorm.Core.Events;
 using Geostorm.Renderer;
 using static Raylib_cs.Raylib;
 using Raylib_cs;
@@ -29,9 +28,9 @@ namespace Geostorm.Core.Entities.Enemies
         float targetRotation = 0;
         Vector2 renderScale = new Vector2(1,1);
 
-        public override void DoUpdate(in GameInputs inputs, GameData data, List<Event> events)
+        public override void DoUpdate(in GameInputs inputs, GameData data)
         {
-            if (MathHelper.GetRotation(data.Player.Position- Position, ref targetRotation))
+            if (MathHelper.GetRotation(data.player.Position - Position, ref targetRotation))
             {
                 targetRotation = MathHelper.CutFloat(MathHelper.ModuloFloat(Rotation - targetRotation, -180.0f, 180.0f), -10.0f, 10.0f);
                 Rotation = (Rotation - targetRotation) % 360.0f;
@@ -70,9 +69,9 @@ namespace Geostorm.Core.Entities.Enemies
             }
             data.particles.Add(new Score(ScoreDrop.ToString(), Position, GetRandomValue(0, 360), Raylib_cs.Color.LIME, GetRandomValue(40, 80)));
         }
-        public override void DoDraw(Graphics graphics, Camera camera) 
+        public override void DoDraw(Camera camera) 
         {
-            graphics.DrawGrunt(Position + camera.Pos, renderScale, 0, spawnTime);
+            Graphics.DrawGrunt(Position + camera.Pos, renderScale, 0, spawnTime);
         }
     }
 }

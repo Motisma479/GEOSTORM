@@ -83,11 +83,13 @@ namespace Geostorm.Renderer
                 case GameData.Scene.MAIN_MENU:
                     {
                         data.InitGameData();
-                        data.Player = new Core.Entities.Player();
+                        data.player = new Core.Entities.Player();
                         buttons["start"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, 400), new Vector2(400, 100), ButtonType.TEXT, DARKBLUE);
                         buttons["start"].SetText("START", new Vector2(15, 0), 100, BLACK);
+
                         buttons["settings"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, 600), new Vector2(400, 100), ButtonType.TEXT, DARKBLUE);
                         buttons["settings"].SetText("SETTINGS", new Vector2(10, 20), 70, BLACK);
+
                         buttons["quit"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, 800), new Vector2(400, 100), ButtonType.TEXT, DARKBLUE);
                         buttons["quit"].SetText("QUIT", new Vector2(85, 8), 90, BLACK);
                     }
@@ -102,6 +104,7 @@ namespace Geostorm.Renderer
                         ShowCursor();
                         buttons["resume"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, 400), new Vector2(400, 100), ButtonType.TEXT, DARKBLUE);
                         buttons["resume"].SetText("RESUME", new Vector2(10, 8), 90, BLACK);
+
                         buttons["quit"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, 600), new Vector2(400, 100), ButtonType.TEXT, DARKBLUE);
                         buttons["quit"].SetText("QUIT", new Vector2(85, 8), 90, BLACK);
                     }
@@ -115,8 +118,9 @@ namespace Geostorm.Renderer
                         }
                         buttons["back"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, GetScreenHeight() - 200), new Vector2(400, 100), ButtonType.TEXT, DARKBLUE);
                         buttons["back"].SetText("BACK", new Vector2(85, 8), 90, BLACK);
+
                         buttons["aimtype"] = new Button(new Vector2(GetScreenWidth() - 400, GetScreenHeight() - 200), new Vector2(300, 50), ButtonType.TEXT, DARKBLUE);
-                        buttons["aimtype"].SetText(Geostorm.Renderer.Ui.AimType[config.AimType], new Vector2(10, 10), 26, Color.BLACK);
+                        buttons["aimtype"].SetText(AimType[config.AimType], new Vector2(10, 10), 26, Color.BLACK);
                     }
                     break;
                 case GameData.Scene.GAME_OVER:
@@ -124,6 +128,8 @@ namespace Geostorm.Renderer
                         ShowCursor();
                         buttons["back"] = new Button(new Vector2(GetScreenWidth() / 2 - 200, GetScreenHeight() - 200), new Vector2(400, 100), ButtonType.TEXT, DARKBLUE);
                         buttons["back"].SetText("BACK", new Vector2(85, 8), 90, BLACK);
+
+                        // Update score board
                         if (data.highscore < data.Score)
                         {
                             data.WriteHighscore(data.Score);

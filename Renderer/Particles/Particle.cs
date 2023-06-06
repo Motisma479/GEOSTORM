@@ -17,12 +17,15 @@ namespace Geostorm.Renderer.Particles
         public Color Color;
         public float time;
         public float CollisionRadius = 3;
+
         public virtual void Update(GameData data)
         {
+
         }
-        public virtual void Draw(Graphics graphics, Camera cam)
+
+        public virtual void Draw(Camera cam)
         {
-            graphics.DrawParticle(Position + cam.Pos, Rotation, Color, time);
+            Graphics.DrawParticle(Position + cam.Pos, Rotation, Color, time);
         }
     }
 }

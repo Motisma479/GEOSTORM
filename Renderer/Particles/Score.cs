@@ -32,9 +32,9 @@ namespace Geostorm.Renderer.Particles
             time--;
         }
 
-        public override void Draw(Graphics graphics, Camera cam)
+        public override void Draw(Camera cam)
         {
-            graphics.DrawScoreParticle(text,Position + cam.Pos, Color, time);
+            Graphics.DrawScoreParticle(text,Position + cam.Pos, Color, time);
         }
     }
 }
