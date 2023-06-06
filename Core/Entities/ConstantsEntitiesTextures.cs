@@ -7,6 +7,7 @@ using System.Numerics;
 
 namespace Geostorm.Core.Entities
 {
+    //------------------------PLAYER_RELATED_GEOMETRY------------------------
     static class PlayerTexture
     {
         private static readonly float preScale = 20.0f;
@@ -33,37 +34,6 @@ namespace Geostorm.Core.Entities
             new Vector2(-0.1f, 0.2f)    * preScale,     //top  
             new Vector2(0.8f, 0.0f)     * preScale,     //right 
             new Vector2(-0.1f,-0.2f)    * preScale      //bottom
-        };
-    }
-    static class GruntTexture
-    {
-        private static readonly float preScale = 18.0f;
-        public static float thickness = 5f;
-        public static readonly Vector2[] Points =
-        {
-            new Vector2(-1.0f, 0.0f)    * preScale,     //left  
-            new Vector2(-0.0f,-1.0f)    * preScale,     //top  
-            new Vector2( 1.0f, 0.0f)    * preScale,     //right 
-            new Vector2(-0.0f, 1.0f)    * preScale      //bottom
-        };
-    }
-    static class MillTexture
-    {
-        private static readonly float preScale = 20.0f;
-        public static float thickness = 4f;
-        public static readonly Vector2[] Pal1 =
-        {
-            new Vector2( 0.0f, 1.0f)    * preScale,     //p1  
-            new Vector2( 1.0f, 1.0f)    * preScale,     //p2  
-            new Vector2(-1.0f,-1.0f)    * preScale,     //p3 
-            new Vector2( 0.0f,-1.0f)    * preScale      //p4
-        };
-        public static readonly Vector2[] Pal2 =
-        {
-            new Vector2(-1.0f, 0.0f)    * preScale,     //p5  
-            new Vector2(-1.0f, 1.0f)    * preScale,     //p6  
-            new Vector2( 1.0f,-1.0f)    * preScale,     //p7 
-            new Vector2( 1.0f, 0.0f)    * preScale      //p8
         };
     }
     static class PointerTexture
@@ -96,8 +66,83 @@ namespace Geostorm.Core.Entities
         {
             new Vector2( 0.25f, 0.0f)     * preScale,     //c1
             new Vector2( 0.25f, 1.5f)     * preScale,     //c2
-            new Vector2( -0.5f, 0.75f)     * preScale,     //c3
+            new Vector2( -0.5f, 0.75f)    * preScale,     //c3
             new Vector2( 1.0f, 0.75f)     * preScale,     //c4
         };
     }
+    //------------------------ENEMYS_RELATED_GEOMETRY------------------------
+    static class GruntTexture
+    {
+        private static readonly float preScale = 18.0f;
+        public static float thickness = 5f;
+        public static readonly Vector2[] Points =
+        {
+            new Vector2(-1.0f, 0.0f)    * preScale,     //left  
+            new Vector2(-0.0f,-1.0f)    * preScale,     //top  
+            new Vector2( 1.0f, 0.0f)    * preScale,     //right 
+            new Vector2(-0.0f, 1.0f)    * preScale      //bottom
+        };
+    }
+    static class MillTexture
+    {
+        private static readonly float preScale = 20.0f;
+        public static float thickness = 4f;
+        public static readonly Vector2[] Pal1 =
+        {
+            new Vector2( 0.0f, 1.0f)    * preScale,     //p1  
+            new Vector2( 1.0f, 1.0f)    * preScale,     //p2  
+            new Vector2(-1.0f,-1.0f)    * preScale,     //p3 
+            new Vector2( 0.0f,-1.0f)    * preScale      //p4
+        };
+        public static readonly Vector2[] Pal2 =
+        {
+            new Vector2(-1.0f, 0.0f)    * preScale,     //p5  
+            new Vector2(-1.0f, 1.0f)    * preScale,     //p6  
+            new Vector2( 1.0f,-1.0f)    * preScale,     //p7 
+            new Vector2( 1.0f, 0.0f)    * preScale      //p8
+        };
+    }
+    static class BlazeTexture
+    {
+        private static readonly float preScale = 20.0f;
+        public static float thickness = 4f;
+        public static readonly Vector2[] Points =
+        {
+            new Vector2(-1.0f, 0.0f)    * preScale,     //p1  
+            new Vector2(-0.2f,-0.2f)    * preScale,     //p2  
+            new Vector2( 0.0f, -1.0f)   * preScale,     //p3
+            new Vector2(0.2f,-0.2f)     * preScale,     //p4
+            new Vector2( 1.0f, 0.0f)    * preScale,     //p5
+            new Vector2(0.2f,0.2f)      * preScale,     //p6
+            new Vector2( 0.0f, 1.0f)    * preScale,     //p7
+            new Vector2( -0.2f, 0.2f)   * preScale,     //p8
+        };
+    }
+    static class TankerTexture
+    {
+        private static readonly float preScale = 35.0f;
+        public static float thickness = 4f;
+        public static readonly Vector2[] Points =
+        {
+            new Vector2(0.0f, 1.0f)     * preScale,     //p1
+            new Vector2(-0.4f, 0.8f)    * preScale,     //p2
+            new Vector2(-0.4f, 1.0f)    * preScale,     //p3
+            new Vector2(-0.6f, 1.2f)    * preScale,     //p4
+            new Vector2(-1.0f, 0.6f)    * preScale,     //p5
+            new Vector2(-0.6f, -0.2f)   * preScale,     //p6
+            new Vector2(-0.4f, 0.2f)    * preScale,     //p7
+            new Vector2(-0.2f, -0.6f)   * preScale,     //p8
+            new Vector2(-0.2f, 0.0f)    * preScale,     //p9
+            new Vector2(0.0f, -1.0f)    * preScale,     //p10
+            new Vector2(0.2f, 0.0f)     * preScale,     //p11
+            new Vector2(0.2f, -0.6f)    * preScale,     //p12
+            new Vector2(0.4f, 0.2f)     * preScale,     //p13
+            new Vector2(0.6f, -0.2f)    * preScale,     //p14
+            new Vector2(1.0f, 0.6f)     * preScale,     //p15
+            new Vector2(0.6f, 1.2f)     * preScale,     //p16
+            new Vector2(0.4f, 1.0f)     * preScale,     //p17
+            new Vector2(0.4f, 0.8f)     * preScale,     //p18
+        };
+    }
+    //-----------------------------------------------------------------------
 }
